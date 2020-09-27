@@ -13,8 +13,80 @@
 - Elody Tang
 - Xuewei Zhang
 
+------
+------
+------
+
+
 # Instructions
 
+## Les codes de Git
+
+Résumé de tous les codes de GIT pouvant nous aidant à la réalisation de ce projet :
+
+### Installation de Git
+
+1. Mettre à jour sa machine.
+```
+sudo apt update & sudo apt upgrade
+```
+
+2. Ouvrir un terminal et écrire :
+
+```
+sudo apt-get install git-all
+```
+
+### Paramètres de Git
+
+1. Écrire dans un terminal :
+```
+$ git config --global user.name "*name*"
+$ git config --global user.email *email*
+
+```
+
+### Première utilisation
+
+1. Vérifier l'état des fichiers :
+```
+$ git status
+```
+
+2. Placer de nouveaux fichiers sous suivi de version :
+```
+$ git add *nomDeFichier*
+```
+
+3. Visualiser ce qui a été modifié mais pas encore indexé :
+```
+$ git diff
+```
+
+4. Valider les modifications :
+```
+$ git commit
+```
+
+5. Déplacer des fichiers :
+```
+$ git mv *nom_origine* *nom_cible*
+```
+
+6. Créer une nouvelle branche :
+```
+$ git branch testing
+```
+
+7. Fusionner la branche d'une issue spéciale :
+```
+$ git merge iss_nombreIssue_
+```
+
+8. Pousser une branche dans un serveur :
+```
+$ git push (serveur distant) (branche)
+```
 
 ## La présentations d'un fichier .MD
 
@@ -102,7 +174,6 @@ Le fork a été crée.
 ## Exécuter le projet
 
 (à détailler + tard)
-
 
 
 
