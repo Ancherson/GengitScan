@@ -65,7 +65,8 @@ $ git diff
 
 4. Valider les modifications :
 ```
-$ git commit
+$ git commit -m _"message"_
+$ git commit --amend -m _"newmessage"_
 ```
 
 5. Déplacer des fichiers :
@@ -83,9 +84,15 @@ $ git branch testing
 $ git merge iss_nombreIssue_
 ```
 
+
 8. Pousser une branche dans un serveur :
 ```
 $ git push (serveur distant) (branche)
+```
+
+9. Changer de branche depuis le dépot local
+```
+$ git checkout _nomdelabranche_
 ```
 
 ## La présentations d'un fichier .MD
