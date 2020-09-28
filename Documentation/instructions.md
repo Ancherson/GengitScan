@@ -84,13 +84,17 @@ $ git branch testing
 $ git merge iss_nombreIssue_
 ```
 
-
-8. Pousser une branche dans un serveur :
+8. Récupérer la dernière version avant de push :
 ```
-$ git push (serveur distant) (branche)
+$ git pull
 ```
 
-9. Changer de branche depuis le dépot local
+9. Pousser une branche dans un serveur :
+```
+$ git push origin (branche)
+```
+
+10. Changer de branche depuis le dépot local
 ```
 $ git checkout _nomdelabranche_
 ```
