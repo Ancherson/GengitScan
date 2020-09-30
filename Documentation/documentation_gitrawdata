@@ -1,4 +1,4 @@
-gitrawdata s'occuper de parcourir les log des commits pour en créer des objects de type commit facile à manipuler qui pourront ensuite être traité par le reste du programme.
+gitrawdata s'occupe de parcourir les log des commits pour en créer des objects de type commit facile à manipuler qui pourront ensuite être traité par le reste du programme.
 
 visulog/gitrawdata/src/main/java/up/visulog/gitrawdata :
 
