@@ -31,7 +31,7 @@ commit 107ce6d901a6fddd2b53be0ea92a1d115e60bf29
 
 ```
 
-2. Définition de POJO
+2. **Définition de POJO**
 
 POJO = "Plain old Java Object"
 C'est une classe avec des attributs. Rien de plus. L'objectif d'un POJO ne contient ni 'extends' ni 'implements' et se contente de ses déclarations propores. (C'est une classe qui ne se prend pas la tête.) Son objectif : juste contenir des données.
