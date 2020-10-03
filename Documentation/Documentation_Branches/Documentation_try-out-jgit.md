@@ -1,6 +1,6 @@
-#Documentation Branche 10-try-out-jgit
+# Documentation Branche 10-try-out-jgit
 
-##BUT:  
+## BUT:  
 
 Tout d'abord cette branche a ete cree pour l'issue 10 du projet de base qui consistait a teste jgit.  
   
@@ -8,7 +8,7 @@ jgit est bibliothèque d'interface de java permettant de faciliter l'analyse des
 
 L'issue est dans la colonne _done_ dans l'ancien projet.
 
-##CHANGEMENT PAR RAPPORT A LA BRANCHE DEVELOP
+## CHANGEMENT PAR RAPPORT A LA BRANCHE DEVELOP
 
 La fonction _compare_ de gitlab est tres etrange puisqu'elle indique des changements par rapport à la branche develop qui ne sont pas, ou alors je ne sais l'utiliser).
 
@@ -16,7 +16,7 @@ Les principaux changements se trouve dans la partie gitrawdata du projet:
 
 Il n'y a plus que la classe Commit.java (Plus de CommitBuilder) et Commit.java est totalement différent de celui qui est dans la branche _develop_.
 
-###Description de la classe Commit:
+### Description de la classe Commit:
 
 - Champs :
 
@@ -42,7 +42,7 @@ Il n'y a plus que la classe Commit.java (Plus de CommitBuilder) et Commit.java e
    - public static Commit parse (Repository repo, AnyObjectId id)  
      Cette methode cree d'abord un RevCommit a partir de repo et id, puis utilise la methode _commitOfRevCommit()_ pour revoyer un Commit.
      
-##Conclusion
+## Conclusion
 
 Cette bibliotheque peut nous être tres utile puisque elle est, je trouve, assez simple d'utilisation, assez claire. Par contre si on veut l'utiliser il faudra completer la classe Commit, notamment une fonction qui peut generer une liste de Commit.
 
