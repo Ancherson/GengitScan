@@ -31,7 +31,23 @@ commit 107ce6d901a6fddd2b53be0ea92a1d115e60bf29
 
 ```
 
-------------------------------------------------------------------------------
+2. Définition de POJO
+
+POJO = "Plain old Java Object"
+C'est une classe avec des attributs. Rien de plus. L'objectif d'un POJO ne contient ni 'extends' ni 'implements' et se contente de ses déclarations propores. (C'est une classe qui ne se prend pas la tête.) Son objectif : juste contenir des données.
+
+```
+Exemple de POJO : 
+
+public class Commit {
+  public String author;
+  public String date;
+  public String title;
+  public String message;
+}
+
+```
+
 # Résumé de cette documentation
 L'issue initiale a déjà été closed, et son test a réussi.
 Il faut juste se renseigner sur JGit qui pourrait être assez intéréssant à utiliser.
