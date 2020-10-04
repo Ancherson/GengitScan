@@ -1,6 +1,7 @@
 package up.visulog.analyzer;
 
 import up.visulog.config.Configuration;
+import up.visulog.gitrawdata.APIresponse;
 import up.visulog.gitrawdata.Commit;
 
 import java.util.HashMap;
@@ -49,6 +50,8 @@ public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
 
         @Override
         public String getResultAsHtmlDiv() {
+            APIresponse json = new APIresponse();
+            json.createLogFileForCommits();
             StringBuilder html = new StringBuilder("<div>Commits per author: <ul>");
             for (var item : commitsPerAuthor.entrySet()) {
                 html.append("<li>").append(item.getKey()).append(": ").append(item.getValue()).append("</li>");
