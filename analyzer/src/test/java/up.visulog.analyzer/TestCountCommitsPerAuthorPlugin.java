@@ -13,7 +13,7 @@ public class TestCountCommitsPerAuthorPlugin {
     @Test
     public void checkCommitSum() {
         var log = new ArrayList<Commit>();
-        String[] authors = {"foo", "bar", "baz"};
+        String[] authors = {"foo", "bar", "bcd"};
         var entries = 20;
         for (int i = 0; i < entries; i++) {
             log.add(new CommitBuilder("").setAuthor(authors[i % 3]).createCommit());
