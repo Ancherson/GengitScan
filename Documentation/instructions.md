@@ -1,28 +1,6 @@
-# Présentation du projet
+**Ce document a été créee pour les membres du gourpe. Il sert à retrouver les codes de Git rapidement.**
 
-(à détailler + tard)
-
-## Liste des membres (8)
-
-- Ismail Badaoui
-- Jules Cherion
-- Alexandre Leymarie
-- Etienne Nedjal
-- Yoan Rougeolle
-- Victor Spehar
-- Elody Tang
-- Xuewei Zhang
-
-------
-------
-------
-
-
-# Instructions
-
-## Les codes de Git
-
-Résumé de tous les codes de GIT pouvant nous aidant à la réalisation de ce projet :
+# **Les codes de Git**
 
 ### Installation de Git
 
@@ -99,13 +77,14 @@ $ git push origin (branche)
 $ git checkout _nomdelabranche_
 ```
 
-## La présentations d'un fichier .MD
+# La présentations d'un fichier .MD
 
-### La syntaxe
+1. **La syntaxe**
 
 ![alt text](https://zupimages.net/up/20/39/j97g.png)
 
-## Cloner et compiler le projet
+
+# Cloner et compiler le projet
 
 ⚠️ Attention, cloner un projet est différent de télécharger un projet !!! ⚠️
 
@@ -165,7 +144,7 @@ Voici une liste des problèmes qui a pu se passer durant votre compression :
     - Rappel : Java 10, 11, 12 et 13 sont les Java compatibles.
 
 
-## Fork le projet
+# Fork le projet
 
 Un fork est une copie d'un dépôt original qu'on place dans un autre espace pour pouvoir y attribuer des modifications sans affecter le projet original. 
 
