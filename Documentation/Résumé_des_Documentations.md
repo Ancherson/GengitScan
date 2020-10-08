@@ -60,6 +60,26 @@ Lors de la création d'un objet de type _Analyser_, la fonction _computeResult()
 - Chemin de la documentation sur le dossier : Documentation/Documentation_Analyser.md
 
 -------------------------------------------------------------------------
+#### Dossier cli
+Ce dossier est un peu le lancement du programme.
+
+- 2 classes (TestCLILauncher, CLILauncher)
+- Utilisation de 3 bibliothèques : java.nio.file.FileSystems, java.util.HashMap, java.util.Optional
+- **Problème 1: 5 TODOs**
+- Chemin de la documentation sur le dossier : Documentation/Documentation_cli.md
+
+-------------------------------------------------------------------------
+#### Dossier Build
+- Quand on exécute le programme avec la commande :
+
+```
+./gradlew build
+```
+Un dossier nommé "build" est généré dans chque dossier. Ce sont les résultats des tests sous format HTML. (On pourra les retrouver dans le dossier : build/report/tests/test.
+Les tests sont effectués grâce au framework JUnit et se trouvent dans les dossiers src/test.
+- Chemin de la documentation sur le dossier : Documentation/Documentation_Build.md
+
+-------------------------------------------------------------------------
 
 # Documentation des branches 
 
