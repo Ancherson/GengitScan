@@ -27,7 +27,15 @@ public class Analyzer {
         }
         // run all the plugins
         // TODO: try running them in parallel
-        for (var plugin: plugins) plugin.run();
+        for (var plugin: plugins) {
+        	//plugin implemente l'interface AnalyserPlugin qui herite de Runnable
+        	//Pour creer un Thread, il faut un objet qui implémente Runnable
+        	//Un Thread s'execute de facon autonome, en parallele du reste du programme
+        	Thread t = new Thread(plugin);
+        	
+        	//Execute la methode run de plugin
+        	t.start();
+        }
 
         // store the results together in an AnalyzerResult instance and return it
         return new AnalyzerResult(plugins.stream().map(AnalyzerPlugin::getResult).collect(Collectors.toList()));
