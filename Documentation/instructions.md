@@ -169,7 +169,7 @@ Le projet peut actuellement être exécuté avec gradle en utilisant la commande
 ```
 Le résultat variera en fonction des arguments.
 
-# liste des arguments acceptés et ce qu'ils font
+### liste des arguments acceptés et ce qu'ils font
 
 ```
 ./gradlew run --args='. --addPlugin=countCommits'
