@@ -163,7 +163,21 @@ Le fork a été crée.
 
 ## Exécuter le projet
 
-(à détailler + tard)
+Le projet peut actuellement être exécuté avec gradle en utilisant la commande:
+```
+./gradlew run --args='arguments'
+```
+Le résultat variera en fonction des arguments.
+
+# liste des arguments acceptés et ce qu'ils font
+
+```
+./gradlew run --args='. --addPlugin=countCommits'
+```
+Compte le nombre de commits de chaque auteur dans la branche actuelle du répertoire git présent dans le dossier actuel (".").
+
+
+Liste à compléter au fur et à mesure de l'avancée du projet et des fonctionnalités ajoutées...
 
 
 
