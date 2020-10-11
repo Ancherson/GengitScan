@@ -10,14 +10,14 @@ import java.util.Map;
 
 public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
     private final Configuration configuration;
-    private Result result;
+    private up.visulog.analyzer.CountCommitsPerAuthorPlugin.Result result;
 
     public CountCommitsPerAuthorPlugin(Configuration generalConfiguration) {
         this.configuration = generalConfiguration;
     }
 
-    static Result processLog(List<Commit> gitLog) {
-        var result = new Result();
+    static up.visulog.analyzer.CountCommitsPerAuthorPlugin.Result processLog(List<Commit> gitLog) {
+        var result = new up.visulog.analyzer.CountCommitsPerAuthorPlugin.Result();
         for (var commit : gitLog) {
             var nb = result.commitsPerAuthor.getOrDefault(commit.author, 0);
             result.commitsPerAuthor.put(commit.author, nb + 1);
@@ -31,7 +31,7 @@ public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
     }
 
     @Override
-    public Result getResult() {
+    public up.visulog.analyzer.CountCommitsPerAuthorPlugin.Result getResult() {
         if (result == null) run();
         return result;
     }
@@ -52,6 +52,9 @@ public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
         public String getResultAsHtmlDiv() {
             APIresponse json = new APIresponse();
             json.createLogFileForCommits();
+            json.createLogFileForIssues();
+            json.createLogFileForOneCommit("7fa1a620338aec79ade8c77c2edfeba64cfad393");
+            json.createLogFileForOneIssue(41);
             StringBuilder html = new StringBuilder("<div>Commits per author: <ul>");
             for (var item : commitsPerAuthor.entrySet()) {
                 html.append("<li>").append(item.getKey()).append(": ").append(item.getValue()).append("</li>");
