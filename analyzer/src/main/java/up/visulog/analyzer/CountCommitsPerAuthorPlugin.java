@@ -10,14 +10,14 @@ import java.util.Map;
 
 public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
     private final Configuration configuration;
-    private up.visulog.analyzer.CountCommitsPerAuthorPlugin.Result result;
+    private Result result;
 
     public CountCommitsPerAuthorPlugin(Configuration generalConfiguration) {
         this.configuration = generalConfiguration;
     }
 
-    static up.visulog.analyzer.CountCommitsPerAuthorPlugin.Result processLog(List<Commit> gitLog) {
-        var result = new up.visulog.analyzer.CountCommitsPerAuthorPlugin.Result();
+    static Result processLog(List<Commit> gitLog) {
+        var result = new Result();
         for (var commit : gitLog) {
             var nb = result.commitsPerAuthor.getOrDefault(commit.author, 0);
             result.commitsPerAuthor.put(commit.author, nb + 1);
@@ -31,10 +31,11 @@ public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
     }
 
     @Override
-    public up.visulog.analyzer.CountCommitsPerAuthorPlugin.Result getResult() {
+    public Result getResult() {
         if (result == null) run();
         return result;
     }
+
 
     static class Result implements AnalyzerPlugin.Result {
         private final Map<String, Integer> commitsPerAuthor = new HashMap<>();
