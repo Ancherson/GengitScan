@@ -47,7 +47,10 @@ public class CLILauncher {
                             break;
                         case "--loadConfigFile":
                             // TODO (load options from a file)
-                        	break;
+                        	//Format command: --loadConfigFile=Path to file where you want load the command
+                        	//Example: ./gradlew run --args='--loadConfigFile=../config.txt'
+                        	//this command loads the command that is in ../config.txt
+                        	return makeConfigFromCommandLineArgs(loadConfig(pValue));
                         	
                         case "--justSaveConfigFile":
                             // TODO (save command line options to a file instead of running the analysis)
@@ -82,6 +85,17 @@ public class CLILauncher {
     		return content;
     	} catch(IOException e) {
     		throw new RuntimeException("Error SaveConfig", e);
+    	}
+    }
+    
+    private static String[] loadConfig(String path) {
+    	try {
+    		BufferedReader reader = new BufferedReader(new FileReader(Paths.get(path).toFile()));
+    		String line = reader.readLine();
+    		String[]args = line.split(" ");
+    		return args;
+    	}catch(IOException e) {
+    		throw new RuntimeException("Error loadConfig",e);
     	}
     }
     
