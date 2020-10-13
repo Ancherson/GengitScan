@@ -24,8 +24,6 @@ public class Commit {
         this.description = description;
         this.mergedFrom = mergedFrom;
     }
-
-    // TODO: factor this out (similar code will have to be used for all git commands)
     
     //this function execute the command args from directory whose path is "path"
     public static BufferedReader command(Path path, String... args) {
