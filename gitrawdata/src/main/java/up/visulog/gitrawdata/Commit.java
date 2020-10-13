@@ -106,10 +106,12 @@ public class Commit {
     @Override
     public String toString() {
         return "Commit{" +
-                "id='" + id + '\'' +
+                //these 3 fields are optional
+                (id != null ? ("id='" + id + '\'') : "") +
                 (mergedFrom != null ? ("mergedFrom...='" + mergedFrom + '\'') : "") + //TODO: find out if this is the only optional field
-                ", date='" + date + '\'' +
-                ", author='" + author + '\'' +
+                (date != null ? (", date='" + date + '\'') : "") +
+                (author != null ? (", author='" + author + '\'') : "") +
+                //field of description is not optional
                 ", description='" + description + '\'' +
                 '}';
     }
