@@ -3,7 +3,7 @@ package up.visulog.gitrawdata;
 public class CommitBuilder {
     private final String id;
     private String author;
-    private String date;
+    private Date date;
     private String description;
     private String mergedFrom;
 
@@ -17,7 +17,7 @@ public class CommitBuilder {
     }
 
     public CommitBuilder setDate(String date) {
-        this.date = date;
+        this.date = new Date(date);
         return this;
     }
 
