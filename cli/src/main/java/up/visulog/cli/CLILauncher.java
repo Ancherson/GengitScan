@@ -37,6 +37,8 @@ public class CLILauncher {
 
                             if (pValue.equals("countCommits")) plugins.put("countCommits", new PluginConfig() {
                             });
+                            if (pValue.equals("countMergeCommits")) plugins.put("countMergeCommits", new PluginConfig() {
+                            });
 
                             break;
                         case "--loadConfigFile":
