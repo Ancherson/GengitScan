@@ -4,13 +4,26 @@ import up.visulog.analyzer.Analyzer;
 import up.visulog.config.Configuration;
 import up.visulog.config.PluginConfig;
 
+// a library that allows you to read an inputReader (for example an FileReader or an InputStreamReader)
 import java.io.BufferedReader;
+
+//a library that allows you to read a File, creates an FileReader 
+//A FileReader alone is useless, we need to use it in a BufferedReader
 import java.io.FileReader;
+
+// a library that allows you to write to files
 import java.io.FileWriter;
+
+//When we have a java error when we open a file or write to a file, it creates an IOException
+//So we need to catch it, that's why I use the couple try,catch
 import java.io.IOException;
+
 import java.nio.file.FileSystems;
+
+//libraries that allow you to find files thanks to their path
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -46,14 +59,12 @@ public class CLILauncher {
 
                             break;
                         case "--loadConfigFile":
-                            // TODO (load options from a file)
                         	//Format command: --loadConfigFile=Path to file where you want load the command
                         	//Example: ./gradlew run --args='--loadConfigFile=../config.txt'
                         	//this command loads the command that is in ../config.txt
                         	return makeConfigFromCommandLineArgs(loadConfig(pValue));
                         	
                         case "--justSaveConfigFile":
-                            // TODO (save command line options to a file instead of running the analysis)
                         	//Format command: --justSaveConfigFile=Path to file where you want save the command
                         	//Example: ./gradlew run --args='--addPlugin=countCommits --justSaveConfigFile=../config.txt'
                         	//this command saves "--addPlugin=countCommits" in ../config.txt
