@@ -17,7 +17,7 @@ Avec cela on pourra voir le travail fournit en le decoupant sur le temps avec pa
 
 on doit pouvoir recuperer :
 - le nombre de *commit* par un utilisateur/Total
-- le nombre de ligne ajoute/supprime/modifie lors d'un *commit*
+- le nombre de ligne ajoute/supprime lors d'un *commit*
 - le nombre d'utilisateur (ainsi que leur nom)
 - le nombre de *commit* merged (fusionne) d'un utilisateur/Total
 - le nombre de *comment* d'un utilisateur (ainsi que sa date et son heure)
