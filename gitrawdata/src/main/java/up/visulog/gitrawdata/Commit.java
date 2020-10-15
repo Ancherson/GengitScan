@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 
 public class Commit {
     // FIXME: (some of) these fields could have more specialized types than String
@@ -16,6 +17,8 @@ public class Commit {
     public final String author;
     public final String description;
     public final String mergedFrom;
+    public int linesAdded = 0;
+    public int linesDeleted = 0;
 
     public Commit(String id, String author, String date, String description, String mergedFrom) {
         this.id = id;
@@ -45,9 +48,49 @@ public class Commit {
     	return new BufferedReader(new InputStreamReader(is));
     }
     
+    public static List<Commit> getNumberLines(Path path, List<Commit> commits) {
+    	for(Commit commit : commits) {
+    		int[] lines = parseLine(command(path, "git", "show", "--format=oneline",commit.id,"--numstat"));
+    		commit.linesAdded = lines[0];
+    		commit.linesDeleted = lines[1];
+    	}
+    	
+    	/*for(Commit commit : commits) {
+    		System.out.println(commit.linesAdded + " , " + commit.linesDeleted);
+    	}*/
+    	
+    	return commits;
+    	
+    }
+    
+    
+    public static int[] parseLine(BufferedReader reader) {
+    	try {
+    		String line;
+    		reader.readLine();
+    		int added = 0;
+    		int deleted = 0;
+    		while((line = reader.readLine()) != null) {
+    			if(!line.equals("")) {
+	    			Scanner sc = new Scanner(line);
+					String s = sc.next();
+					if(s.equals("-")) added += 0;
+					else added += Integer.parseInt(s);
+					s = sc.next();
+					if(s.equals("-")) deleted += 0;
+					else deleted += Integer.parseInt(s);  		
+    			}
+    		}
+    		int[] res = {added, deleted};
+    		return res;
+    	}catch(IOException e) {
+    		throw new RuntimeException("Error parseLine", e);
+    	}
+    }
+    
     public static List<Commit> parseLogFromCommand(Path gitPath) {
     	BufferedReader reader = command(gitPath, "git", "log");
-        return parseLog(reader);
+        return getNumberLines(gitPath,parseLog(reader));
     }
 
     public static List<Commit> parseLog(BufferedReader reader) {
@@ -123,5 +166,10 @@ public class Commit {
                 ", author='" + author + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+    }
+    
+    public String getLinesToString() {
+    	int[]t = {this.linesAdded, this.linesDeleted};
+    	return t[0] + " , " + t[1];
     }
 }
