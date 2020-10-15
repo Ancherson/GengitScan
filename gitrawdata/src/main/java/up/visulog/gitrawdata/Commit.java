@@ -24,19 +24,29 @@ public class Commit {
         this.description = description;
         this.mergedFrom = mergedFrom;
     }
-
-    // TODO: factor this out (similar code will have to be used for all git commands)
+    
+    //this function execute the command args from directory whose path is "path"
+    public static BufferedReader command(Path path, String... args) {
+    	ProcessBuilder builder = new ProcessBuilder();
+    	builder.directory(path.toFile());
+    	builder.command(args);
+    	
+    	Process process;
+    	try {
+    		process = builder.start();
+    	}catch(IOException e) {
+    		String arg = "";
+    		for(int i = 0; i < args.length; i++) {
+    			arg += args[i] + " ";
+    		}
+    		throw new RuntimeException("Error running \"" + arg + "\"", e);
+    	}
+    	InputStream is = process.getInputStream();
+    	return new BufferedReader(new InputStreamReader(is));
+    }
+    
     public static List<Commit> parseLogFromCommand(Path gitPath) {
-        ProcessBuilder builder =
-                new ProcessBuilder("git", "log").directory(gitPath.toFile());
-        Process process;
-        try {
-            process = builder.start();
-        } catch (IOException e) {
-            throw new RuntimeException("Error running \"git log\".", e);
-        }
-        InputStream is = process.getInputStream();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+    	BufferedReader reader = command(gitPath, "git", "log");
         return parseLog(reader);
     }
 
