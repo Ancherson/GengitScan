@@ -48,6 +48,7 @@ public class Commit {
     	return new BufferedReader(new InputStreamReader(is));
     }
     
+    //This function collects the number of line added and deleted for each commits
     public static List<Commit> getNumberLines(Path path, List<Commit> commits) {
     	for(Commit commit : commits) {
     		int[] lines = parseLine(command(path, "git", "show", "--format=oneline",commit.id,"--numstat"));
@@ -55,15 +56,18 @@ public class Commit {
     		commit.linesDeleted = lines[1];
     	}
     	
+    	//If you want to test the function, remove the '/* */'
+    	//It shows the number of line added and deleted for each commits from the most recent to the oldest
+    	//You can compare the results with gitlab
     	/*for(Commit commit : commits) {
-    		System.out.println(commit.linesAdded + " , " + commit.linesDeleted);
+    		System.out.println(commit.linesAdded + " added , " + commit.linesDeleted + " deleted");
     	}*/
     	
     	return commits;
     	
     }
     
-    
+    //This function parses the output of the command 'git show', to collect the number of line added and deleted
     public static int[] parseLine(BufferedReader reader) {
     	try {
     		String line;
