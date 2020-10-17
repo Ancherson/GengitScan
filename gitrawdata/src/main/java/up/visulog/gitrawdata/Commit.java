@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,12 +13,12 @@ import java.util.Optional;
 public class Commit {
     // FIXME: (some of) these fields could have more specialized types than String
     public final String id;
-    public final String date;
+    public final LocalDateTime date;
     public final String author;
     public final String description;
     public final String mergedFrom;
 
-    public Commit(String id, String author, String date, String description, String mergedFrom) {
+    public Commit(String id, String author, LocalDateTime date, String description, String mergedFrom) {
         this.id = id;
         this.author = author;
         this.date = date;
