@@ -61,8 +61,13 @@ public class APIresponse {
             //creating a json file
             File jsonFile = new File("../GitLog/resultsIssues.json");
             FileWriter writeJsonFile = new FileWriter("../GitLog/resultsIssues.json");
+	    //Command to terminal
+	    String[] command = {"curl",
+				"--header",
+				"PRIVATE-TOKEN:"+privateToken,
+				"https://gaufre.informatique.univ-paris-diderot.fr/api/v4/projects/"+idProject+"/issues"};
             //Sending to GitLab API a request
-            process = Runtime.getRuntime().exec("curl --header \"PRIVATE-TOKEN: "+privateToken+"\" \"https://gaufre.informatique.univ-paris-diderot.fr/api/v4/projects/"+idProject+"/issues\"");
+            process = Runtime.getRuntime().exec(command);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             //Writing in JSON file
@@ -85,14 +90,20 @@ public class APIresponse {
             //creating a json file
             File jsonFile = new File("../GitLog/resultsIssue"+id+".json");
             FileWriter writeJsonFile = new FileWriter("../GitLog/resultsIssue"+id+".json");
+	    //Command to terminal
+	    String[] command = {"curl",
+				"--header",
+				"PRIVATE-TOKEN:"+privateToken,
+				"https://gaufre.informatique.univ-paris-diderot.fr/api/v4/projects/"+idProject+"/issues/"+id+"/discussions"};
             //Sending to GitLab API a request
-            process = Runtime.getRuntime().exec("curl --header \"PRIVATE-TOKEN: "+privateToken+"\" \"https://gaufre.informatique.univ-paris-diderot.fr/api/v4/projects/"+idProject+"/issues/"+id+"/discussions\"");
+            process = Runtime.getRuntime().exec(command);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             //Writing in JSON file
             while ((line = reader.readLine()) != null) {
                 writeJsonFile.write(line);
             }
+
             //closing the file
             writeJsonFile.close();
 
