@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class CommitsPerDatePlugin implements AnalyzerPlugin {
     private final Configuration configuration;
-    private static String howToSort= "months"; //the plugin sort commits per months, this is a default value 
+    private static String howToSort = "months"; //the plugin sort commits per months, this is a default value 
     private Result result;
 
     
@@ -27,6 +27,7 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
     //Sort commits per month and per date
     static Result processLog(List<Commit> gitLog) {
     	var result = new Result();
+    	result.setHowToSort(howToSort);
     	if(howToSort == "months") { //Commits per Months
 	        for (var commit : gitLog) {
 	        	String m = commit.date.getMonth().name();
@@ -56,7 +57,7 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
 	        	LocalDateTime datetmp = commit.date;
 	        	if(getNumberOfWeek(commit.date) == getNumberOfWeek(datetmp)) {
 	        		result.commitsPerDate.put(m, nb + 1);
-	        	}            
+	        	}
 	        }
 	        return result;
         }
@@ -87,6 +88,11 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
     
     static class Result implements AnalyzerPlugin.Result {
         private final Map<String, Integer> commitsPerDate = new HashMap<>();
+        private String howToSort = "month";
+        
+        public void setHowToSort(String howToSort) {
+        	this.howToSort = howToSort;
+        }
 
         Map<String, Integer> getCommitsPerDate() {
             return commitsPerDate;
@@ -99,7 +105,7 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
 
         @Override
         public String getResultAsHtmlDiv() {
-            StringBuilder html = new StringBuilder("<div>Number of Commits per Days/Month: <ul>");
+            StringBuilder html = new StringBuilder("<div>Number of Commits per " + this.howToSort + ": <ul>");
             for (var item : commitsPerDate.entrySet()) {
                 html.append("<li>").append(item.getKey()).append(": ").append(item.getValue()).append("</li>");
             }
