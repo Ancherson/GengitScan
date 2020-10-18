@@ -44,6 +44,8 @@ public class CLILauncher {
                             });
                             if (pValue.equals("countComments")) plugins.put("countComments", new PluginConfig() {
                             });
+                            if(pValue.equals("getMembers")) plugins.put("getMembers", new PluginConfig() {
+                            });
                             break;
                         case "--loadConfigFile":
                             // TODO (load options from a file)

@@ -114,4 +114,31 @@ public class APIresponse {
     public void createLogFileForOneIssue(int idProject ,int id){
         createLogFileForOneIssue("1m1pdKszBNnTtCHS9KtS",idProject,id);
     }
+    public void createLogFileForMembers(String privateToken,int idProject){
+        Process process;
+        try {
+
+            //creating a json file
+            File jsonFile = new File("../GitLog/resultsMembers.json");
+            FileWriter writeJsonFile = new FileWriter("../GitLog/resultsMembers.json");
+            //Command to terminal
+            String[] command = {"curl",
+                    "--header",
+                    "PRIVATE-TOKEN:"+privateToken,
+                    "https://gaufre.informatique.univ-paris-diderot.fr/api/v4/projects/"+idProject+"/users"};
+            //Sending to GitLab API a request
+            process = Runtime.getRuntime().exec(command);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            //Writing in JSON file
+            while ((line = reader.readLine()) != null) {
+                writeJsonFile.write(line);
+            }
+            //closing the file
+            writeJsonFile.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
