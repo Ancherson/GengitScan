@@ -22,6 +22,9 @@ public class CLILauncher {
     static Optional<Configuration> makeConfigFromCommandLineArgs(String[] args) {
         var gitPath = FileSystems.getDefault().getPath(".");
         var plugins = new HashMap<String, PluginConfig>();
+        String pPrivateToken = "";
+        int pProjectId = -1;
+        boolean API = false;
         for (var arg : args) {
             if (arg.startsWith("--")) {
                 String[] parts = arg.split("=");
@@ -39,13 +42,23 @@ public class CLILauncher {
                             });
                             if (pValue.equals("countMergeCommits")) plugins.put("countMergeCommits", new PluginConfig() {
                             });
-
+                            if (pValue.equals("countComments")) plugins.put("countComments", new PluginConfig() {
+                            });
+                            if(pValue.equals("getMembers")) plugins.put("getMembers", new PluginConfig() {
+                            });
                             break;
                         case "--loadConfigFile":
                             // TODO (load options from a file)
                             break;
                         case "--justSaveConfigFile":
                             // TODO (save command line options to a file instead of running the analysis)
+                            break;
+                        case "--privateToken":
+                            pPrivateToken = pValue;
+                            API = true;
+                            break;
+                        case "--projectId":
+                            pProjectId = Integer.parseInt(pValue);
                             break;
                         default:
                             return Optional.empty();
@@ -55,7 +68,7 @@ public class CLILauncher {
                 gitPath = FileSystems.getDefault().getPath(arg);
             }
         }
-        return Optional.of(new Configuration(gitPath, plugins));
+        return (API)?Optional.of(new Configuration(pPrivateToken,plugins,pProjectId)):Optional.of(new Configuration(gitPath, plugins));
     }
 
     private static void displayHelpAndExit() {
