@@ -171,18 +171,18 @@ Le résultat variera en fonction des arguments.
 
 ### Liste des arguments acceptés et leurs résultats
 
-1. Pour compter le nombre de commits de chaque auteur dans la branche actuelle du répertoire Git présent dans le dossier actuel (".")
+1. **Pour compter le nombre de commits de chaque auteur dans la branche actuelle du répertoire Git présent dans le dossier actuel (".")**
 
 ```
 ./gradlew run --args='. --addPlugin=countCommits'
 ```
 
-2. Pour compter le nombre de commits 'merge' par auteur
+2. **Pour compter le nombre de commits 'merge' par auteur**
 ```
 ./gradlew run --args='. --addPlugin=countMergeCommits'
 ```
 
-2. Pour compter le nombre de commentaires par auteur
+3. **Pour compter le nombre de commentaires par auteur**
 
 - Linux :
 
@@ -209,7 +209,7 @@ brew install curl
 ```
 
 
-3. Pour avoir la liste des membres :
+4. **Pour avoir la liste des membres**
 
 - Linux :
 
