@@ -26,6 +26,7 @@ import java.nio.file.Paths;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.Scanner;
 
 public class CLILauncher {
 
@@ -59,14 +60,14 @@ public class CLILauncher {
 
                             break;
                         case "--loadConfigFile":
-                        	//Format command: --loadConfigFile=Path to file where you want load the command
-                        	//Example: ./gradlew run --args='--loadConfigFile=../config.txt'
-                        	//this command loads the command that is in ../config.txt
+                        	//Format command: --loadConfigFile=name of the config
+                        	//Example: ./gradlew run --args='--loadConfigFile=test'
+                        	//this command loads the command "test" that is in ../config.txt
                         	return makeConfigFromCommandLineArgs(loadConfig(pValue));
                         	
                         case "--justSaveConfigFile":
-                        	//Format command: --justSaveConfigFile=Path to file where you want save the command
-                        	//Example: ./gradlew run --args='--addPlugin=countCommits --justSaveConfigFile=../config.txt'
+                        	//Format command: --justSaveConfigFile=name of the config
+                        	//Example: ./gradlew run --args='--addPlugin=countCommits --justSaveConfigFile=test'
                         	//this command saves "--addPlugin=countCommits" in ../config.txt
                         	String command = saveConfig(args,pValue);
                         	System.out.println("Command: " + command + ", is saved");
@@ -83,15 +84,15 @@ public class CLILauncher {
     }
     
     //this function save the command in the file whose path is "path"
-    private static String saveConfig(String[] args, String path) {
+    private static String saveConfig(String[] args, String name) {
     	String content = "";
     	for(int i = 0; i < args.length; i++) {
-    		if(!args[i].equals("--justSaveConfigFile=" + path)) content += args[i] + " ";
+    		if(!args[i].equals("--justSaveConfigFile=" + name)) content += args[i] + " ";
     	}
     	content = content.substring(0, content.length() - 1);
     	try {
-    		FileWriter file = new FileWriter(path);
-    		file.write(content);
+    		FileWriter file = new FileWriter("../config.txt", true);
+    		file.write(name + " " + content + "\n");
     		file.close();
     		return content;
     	} catch(IOException e) {
@@ -99,10 +100,21 @@ public class CLILauncher {
     	}
     }
     
-    private static String[] loadConfig(String path) {
+    private static String[] loadConfig(String name) {
     	try {
-    		BufferedReader reader = new BufferedReader(new FileReader(Paths.get(path).toFile()));
-    		String line = reader.readLine();
+    		BufferedReader reader = new BufferedReader(new FileReader(Paths.get("../config.txt").toFile()));
+    		String line;
+    		while((line = reader.readLine()) != null) {
+    			Scanner sc = new Scanner(line);
+    			if(sc.hasNext() && sc.next().equals(name)) {
+    				sc.close();
+    				break;
+    			}
+    			sc.close();
+    		}
+    		if(line == null) return new String[0];
+    		line = line.substring(name.length() + 1);
+    		System.out.println(line);
     		String[]args = line.split(" ");
     		return args;
     	}catch(IOException e) {
