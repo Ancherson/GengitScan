@@ -6,10 +6,6 @@ version = "0.0.1"
 group = "up"
 
 allprojects {
-
-    tasks.withType<JavaCompile> {
-        options.encoding = "UTF-8"
-    }
     repositories {
         mavenCentral()
     }
@@ -17,5 +13,15 @@ allprojects {
     plugins.apply("java")
 
     java.sourceCompatibility = JavaVersion.VERSION_1_10
+
+    tasks {
+        compileJava {
+            options.encoding = "UTF-8"
+        }
+
+        compileTestJava {
+            options.encoding = "UTF-8"
+        }
+    }
 
 }
