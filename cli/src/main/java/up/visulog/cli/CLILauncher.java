@@ -37,6 +37,8 @@ public class CLILauncher {
 
                             if (pValue.equals("countCommits")) plugins.put("countCommits", new PluginConfig() {
                             });
+                            if (pValue.equals("countMergeCommits")) plugins.put("countMergeCommits", new PluginConfig() {
+                            });
 
                             break;
                         case "--loadConfigFile":
@@ -59,6 +61,10 @@ public class CLILauncher {
     private static void displayHelpAndExit() {
         System.out.println("Wrong command...");
         //TODO: print the list of options and their syntax
+        System.out.println("Different options: ");
+        System.out.println("--addPlugin allows you to add new plugins");
+        System.out.println("--loadConfigFile allows you to load options from a file");
+        System.out.println("--justSaveConfigFile save command line options to a file instead of running the analysis");
         System.exit(0);
     }
 }
