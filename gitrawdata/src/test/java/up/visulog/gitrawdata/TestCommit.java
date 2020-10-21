@@ -24,9 +24,9 @@ public class TestCommit {
         }
     }
     
-    /*@Test
+    @Test
     public void testParseLog() throws IOException, URISyntaxException {
-        var expectedUri = getClass().getClassLoader().getResource("expectedToString").toURI();
+        var expectedUri = getClass().getClassLoader().getResource("expected").toURI();
         var logUri = getClass().getClassLoader().getResource("git.log").toURI();
         try (var expectedReader =  Files.newBufferedReader(Paths.get(expectedUri))) {
             try (var logReader = Files.newBufferedReader(Paths.get(logUri))) {
@@ -35,7 +35,7 @@ public class TestCommit {
                 assertEquals(expected, log.toString());
             }
         }
-    }*/
+    }
     
     @Test
     public void testGetNumberLines() {
