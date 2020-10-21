@@ -35,7 +35,7 @@ public class TestCommit {
                 assertEquals(expected, log.toString());
             }
         }
-    }
+    }*/
     
     @Test
     public void testGetNumberLines() {
