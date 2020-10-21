@@ -182,12 +182,59 @@ Le résultat variera en fonction des arguments.
 ./gradlew run --args='. --addPlugin=countMergeCommits'
 ```
 
+2. Pour compter le nombre de commentaires par auteur
+
+- Linux :
+
+```
+sudo apt install curl
+
+./gradlew build
+```
+
+- MacOS
+
+```
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
+
+brew install curl
+
+./gradlew build
+```
+
+- La commande :
+
+```
+./gradlew run --args="--addPlugin=getMembers --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
+```
+
+
+3. Pour avoir la liste des membres :
+
+- Linux :
+
+```
+sudo apt install curl
+
+./gradlew build
+```
+
+- MacOS
+
+```
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
+
+brew install curl
+
+./gradlew build
+```
+
+- La commande :
+
+```
+./gradlew run --args="--addPlugin=getMembers --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
+```
 
 Liste à compléter au fur et à mesure de l'avancée du projet et des fonctionnalités ajoutées...
-
-
-
-
-
 
 
