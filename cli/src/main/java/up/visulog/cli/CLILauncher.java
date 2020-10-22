@@ -51,13 +51,25 @@ public class CLILauncher {
                     String pValue = parts[1];
                     switch (pName) {
                         case "--addPlugin":
+                        	switch(pValue) {
                             // TODO: parse argument and make an instance of PluginConfig
 
                             // Let's just trivially do this, before the TODO is fixed:
-
-                            if (pValue.equals("countCommits")) plugins.put("countCommits", new PluginConfig() {
-                            });
-
+                        	case "countCommits":
+                        		plugins.put("countCommits", new PluginConfig() {});
+                        		break;
+                        	case "countMergeCommits":
+                        		plugins.put("countMergeCommits", new PluginConfig() {});
+                        		break;
+                        	case "countComments":
+                        		plugins.put("countComments", new PluginConfig() {});
+                        		break;
+                        	case "getMembers":
+                        		plugins.put("getMembers", new PluginConfig() {});
+                        		break;
+                        	default :
+                        		return Optional.empty();
+                        	}
                             break;
                         case "--load":
                         	//Format command: --load=name of the config
@@ -99,9 +111,11 @@ public class CLILauncher {
     		while((line = reader.readLine()) != null) {
     			Scanner sc = new Scanner(line);
     			if(sc.hasNext()) {
-    				if(!sc.next().equals(name)) {
+    				String n = sc.next();
+    				if(!n.equals(name)) {
     					oldContent += line + "\n";
     				}
+    				else System.out.println("Warning! old configuation :" + name + " overwitted!");
     			}
     			sc.close();
     		}
@@ -126,7 +140,12 @@ public class CLILauncher {
     			}
     			sc.close();
     		}
-    		if(line == null) return new String[0];
+    		if(line == null) {
+    			//error message
+    			System.out.println("Config not found, you should save it first using: \n./gradlew run --args=' Your command --save="+name+"'");
+    			String [] fill= {"--"};
+    			return fill;
+    		}
     		line = line.substring(name.length() + 1);
     		String[]args = line.split(" ");
     		return args;
