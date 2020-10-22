@@ -59,15 +59,15 @@ public class CLILauncher {
                             });
 
                             break;
-                        case "--loadConfigFile":
-                        	//Format command: --loadConfigFile=name of the config
-                        	//Example: ./gradlew run --args='--loadConfigFile=test'
+                        case "--load":
+                        	//Format command: --load=name of the config
+                        	//Example: ./gradlew run --args='--load=test'
                         	//this command loads the command "test" that is in ../config.txt
                         	return makeConfigFromCommandLineArgs(loadConfig(pValue));
                         	
-                        case "--justSaveConfigFile":
-                        	//Format command: --justSaveConfigFile=name of the config
-                        	//Example: ./gradlew run --args='--addPlugin=countCommits --justSaveConfigFile=test'
+                        case "--save":
+                        	//Format command: --save=name of the config
+                        	//Example: ./gradlew run --args='--addPlugin=countCommits --save=test'
                         	//this command saves "--addPlugin=countCommits" in ../config.txt
                         	String command = saveConfig(args,pValue);
                         	System.out.println("Command: " + command + ", is saved");
@@ -87,12 +87,26 @@ public class CLILauncher {
     private static String saveConfig(String[] args, String name) {
     	String content = "";
     	for(int i = 0; i < args.length; i++) {
-    		if(!args[i].equals("--justSaveConfigFile=" + name)) content += args[i] + " ";
+    		if(!args[i].equals("--save=" + name)) content += args[i] + " ";
     	}
-    	content = content.substring(0, content.length() - 1);
+    	if(content.length() != 0) {
+    		content = content.substring(0, content.length() - 1);
+    	}
     	try {
-    		FileWriter file = new FileWriter("../config.txt", true);
-    		file.write(name + " " + content + "\n");
+    		BufferedReader reader = new BufferedReader(new FileReader("../config.txt"));
+    		String line;
+    		String oldContent = "";
+    		while((line = reader.readLine()) != null) {
+    			Scanner sc = new Scanner(line);
+    			if(sc.hasNext()) {
+    				if(!sc.next().equals(name)) {
+    					oldContent += line + "\n";
+    				}
+    			}
+    			sc.close();
+    		}
+    		FileWriter file = new FileWriter("../config.txt");
+    		file.write(oldContent + name + " " + content + "\n");
     		file.close();
     		return content;
     	} catch(IOException e) {
@@ -114,7 +128,6 @@ public class CLILauncher {
     		}
     		if(line == null) return new String[0];
     		line = line.substring(name.length() + 1);
-    		System.out.println(line);
     		String[]args = line.split(" ");
     		return args;
     	}catch(IOException e) {
