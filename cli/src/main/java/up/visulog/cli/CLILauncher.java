@@ -99,9 +99,11 @@ public class CLILauncher {
     		while((line = reader.readLine()) != null) {
     			Scanner sc = new Scanner(line);
     			if(sc.hasNext()) {
-    				if(!sc.next().equals(name)) {
+    				String n = sc.next();
+    				if(!n.equals(name)) {
     					oldContent += line + "\n";
     				}
+    				else System.out.println("Warning old configuation :" + name + " overwitted");
     			}
     			sc.close();
     		}
