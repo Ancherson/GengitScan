@@ -46,6 +46,10 @@ public class CLILauncher {
                             });
                             if(pValue.equals("getMembers")) plugins.put("getMembers", new PluginConfig() {
                             });
+                            if(pValue.equals("countLinesAdded")) plugins.put("countLinesAdded", new PluginConfig() {
+                            });
+                            if(pValue.equals("countLinesDeleted")) plugins.put("countLinesDeleted", new PluginConfig() {
+                            });
                             break;
                         case "--loadConfigFile":
                             // TODO (load options from a file)

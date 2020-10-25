@@ -48,6 +48,8 @@ public class Analyzer {
             case "countMergeCommits" : return Optional.of(new CountMergeCommitsPerAuthorPlugin(config));
             case "countComments" : return Optional.of(new CountCommentsPerAuthorPlugin(config));
             case "getMembers" : return Optional.of(new GetMembersPerProjectPlugin(config));
+            case "countLinesAdded" : return Optional.of(new CountLinesPerAuthorPlugin(config, true));
+            case "countLinesDeleted" : return Optional.of(new CountLinesPerAuthorPlugin(config, false));
             default : return Optional.empty();
         }
     }
