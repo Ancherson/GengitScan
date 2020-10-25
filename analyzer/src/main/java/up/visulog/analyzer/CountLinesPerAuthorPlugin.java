@@ -25,6 +25,7 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 	        result.sortLineAdded = this.sortLineAdded;
 	        for (var commit : gitLog) {
 	        	// I decide to not count the line added/deleted from the merged commit
+	        	// because the person who merges a branch, collects all the lines added and deleted 
 	        	if(commit.mergedFrom == null) {
 	        		var oldNbLines = result.linesPerAuthor.getOrDefault(commit.author, 0);
 		        	Integer nbLines;
@@ -52,7 +53,7 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 	        private boolean sortLineAdded;
 	        
 
-	        Map<String, Integer> getCommitsPerAuthor() {
+	        Map<String, Integer> getLinesPerAuthor () {
 	            return linesPerAuthor;
 	        }
 
