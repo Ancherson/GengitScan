@@ -17,9 +17,21 @@ public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
 
     static Result processLog(List<Commit> gitLog) {
         var result = new Result();
+        Map<String,String>emailToName = new HashMap<String,String>();
         for (var commit : gitLog) {
-            var nb = result.mergeCommitsPerAuthor.getOrDefault(commit.author, 0);
-            if(commit.mergedFrom != null) result.mergeCommitsPerAuthor.put(commit.author, nb + 1);// If the commit is a merge commit, add one to the number of merge commits done by the author
+            if(commit.mergedFrom != null) { // If the commit is a merge commit, add one to the number of merge commits done by the author
+            	String[] author = commit.author.split(" ");
+            	String email = author[author.length - 1];
+            	if(emailToName.get(email) == null) {
+            		emailToName.put(email, commit.author);
+            	}
+            	var nb = result.mergeCommitsPerAuthor.getOrDefault(email, 0);
+            	result.mergeCommitsPerAuthor.put(email, nb + 1);
+            }
+        }
+        for(var e : emailToName.entrySet()) {
+        	int nbCommit = result.mergeCommitsPerAuthor.remove(e.getKey());
+        	result.mergeCommitsPerAuthor.put(e.getValue(), nbCommit);
         }
         return result;
     }

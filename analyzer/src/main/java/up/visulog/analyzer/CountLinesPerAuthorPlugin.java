@@ -23,17 +23,28 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 	    Result processLog(List<Commit> gitLog) {
 	        var result = new Result();
 	        result.sortLineAdded = this.sortLineAdded;
+	        Map<String,String>emailToName = new HashMap<String,String>();
 	        for (var commit : gitLog) {
 	        	// I decide to not count the line added/deleted from the merged commit
 	        	// because the person who merges a branch, collects all the lines added and deleted 
 	        	if(commit.mergedFrom == null) {
-	        		var oldNbLines = result.linesPerAuthor.getOrDefault(commit.author, 0);
+	        		String[] author = commit.author.split(" ");
+	            	String email = author[author.length - 1];
+	            	if(emailToName.get(email) == null) {
+	            		emailToName.put(email, commit.author);
+	            	}
+	        		var oldNbLines = result.linesPerAuthor.getOrDefault(email, 0);
 		        	Integer nbLines;
 		        	if(sortLineAdded) nbLines = oldNbLines + commit.linesAdded;
 		        	else nbLines = oldNbLines + commit.linesDeleted;
-		        	result.linesPerAuthor.put(commit.author, nbLines);
+		        	result.linesPerAuthor.put(email, nbLines);
 	        	}
+	        	
 	        }
+	        for(var e : emailToName.entrySet()) {
+             	int nbCommit = result.linesPerAuthor.remove(e.getKey());
+             	result.linesPerAuthor.put(e.getValue(), nbCommit);
+             }
 	        return result;
 	    }
 

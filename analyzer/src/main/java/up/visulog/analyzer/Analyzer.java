@@ -27,16 +27,26 @@ public class Analyzer {
         }
         // run all the plugins
         // TODO: try running them in parallel
+        ArrayList<Thread> threads = new ArrayList<Thread>();
         for (var plugin: plugins) {
         	//plugin implements the AnalyzerPlugin interface which inherits from Runnable
         	//To create a Thread, you need an object that implements Runnable
         	//A Thread runs autonomously, in parallel with the rest of the program
         	Thread t = new Thread(plugin);
-        	
+        	threads.add(t);  	
         	//Execute the plugin run method
         	t.start();
         }
-
+        
+        //We need to check if all the Thread are finished
+        //because the line "return new AnalyserResult ..." calls the function getResult(), 
+        //who calls run() and if run() hasn't finished there are two calls of run()
+        while(threads.size() != 0) {
+        	for(int i = threads.size() - 1; i >= 0; i--) {
+        		if(!threads.get(i).isAlive()) threads.remove(i);
+        	}
+        }
+        
         // store the results together in an AnalyzerResult instance and return it
         return new AnalyzerResult(plugins.stream().map(AnalyzerPlugin::getResult).collect(Collectors.toList()));
     }
