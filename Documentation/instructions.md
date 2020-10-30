@@ -171,13 +171,13 @@ Le résultat variera en fonction des arguments.
 
 ### Liste des arguments acceptés et leurs résultats
 
-1. Pour compter le nombre de commits de chaque auteur dans la branche actuelle du répertoire Git présent dans le dossier actuel (".")
+1. **Pour compter le nombre de commits de chaque auteur dans la branche actuelle du répertoire Git présent dans le dossier actuel (".")**
 
 ```
 ./gradlew run --args='. --addPlugin=countCommits'
 ```
 
-2. Pour compter le nombre de commits 'merge' par auteur
+2. **Pour compter le nombre de commits 'merge' par auteur**
 ```
 ./gradlew run --args='. --addPlugin=countMergeCommits'
 ```
@@ -200,11 +200,57 @@ Le résultat variera en fonction des arguments.
 ```
 
 
+- Linux :
+
+```
+sudo apt install curl
+
+./gradlew build
+```
+
+- MacOS
+
+```
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
+
+brew install curl
+
+./gradlew build
+```
+
+- La commande :
+
+```
+./gradlew run --args="--addPlugin=getMembers --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
+```
+
+
+4. **Pour avoir la liste des membres**
+
+- Linux :
+
+```
+sudo apt install curl
+
+./gradlew build
+```
+
+- MacOS
+
+```
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
+
+brew install curl
+
+./gradlew build
+```
+
+- La commande :
+
+```
+./gradlew run --args="--addPlugin=getMembers --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
+```
+
 Liste à compléter au fur et à mesure de l'avancée du projet et des fonctionnalités ajoutées...
-
-
-
-
-
 
 

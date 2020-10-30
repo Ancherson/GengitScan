@@ -49,6 +49,8 @@ public class Analyzer {
             case "countCommitsPerMonths" : return Optional.of(new CommitsPerDatePlugin(config));
             case "countCommitsPerDays" : return Optional.of(new CommitsPerDatePlugin(config, "days"));
             case "countCommitsPerWeeks" : return Optional.of(new CommitsPerDatePlugin(config, "weeks"));
+            case "countComments" : return Optional.of(new CountCommentsPerAuthorPlugin(config));
+            case "getMembers" : return Optional.of(new GetMembersPerProjectPlugin(config));
             default : return Optional.empty();
         }
     }

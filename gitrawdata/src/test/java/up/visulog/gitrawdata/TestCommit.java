@@ -7,6 +7,7 @@ import java.io.Reader;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -23,9 +24,9 @@ public class TestCommit {
         }
     }
     
-    /*@Test
+    @Test
     public void testParseLog() throws IOException, URISyntaxException {
-        var expectedUri = getClass().getClassLoader().getResource("expectedToString").toURI();
+        var expectedUri = getClass().getClassLoader().getResource("expected").toURI();
         var logUri = getClass().getClassLoader().getResource("git.log").toURI();
         try (var expectedReader =  Files.newBufferedReader(Paths.get(expectedUri))) {
             try (var logReader = Files.newBufferedReader(Paths.get(logUri))) {
@@ -34,7 +35,22 @@ public class TestCommit {
                 assertEquals(expected, log.toString());
             }
         }
-    }*/
+    }
+    
+    @Test
+    public void testGetNumberLines() {
+    	//Values collected on gitlab
+    	int[][]expectedLines = {{18,0},{30,11},{1,1},{1,3},{2,1},{854,2},{854,2},{10,7}};
+    	List<Commit> commits = Commit.parseLogFromCommand(Paths.get("../")); 
+    	int x = 0;
+    	for(int i = commits.size() - 1; i >= commits.size() - 8; i--) {
+    		String line = commits.get(i).getLinesToString();
+    		String expectedLine = expectedLines[x][0] + " , " + expectedLines[x][1];
+    		assertEquals(line, expectedLine);
+    		x++;
+    	}
+    	
+    }
 
 }
 
