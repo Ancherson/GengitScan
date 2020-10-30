@@ -58,48 +58,38 @@ public class CLILauncher {
                             // TODO: parse argument and make an instance of PluginConfig
 
                             // Let's just trivially do this, before the TODO is fixed:
-                            if (pValue.equals("countCommits")) plugins.put("countCommits", new PluginConfig() {
-                            });
-                            if (pValue.equals("countMergeCommits")) plugins.put("countMergeCommits", new PluginConfig() {
-                            });
-                            if (pValue.equals("countCommitsPerMonths")) plugins.put("countCommitsPerMonths", new PluginConfig() {
-                            });
-                            if (pValue.equals("countCommitsPerDays")) plugins.put("countCommitsPerDays", new PluginConfig() {
-                            });
-                            if (pValue.equals("countCommitsPerWeeks")) plugins.put("countCommitsPerWeeks", new PluginConfig() {
-                            });
-                            if (pValue.equals("countComments")){
-                                plugins.put("countComments", new PluginConfig() {
-                                });
-                                API = true;
-                            }
-                            if(pValue.equals("getMembers")){
-                                plugins.put("getMembers", new PluginConfig() {
-                                });
-                                API = true;
-                            }
-                            if(pValue.equals("countIssues")){
-                                plugins.put("countIssues", new PluginConfig() {
-                                });
-                                API = true;
-                            }
-                            if(pValue.equals("countLinesAdded")) plugins.put("countLinesAdded", new PluginConfig() {
-                            });
-                            if(pValue.equals("countLinesDeleted")) plugins.put("countLinesDeleted", new PluginConfig() {
-                            });
-                            break;
-                        case "--loadConfigFile":
-                            // TODO (load options from a file)
-                            break;
-                        case "--justSaveConfigFile":
-                            // TODO (save command line options to a file instead of running the analysis)
-                            break;
-                        case "--privateToken":
-                            pPrivateToken = pValue;
-                            break;
-                        case "--projectId":
-                            pProjectId = Integer.parseInt(pValue);
-                            break;
+                            	case "countCommits":
+                            		plugins.put("countCommits", new PluginConfig() {});
+                            		break;
+                            	case "countMergeCommits":
+                            		plugins.put("countMergeCommits", new PluginConfig() {});
+                            		break;
+                            	case "countComments":
+                            		plugins.put("countComments", new PluginConfig() {});
+                            		break;
+                            	case "getMembers":
+                            		plugins.put("getMembers", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerMonths":
+                            		plugins.put("countCommitsPerMonths", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerWeeks":
+                            		plugins.put("countCommitsPerWeeks", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerDays":
+                            		plugins.put("countCommitsPerDays", new PluginConfig() {});
+                            		break;
+                            	case "countIssues":
+                            		plugins.put("countIssues", new PluginConfig() {});
+                            		break;
+                            	case "countLinesDeleted":
+                            		plugins.put("countLinesDeleted", new PluginConfig() {});
+                            		break;
+                            	case "countLinesAdded":
+                            		plugins.put("countLinesAdded", new PluginConfig() {});
+                            		break;
+                        	}
+                        	break;
                         case "--load":
                         	//Format command: --load=name of the config
                         	//Example: ./gradlew run --args='--load=test'
@@ -112,7 +102,13 @@ public class CLILauncher {
                         	//this command saves "--addPlugin=countCommits" in ../config.txt
                         	String command = saveConfig(args,pValue);
                         	System.out.println("Command: " + command + ", is saved");
-                        	System.exit(0);
+                        	System.exit(0);	
+                        case "--privateToken":
+                            pPrivateToken = pValue;
+                            break;
+                        case "--projectId":
+                            pProjectId = Integer.parseInt(pValue);
+                            break;
                         default:
                             return Optional.empty();
                     }
