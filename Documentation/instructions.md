@@ -182,23 +182,14 @@ Le résultat variera en fonction des arguments.
 ./gradlew run --args='. --addPlugin=countMergeCommits'
 ```
 
-3. Pour compter le nombre de commits par mois
+3. **Pour compter le nombre de commits par date**
 ```
 ./gradlew run --args='. --addPlugin=countCommitsPerMonths'
-```
-
-
-4. Pour compter le nombre de commits par semaine
-```
 ./gradlew run --args='. --addPlugin=countCommitsPerWeeks'
-```
-
-
-5. Pour compter le nombre de commits par jour
-```
 ./gradlew run --args='. --addPlugin=countCommitsPerDays'
 ```
 
+4. **Pour avoir la liste des membres et avoir le nombre de comments par auteur**
 
 - Linux :
 
@@ -224,33 +215,19 @@ brew install curl
 ./gradlew run --args="--addPlugin=getMembers --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
 ```
 
-
-4. **Pour avoir la liste des membres**
-
-- Linux :
-
+5. **Avoir le nombre de lignes ajoutés et supprimés par date**
 ```
-sudo apt install curl
+./gradlew run --args='. --addPlugin=countLinesAddedPerMonths'
+./gradlew run --args='. --addPlugin=countLinesDeletedPerMonths'
 
-./gradlew build
-```
+./gradlew run --args='. --addPlugin=countLinesAddedPerWeeks'
+./gradlew run --args='. --addPlugin=countLinesDeletedPerWeeks'
 
-- MacOS
-
-```
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
-
-brew install curl
-
-./gradlew build
+./gradlew run --args='. --addPlugin=countLinesAddedPerDays'
+./gradlew run --args='. --addPlugin=countLinesDeletedPerDays'
 ```
 
-- La commande :
 
-```
-./gradlew run --args="--addPlugin=getMembers --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
-```
+
 
 Liste à compléter au fur et à mesure de l'avancée du projet et des fonctionnalités ajoutées...
-
-

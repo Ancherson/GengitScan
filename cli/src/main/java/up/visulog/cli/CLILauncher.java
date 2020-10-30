@@ -63,6 +63,18 @@ public class CLILauncher {
                                 });
                                 API = true;
                             }
+                            if (pValue.equals("countLinesAddedPerDays")) plugins.put("countLinesAddedPerDays", new PluginConfig() {
+                            });
+                            if (pValue.equals("countLinesDeletedPerDays")) plugins.put("countLinesDeletedPerDays", new PluginConfig() {
+                            });
+                            if (pValue.equals("countLinesAddedPerMonths")) plugins.put("countLinesAddedPerMonths", new PluginConfig() {
+                            });
+                            if (pValue.equals("countLinesDeletedPerMonths")) plugins.put("countLinesDeletedPerMonths", new PluginConfig() {
+                            });
+                            if (pValue.equals("countLinesAddedPerWeeks")) plugins.put("countLinesAddedPerWeeks", new PluginConfig() {
+                            });
+                            if (pValue.equals("countLinesDeletedPerWeeks")) plugins.put("countLinesDeletedPerWeeks", new PluginConfig() {
+                            });
                             break;
                         case "--loadConfigFile":
                             // TODO (load options from a file)
