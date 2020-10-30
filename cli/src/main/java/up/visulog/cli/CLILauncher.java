@@ -48,10 +48,21 @@ public class CLILauncher {
                             });
                             if (pValue.equals("countCommitsPerWeeks")) plugins.put("countCommitsPerWeeks", new PluginConfig() {
                             });
-                            if (pValue.equals("countComments")) plugins.put("countComments", new PluginConfig() {
-                            });
-                            if(pValue.equals("getMembers")) plugins.put("getMembers", new PluginConfig() {
-                            });
+                            if (pValue.equals("countComments")){
+                                plugins.put("countComments", new PluginConfig() {
+                                });
+                                API = true;
+                            }
+                            if(pValue.equals("getMembers")){
+                                plugins.put("getMembers", new PluginConfig() {
+                                });
+                                API = true;
+                            }
+                            if(pValue.equals("countIssues")){
+                                plugins.put("countIssues", new PluginConfig() {
+                                });
+                                API = true;
+                            }
                             break;
                         case "--loadConfigFile":
                             // TODO (load options from a file)
@@ -61,7 +72,6 @@ public class CLILauncher {
                             break;
                         case "--privateToken":
                             pPrivateToken = pValue;
-                            API = true;
                             break;
                         case "--projectId":
                             pProjectId = Integer.parseInt(pValue);
@@ -73,6 +83,9 @@ public class CLILauncher {
             } else {
                 gitPath = FileSystems.getDefault().getPath(arg);
             }
+        }
+        if(API && (pProjectId==-1 || pPrivateToken.equals(""))){
+            return Optional.empty();
         }
         return (API)?Optional.of(new Configuration(pPrivateToken,plugins,pProjectId)):Optional.of(new Configuration(gitPath, plugins));
     }

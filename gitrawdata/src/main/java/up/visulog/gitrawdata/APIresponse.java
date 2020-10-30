@@ -11,28 +11,28 @@ public class APIresponse {
     public APIresponse(){
     }
     public void createLogFileForCommits(){
-            Process process;
-            try {
-                //getting date and time of the API request
-                String out = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss").format(new Date());
-                //creating a json file
-                File jsonFile = new File("../GitLog/resultsCommit"+out+".json");
-                FileWriter writeJsonFile = new FileWriter("../GitLog/resultsCommit"+out+".json");
-                //Sending to GitLab API a request
-                process = Runtime.getRuntime().exec("curl --header \"PRIVATE-TOKEN: 1m1pdKszBNnTtCHS9KtS\" \"https://gaufre.informatique.univ-paris-diderot.fr/api/v4/projects/1618/repository/commits\"");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                String line;
-                //Writing in JSON file
-                while ((line = reader.readLine()) != null) {
-                    writeJsonFile.write(line);
-                }
-                //closing the file
-                writeJsonFile.close();
-
-            } catch (Exception e) {
-                e.printStackTrace();
+        Process process;
+        try {
+            //getting date and time of the API request
+            String out = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss").format(new Date());
+            //creating a json file
+            File jsonFile = new File("../GitLog/resultsCommit"+out+".json");
+            FileWriter writeJsonFile = new FileWriter("../GitLog/resultsCommit"+out+".json");
+            //Sending to GitLab API a request
+            process = Runtime.getRuntime().exec("curl --header \"PRIVATE-TOKEN: 1m1pdKszBNnTtCHS9KtS\" \"https://gaufre.informatique.univ-paris-diderot.fr/api/v4/projects/1618/repository/commits\"");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            //Writing in JSON file
+            while ((line = reader.readLine()) != null) {
+                writeJsonFile.write(line);
             }
+            //closing the file
+            writeJsonFile.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
     public void createLogFileForOneCommit(String id){
         Process process;
         try {
@@ -61,11 +61,11 @@ public class APIresponse {
             //creating a json file
             File jsonFile = new File("../GitLog/resultsIssues.json");
             FileWriter writeJsonFile = new FileWriter("../GitLog/resultsIssues.json");
-	    //Command to terminal
-	    String[] command = {"curl",
-				"--header",
-				"PRIVATE-TOKEN:"+privateToken,
-				"https://gaufre.informatique.univ-paris-diderot.fr/api/v4/projects/"+idProject+"/issues"};
+            //Command to terminal
+            String[] command = {"curl",
+                    "--header",
+                    "PRIVATE-TOKEN:"+privateToken,
+                    "https://gaufre.informatique.univ-paris-diderot.fr/api/v4/projects/"+idProject+"/issues?per_page=1000"};
             //Sending to GitLab API a request
             process = Runtime.getRuntime().exec(command);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -90,11 +90,11 @@ public class APIresponse {
             //creating a json file
             File jsonFile = new File("../GitLog/resultsIssue"+id+".json");
             FileWriter writeJsonFile = new FileWriter("../GitLog/resultsIssue"+id+".json");
-	    //Command to terminal
-	    String[] command = {"curl",
-				"--header",
-				"PRIVATE-TOKEN:"+privateToken,
-				"https://gaufre.informatique.univ-paris-diderot.fr/api/v4/projects/"+idProject+"/issues/"+id+"/discussions"};
+            //Command to terminal
+            String[] command = {"curl",
+                    "--header",
+                    "PRIVATE-TOKEN:"+privateToken,
+                    "https://gaufre.informatique.univ-paris-diderot.fr/api/v4/projects/"+idProject+"/issues/"+id+"/discussions?per_page=1000"};
             //Sending to GitLab API a request
             process = Runtime.getRuntime().exec(command);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -125,7 +125,7 @@ public class APIresponse {
             String[] command = {"curl",
                     "--header",
                     "PRIVATE-TOKEN:"+privateToken,
-                    "https://gaufre.informatique.univ-paris-diderot.fr/api/v4/projects/"+idProject+"/users"};
+                    "https://gaufre.informatique.univ-paris-diderot.fr/api/v4/projects/"+idProject+"/users?per_page=1000"};
             //Sending to GitLab API a request
             process = Runtime.getRuntime().exec(command);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
