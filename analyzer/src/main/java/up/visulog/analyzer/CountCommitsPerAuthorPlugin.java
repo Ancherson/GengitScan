@@ -17,9 +17,19 @@ public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
 
     static Result processLog(List<Commit> gitLog) {
         var result = new Result();
+        Map<String,String>emailToName = new HashMap<String,String>();
         for (var commit : gitLog) {
-            var nb = result.commitsPerAuthor.getOrDefault(commit.author, 0);
-            result.commitsPerAuthor.put(commit.author, nb + 1);
+        	String[] author = commit.author.split(" ");
+        	String email = author[author.length - 1];
+        	if(emailToName.get(email) == null) {
+        		emailToName.put(email, commit.author);
+        	}
+            var nb = result.commitsPerAuthor.getOrDefault(email, 0);
+            result.commitsPerAuthor.put(email, nb + 1);
+        }
+        for(var e : emailToName.entrySet()) {
+        	int nbCommit = result.commitsPerAuthor.remove(e.getKey());
+        	result.commitsPerAuthor.put(e.getValue(), nbCommit);
         }
         return result;
     }
