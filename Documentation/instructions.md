@@ -182,7 +182,23 @@ Le résultat variera en fonction des arguments.
 ./gradlew run --args='. --addPlugin=countMergeCommits'
 ```
 
-3. **Pour compter le nombre de commentaires par auteur**
+3. Pour compter le nombre de commits par mois
+```
+./gradlew run --args='. --addPlugin=countCommitsPerMonths'
+```
+
+
+4. Pour compter le nombre de commits par semaine
+```
+./gradlew run --args='. --addPlugin=countCommitsPerWeeks'
+```
+
+
+5. Pour compter le nombre de commits par jour
+```
+./gradlew run --args='. --addPlugin=countCommitsPerDays'
+```
+
 
 - Linux :
 

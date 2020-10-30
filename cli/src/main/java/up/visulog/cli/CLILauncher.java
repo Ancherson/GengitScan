@@ -42,6 +42,12 @@ public class CLILauncher {
                             });
                             if (pValue.equals("countMergeCommits")) plugins.put("countMergeCommits", new PluginConfig() {
                             });
+                            if (pValue.equals("countCommitsPerMonths")) plugins.put("countCommitsPerMonths", new PluginConfig() {
+                            });
+                            if (pValue.equals("countCommitsPerDays")) plugins.put("countCommitsPerDays", new PluginConfig() {
+                            });
+                            if (pValue.equals("countCommitsPerWeeks")) plugins.put("countCommitsPerWeeks", new PluginConfig() {
+                            });
                             if (pValue.equals("countComments")){
                                 plugins.put("countComments", new PluginConfig() {
                                 });
