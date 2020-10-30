@@ -66,9 +66,11 @@ public class CLILauncher {
                             		break;
                             	case "countComments":
                             		plugins.put("countComments", new PluginConfig() {});
+                            		API = true;
                             		break;
                             	case "getMembers":
                             		plugins.put("getMembers", new PluginConfig() {});
+                            		API = true;
                             		break;
                             	case "countCommitsPerMonths":
                             		plugins.put("countCommitsPerMonths", new PluginConfig() {});
@@ -81,6 +83,7 @@ public class CLILauncher {
                             		break;
                             	case "countIssues":
                             		plugins.put("countIssues", new PluginConfig() {});
+                            		API = true;
                             		break;
                             	case "countLinesDeleted":
                             		plugins.put("countLinesDeleted", new PluginConfig() {});
