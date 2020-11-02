@@ -96,24 +96,24 @@ public class CountLinesAddedOrDeletedPerDatePlugin implements AnalyzerPlugin {
         }
         
         //function which sort the lines Added/Deleted per months
-        public Map<Month, Integer> resultPerMonths() {
-        	Map<Month, Integer> res = new TreeMap<>();
+        public Map<LocalDate, Integer> resultPerMonths() {
+        	Map<LocalDate, Integer> res = new TreeMap<>();
         	for (var date : commitsPerDate.entrySet()) {
-	           	Month m = date.getKey().getMonth();
-	           	var nb = res.getOrDefault(m, 0);
-	           	res.put(m, nb + date.getValue());            
-	        }
+        		LocalDate m = LocalDate.of(date.getKey().getYear(), date.getKey().getMonth(), 1);
+            	var nb = res.getOrDefault(m, 0);
+            	res.put(m, nb + date.getValue());            
+            }
         	return res;
         }
         
         //function which sort the lines Added/Deleted per weeks
-        public Map<Integer, Integer> resultPerWeeks() {
-        	Map<Integer, Integer> res = new TreeMap<>();
+        public Map<String, Integer> resultPerWeeks() {
+        	Map<String, Integer> res = new TreeMap<>();
         	for (var date : commitsPerDate.entrySet()) {
-	           	int m = date.getKey().getDayOfYear()/7;
-	           	var nb = res.getOrDefault(m, 0);
-	           	res.put(m, nb + date.getValue());
-        	}
+            	String m = Integer.toString(date.getKey().getYear()) + " Week " + Integer.toString(date.getKey().getDayOfYear()/7);
+            	var nb = res.getOrDefault(m, 0);
+            	res.put(m, nb + date.getValue());            
+            }
         	return res;
         }
         
@@ -138,17 +138,17 @@ public class CountLinesAddedOrDeletedPerDatePlugin implements AnalyzerPlugin {
         	//display the commits (or lines added/deleted) by the way of sorting
         	if(this.howToSort.equals("days")) {
         		for(var item : commitsPerDate.entrySet()) {
-        			s += "<li>" + item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() + ": " + item.getValue() + "</li>";
+        			s += "<li>" + item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() +  " " + item.getKey().getYear() + ": " + item.getValue() + "</li>";
         		}
         	} else if(this.howToSort.equals("weeks")) {
-        		Map<Integer, Integer> res = resultPerWeeks();
+        		Map<String, Integer> res = resultPerWeeks();
         		for(var item : res.entrySet()) {
-        			s += "<li> Week " + item.getKey() + " : " + item.getValue() + "</li>";
+        			s += "<li> Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ") : " + item.getValue() + "</li>";
         		}
         	} else {
-        		Map<Month, Integer> res = resultPerMonths();
+        		Map<LocalDate, Integer> res = resultPerMonths();
         		for(var item : res.entrySet()) {
-        			s += "<li>" + item.getKey() + ": " + item.getValue() + "</li>";
+        			s += "<li>"  + item.getKey().getMonth().name() + " " + item.getKey().getYear() + ": " + item.getValue() + "</li>";
         		}
         	}
         	s += "</ul></div>";
