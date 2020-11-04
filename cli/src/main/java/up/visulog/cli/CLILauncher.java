@@ -58,7 +58,8 @@ public class CLILauncher {
                             // TODO: parse argument and make an instance of PluginConfig
 
                             // Let's just trivially do this, before the TODO is fixed:
-                            	case "countCommits":
+                            
+                                case "countCommits":
                             		plugins.put("countCommits", new PluginConfig() {});
                             		break;
                             	case "countMergeCommits":
@@ -91,8 +92,32 @@ public class CLILauncher {
                             	case "countLinesAdded":
                             		plugins.put("countLinesAdded", new PluginConfig() {});
                             		break;
+                            	case "countLinesAddedPerDays":
+                            	     plugins.put("countLinesAddedPerDays", new PluginConfig() {});
+                            	     break;
+                            	case "countLinesAddedPerWeeks":
+                            	     plugins.put("countLinesAddedPerWeeks", new PluginConfig() {});
+                            	     break;
+                            	case "countLinesAddedPerMonths":
+                            	     plugins.put("countLinesAddedPerMonths", new PluginConfig() {});
+                            	     break;
+                            	case "countLinesDeletedPerDays":
+                            	     plugins.put("countLinesDeletedPerDays", new PluginConfig() {});
+                            	     break;
+                            	case "countLinesDeletedPerWeeks":
+                            	     plugins.put("countLinesDeletedPerWeeks", new PluginConfig() {});
+                            	     break;
+                            	case "countLinesDeletedPerMonths":
+                            	     plugins.put("countLinesDeletedPerMonths", new PluginConfig() {});
+                            	     break;
                         	}
                         	break;
+                        case "--loadConfigFile":
+                            // TODO (load options from a file)
+                            break;
+                        case "--justSaveConfigFile":
+                            // TODO (save command line options to a file instead of running the analysis)
+                            break;
                         case "--load":
                         	//Format command: --load=name of the config
                         	//Example: ./gradlew run --args='--load=test'

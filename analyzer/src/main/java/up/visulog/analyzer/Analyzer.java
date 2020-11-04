@@ -62,6 +62,12 @@ public class Analyzer {
             case "countComments" : return Optional.of(new CountCommentsPerAuthorPlugin(config));
             case "getMembers" : return Optional.of(new GetMembersPerProjectPlugin(config));
             case "countIssues" : return Optional.of(new CountIssuesPerMemberPlugin(config));
+            case "countLinesAddedPerDays" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "days", true));
+            case "countLinesDeletedPerDays" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "days", false));
+            case "countLinesAddedPerMonths" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "months", true));
+            case "countLinesDeletedPerMonths" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "months", false));
+            case "countLinesAddedPerWeeks" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "weeks", true));
+            case "countLinesDeletedPerWeeks" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "weeks", false));
             case "countLinesAdded" : return Optional.of(new CountLinesPerAuthorPlugin(config, true));
             case "countLinesDeleted" : return Optional.of(new CountLinesPerAuthorPlugin(config, false));
             default : return Optional.empty();
