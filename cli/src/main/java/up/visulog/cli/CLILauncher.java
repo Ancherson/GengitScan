@@ -131,7 +131,6 @@ public class CLILauncher {
                         	String command = saveConfig(args,pValue);
                         	System.out.println("Command: " + command + ", is saved");
                         	System.exit(0);	
->>>>>>> cli/src/main/java/up/visulog/cli/CLILauncher.java
                         case "--privateToken":
                             pPrivateToken = pValue;
                             break;
