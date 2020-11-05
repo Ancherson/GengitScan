@@ -65,6 +65,7 @@ public class CLILauncher {
                                 case "countCommitsForAllBranchs":
                             		plugins.put("countCommitsForAllBranchs", new PluginConfig() {});
                             		break;
+                            		
                             	case "countMergeCommits":
                             		plugins.put("countMergeCommits", new PluginConfig() {});
                             		break;
@@ -76,6 +77,7 @@ public class CLILauncher {
                             		plugins.put("getMembers", new PluginConfig() {});
                             		API = true;
                             		break;
+                            		
                             	case "countCommitsPerMonths":
                             		plugins.put("countCommitsPerMonths", new PluginConfig() {});
                             		break;
@@ -94,6 +96,7 @@ public class CLILauncher {
                             	case "countCommitsPerDaysForAllBranchs":
                             		plugins.put("countCommitsPerDaysForAllBranchs", new PluginConfig() {});
                             		break;
+                            		
                             	case "countIssues":
                             		plugins.put("countIssues", new PluginConfig() {});
                             		API = true;
@@ -111,7 +114,6 @@ public class CLILauncher {
                             	case "countLinesAddedForAllBranchs":
                             		plugins.put("countLinesAddedForAllBranchs", new PluginConfig() {});
                             		break;
-           
                             		
                             	case "countLinesAddedPerDays":
                             	     plugins.put("countLinesAddedPerDays", new PluginConfig() {});
@@ -131,10 +133,6 @@ public class CLILauncher {
                             	case "countLinesAddedPerMonthsForAllBranchs":
                            	     plugins.put("countLinesAddedPerMonthsForAllBranchs", new PluginConfig() {});
                            	     break;
-                           	     
-                           	     
-                           	     
-                           	     
                             	case "countLinesDeletedPerDays":
                             	     plugins.put("countLinesDeletedPerDays", new PluginConfig() {});
                             	     break;

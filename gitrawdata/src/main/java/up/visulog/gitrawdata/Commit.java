@@ -102,11 +102,6 @@ public class Commit {
     	}
         return getNumberLines(gitPath,parseLog(reader));
     }
-    
-    public static List<Commit> parseLogFromCommand(Path gitPath) {
-    	BufferedReader reader = command(gitPath, "git", "log");
-        return getNumberLines(gitPath,parseLog(reader));
-    }
 
     public static List<Commit> parseLog(BufferedReader reader) {
         var result = new ArrayList<Commit>();
