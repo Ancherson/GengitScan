@@ -30,6 +30,7 @@ public class Commit {
         this.mergedFrom = mergedFrom;
     }
     
+    //This function counts the number of lines per Author
     public static HashMap<String, Integer> countLinesContribution(Path path) {
     	HashMap<String, Integer> tot = new HashMap<String, Integer>();
     	BufferedReader b = command(path, "git", "ls-files", "--exclude-standard");
@@ -52,6 +53,7 @@ public class Commit {
     	return tot;
     }
     
+    //This function parses the results of the command git blame
     public static HashMap<String, Integer> parseLinesContribution(BufferedReader b, String file) {
     	HashMap<String, Integer> hm = new HashMap<String, Integer>();
     	String line;
