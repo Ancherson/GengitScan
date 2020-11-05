@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -27,6 +28,30 @@ public class Commit {
         this.date = date;
         this.description = description;
         this.mergedFrom = mergedFrom;
+    }
+    
+    public static HashMap<String, Integer> parseLinesContribution(BufferedReader b, String file) {
+    	HashMap<String, Integer> hm = new HashMap<String, Integer>();
+    	String line;
+    	try {
+			while((line = b.readLine()) != null) {
+				Scanner sc = new Scanner(line);
+				if(sc.hasNext()) {
+					sc.next();
+					if(sc.hasNext()) {
+						String email = sc.next();
+						if(!(email.startsWith("(<") && email.endsWith(">"))) return hm;
+						email = email.substring(1);
+						
+						Integer nb = hm.getOrDefault(email, 0);
+						hm.put(email, nb + 1);
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	return hm;
     }
     
     //this function execute the command args from directory whose path is "path"
