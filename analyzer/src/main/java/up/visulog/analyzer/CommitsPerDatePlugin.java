@@ -15,16 +15,13 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
     private final Configuration configuration;
     private static String howToSort = "months"; //the plugin sort commits per months, this is a default value 
     private Result result;
+    private boolean allBranchs;
 
-    
-    public CommitsPerDatePlugin(Configuration generalConfiguration) {
-        this.configuration = generalConfiguration;
-    }
-    
     //if you want to change the kind of sort, you can use other sort of spell
-    public CommitsPerDatePlugin(Configuration generalConfiguration, String howToSort) {
+    public CommitsPerDatePlugin(Configuration generalConfiguration, String howToSort, boolean allBranchs) {
         this.configuration = generalConfiguration;
         this.howToSort = howToSort;
+        this.allBranchs = allBranchs;
     }
 
     //Sort commits per month and per date
@@ -47,7 +44,7 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
     //function which executes the plugin
     @Override
     public void run() {
-        result = processLog(Commit.parseLogFromCommand(configuration.getGitPath()));
+        result = processLog(Commit.parseLogFromCommand(configuration.getGitPath(), allBranchs));
     }
 
     //function which returns the results of the analysis

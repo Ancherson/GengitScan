@@ -33,7 +33,7 @@ public class TestCountLinesPerAuthorPlugin {
 		L.add(c5);
 		L.add(c6);
 		
-		var plugin = new CountLinesPerAuthorPlugin(null, true);
+		var plugin = new CountLinesPerAuthorPlugin(null, true, false);
 		Result result = plugin.processLog(L);
 		
 		String expected = "{Author 2=10, Author 1=17, Author 3=6}";
