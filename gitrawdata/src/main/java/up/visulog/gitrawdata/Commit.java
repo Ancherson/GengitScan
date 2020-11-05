@@ -30,6 +30,28 @@ public class Commit {
         this.mergedFrom = mergedFrom;
     }
     
+    public static HashMap<String, Integer> countLinesContribution(Path path) {
+    	HashMap<String, Integer> tot = new HashMap<String, Integer>();
+    	BufferedReader b = command(path, "git", "ls-files", "--exclude-standard");
+    	String line;
+    	try {
+			while((line = b.readLine()) != null) {
+				BufferedReader reader = command(path, "git", "blame", "-e", line);
+				var result = parseLinesContribution(reader, line);
+				for(var ass : result.entrySet()) {
+					String author = ass.getKey();
+					Integer nb = ass.getValue();
+					Integer oldNb = tot.getOrDefault(author, 0);
+					tot.put(author, nb + oldNb);
+				}
+			}
+    		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	return tot;
+    }
+    
     public static HashMap<String, Integer> parseLinesContribution(BufferedReader b, String file) {
     	HashMap<String, Integer> hm = new HashMap<String, Integer>();
     	String line;
