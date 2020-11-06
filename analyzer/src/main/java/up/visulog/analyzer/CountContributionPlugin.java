@@ -16,23 +16,39 @@ public class CountContributionPlugin implements AnalyzerPlugin{
 	        this.configuration = generalConfiguration;
 	    }
 	    
-	    public HashMap<String, String> getName(HashMap<String, Integer>hm) {
+	    public HashMap<String, String> getName() {
 	    	List<Commit> commits = Commit.parseLogFromCommand(configuration.getGitPath());
 	    	HashMap<String, String>emailToName = new HashMap<String, String>();
 	    	
+	    	for(var commit : commits) {
+	    		String[]author = commit.author.split(" ");
+	    		String email = author[author.length - 1];
+	    		if(emailToName.get(email) == null) {
+	    			emailToName.put(email, commit.author);
+	    		}
+	    	}
 	    	
 	    	return emailToName;
 	    }
 
-	    public Result processLog(List<Commit> gitLog) {
+	    public Result processLog(HashMap<String, Integer>LinesPerEmail) {
 	        var result = new Result();
+	        
+	        var emailToName = getName();
+	        HashMap<String, Integer>LinesPerName = new HashMap<String, Integer>();
+	        for(var ass : emailToName.entrySet()) {
+	        	Integer lines = LinesPerEmail.get(ass.getKey());
+	        	LinesPerName.put(ass.getValue(), lines);
+	        }
+	        
+	        System.out.println(LinesPerName);
 	        
 	        return result;
 	    }
 
 	    @Override
 	    public void run() {
-	        result = processLog(Commit.parseLogFromCommand(configuration.getGitPath()));
+	        result = processLog(Commit.countLinesContribution(configuration.getGitPath()));
 	    }
 
 	    @Override

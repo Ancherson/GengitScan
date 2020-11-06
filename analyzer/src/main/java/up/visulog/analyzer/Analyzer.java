@@ -70,6 +70,7 @@ public class Analyzer {
             case "countLinesDeletedPerWeeks" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "weeks", false));
             case "countLinesAdded" : return Optional.of(new CountLinesPerAuthorPlugin(config, true));
             case "countLinesDeleted" : return Optional.of(new CountLinesPerAuthorPlugin(config, false));
+            case "countContribution" : return Optional.of(new CountContributionPlugin(config));
             default : return Optional.empty();
         }
     }

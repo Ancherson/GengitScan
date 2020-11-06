@@ -7,7 +7,7 @@ import up.visulog.gitrawdata.Commit;
 
 // a library that allows you to read an inputReader (for example an FileReader or an InputStreamReader)
 import java.io.BufferedReader;
-
+import java.io.FileNotFoundException;
 //a library that allows you to read a File, creates an FileReader 
 //A FileReader alone is useless, we need to use it in a BufferedReader
 import java.io.FileReader;
@@ -111,14 +111,12 @@ public class CLILauncher {
                             	case "countLinesDeletedPerMonths":
                             	     plugins.put("countLinesDeletedPerMonths", new PluginConfig() {});
                             	     break;
+                            	case "countContribution":
+                            		plugins.put("countContribution", new PluginConfig() {});
+                            		break;
                         	}
                         	break;
-                        case "--loadConfigFile":
-                            // TODO (load options from a file)
-                            break;
-                        case "--justSaveConfigFile":
-                            // TODO (save command line options to a file instead of running the analysis)
-                            break;
+   
                         case "--load":
                         	//Format command: --load=name of the config
                         	//Example: ./gradlew run --args='--load=test'
