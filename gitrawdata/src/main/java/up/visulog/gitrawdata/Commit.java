@@ -38,7 +38,7 @@ public class Commit {
     	try {
 			while((line = b.readLine()) != null) {
 				BufferedReader reader = command(path, "git", "blame", "-e", line);
-				var result = parseLinesContribution(reader, line);
+				var result = parseLinesContribution(reader);
 				for(var ass : result.entrySet()) {
 					String author = ass.getKey();
 					Integer nb = ass.getValue();
@@ -54,7 +54,7 @@ public class Commit {
     }
     
     //This function parses the results of the command git blame
-    public static HashMap<String, Integer> parseLinesContribution(BufferedReader b, String file) {
+    public static HashMap<String, Integer> parseLinesContribution(BufferedReader b) {
     	HashMap<String, Integer> hm = new HashMap<String, Integer>();
     	String line;
     	try {
