@@ -41,7 +41,7 @@ public class TestCommit {
     public void testGetNumberLines() {
     	//Values collected on gitlab
     	int[][]expectedLines = {{18,0},{30,11},{1,1},{1,3},{2,1},{854,2},{854,2},{10,7}};
-    	List<Commit> commits = Commit.parseLogFromCommand(Paths.get("../")); 
+    	List<Commit> commits = Commit.parseLogFromCommand(Paths.get("../"), false); 
     	int x = 0;
     	for(int i = commits.size() - 1; i >= commits.size() - 8; i--) {
     		String line = commits.get(i).getLinesToString();
