@@ -35,13 +35,23 @@ public class CountContributionPlugin implements AnalyzerPlugin{
 	        var result = new Result();
 	        
 	        var emailToName = getName();
-	        HashMap<String, Integer>LinesPerName = new HashMap<String, Integer>();
+	        double tot = 0;
 	        for(var ass : emailToName.entrySet()) {
-	        	Integer lines = LinesPerEmail.get(ass.getKey());
-	        	LinesPerName.put(ass.getValue(), lines);
+	        	double lines;
+	        	Integer l = LinesPerEmail.get(ass.getKey());
+	        	if(l == null) lines = 0;
+	        	else lines = l;
+	        	result.contributionPerAuthor.put(ass.getValue(), lines);
+	        	tot += lines;
 	        }
 	        
-	        System.out.println(LinesPerName);
+	        
+	        for(var ass : result.contributionPerAuthor.entrySet()) {
+	        	double percent = (ass.getValue() / tot) * 100;
+	        	ass.setValue(percent);
+	        }
+	       
+	        //System.out.println(LinesPerName);
 	        
 	        return result;
 	    }
@@ -58,9 +68,9 @@ public class CountContributionPlugin implements AnalyzerPlugin{
 	    }
 
 	    static class Result implements AnalyzerPlugin.Result {
-	        private final Map<String, Integer> contributionPerAuthor = new HashMap<>();
+	        private final Map<String,Double> contributionPerAuthor = new HashMap<>();
 
-	        Map<String, Integer> getCommitsPerAuthor() {
+	        Map<String, Double> getCommitsPerAuthor() {
 	            return contributionPerAuthor;
 	        }
 
@@ -73,7 +83,17 @@ public class CountContributionPlugin implements AnalyzerPlugin{
 	        public String getResultAsHtmlDiv() {
 	            StringBuilder html = new StringBuilder("<div>Contribution per author: <ul>");
 	            for (var item : contributionPerAuthor.entrySet()) {
-	                html.append("<li>").append(item.getKey()).append(": ").append(item.getValue()).append("</li>");
+	            	String percent;
+	            	Double value = item.getValue();
+	            	if(value == 0.0)
+	            		percent = String.valueOf(value).substring(0,3);
+	            	else if(value < 10)
+	            		percent = String.valueOf(value).substring(0,4);
+	            	else 
+	            		percent = String.valueOf(value).substring(0,5);
+	            	percent += " %";
+	            	
+	                html.append("<li>").append(item.getKey()).append(": ").append(percent).append("</li>");
 	            }
 	            html.append("</ul></div>");
 	            return html.toString();
