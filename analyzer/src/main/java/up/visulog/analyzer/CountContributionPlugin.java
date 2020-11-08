@@ -31,10 +31,9 @@ public class CountContributionPlugin implements AnalyzerPlugin{
 	    	return emailToName;
 	    }
 
-	    public Result processLog(HashMap<String, Integer>LinesPerEmail) {
+	    public Result processLog(HashMap<String, Integer>LinesPerEmail, HashMap<String, String>emailToName) {
 	        var result = new Result();
-	        
-	        var emailToName = getName();
+	        ;
 	        double tot = 0;
 	        for(var ass : emailToName.entrySet()) {
 	        	double lines;
@@ -58,7 +57,7 @@ public class CountContributionPlugin implements AnalyzerPlugin{
 
 	    @Override
 	    public void run() {
-	        result = processLog(Commit.countLinesContribution(configuration.getGitPath()));
+	        result = processLog(Commit.countLinesContribution(configuration.getGitPath()), getName());
 	    }
 
 	    @Override
