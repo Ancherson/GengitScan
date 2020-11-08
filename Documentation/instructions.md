@@ -235,7 +235,7 @@ brew install curl
 
 7. **Avoir la contribution finale de chacun**
 ```
-./gradlew run --args='. --addPlugin=countContribution'
+./gradlew run --args='--addPlugin=countContribution'
 ```
 
 Liste à compléter au fur et à mesure de l'avancée du projet et des fonctionnalités ajoutées...
