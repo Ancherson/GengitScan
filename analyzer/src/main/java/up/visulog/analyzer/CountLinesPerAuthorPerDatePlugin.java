@@ -223,40 +223,40 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         	
         	//check if the user wants the number of the lines added/deleted or the number of commits
         	if(lines) {
-        		s += "<div>Number of lines added of commits per " + this.howToSort + "and per author : <ul>\n";
+        		s += "<div>Number of lines added of commits per " + this.howToSort + "and per author : <ul><br>";
         	} else {
-        		s += "<div>Number of lines deleted per " + this.howToSort + "and per author : <ul>\n";
+        		s += "<div>Number of lines deleted per " + this.howToSort + "and per author : <ul><br>";
         	}
         	
         	//display the commits (or lines added/deleted) by the way of sorting
         	if(this.howToSort.equals("days")) {
         		for(var item : linesPerAuthorPerDate.entrySet()) {
-        			s += "<ul>" + item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() +  " " + item.getKey().getYear() + "\n";
+        			s += "<ul>" + item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() +  " " + item.getKey().getYear() + "<br>";
         			Map<String, Integer> lines = item.getValue();
             		for(var l : lines.entrySet()) {
-            			s += "<li>" + l.getKey() + " : " + l.getValue() + "</li>\n";
+            			s += "<li>" + l.getKey() + " : " + l.getValue() + "</li><br>";
             		}
-            		s+= "</ul>\n\n";
+            		s+= "</ul><br>";
         		}
         	} else if(this.howToSort.equals("weeks")) {
         		Map<String, Map<String, Integer>> res = resultPerWeeks();
         		for(var item : res.entrySet()) {
-        			s += "<ul>Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")\n";
+        			s += "<ul>Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")<br>";
         			Map<String, Integer> lines = item.getValue();
             		for(var l : lines.entrySet()) {
-            			s += "<li>" + l.getKey() + " : " + l.getValue() + "</li>\n";
+            			s += "<li>" + l.getKey() + " : " + l.getValue() + "</li><br>";
             		}
-            		s+= "</ul>\n\n";
+            		s+= "</ul><br>";
         		}
         	} else {
         		Map<LocalDate, Map<String, Integer>> res = resultPerMonths();
         		for(var item : res.entrySet()) {
-        			s += "<ul>" + item.getKey().getMonth().name() + " " + item.getKey().getYear() + "\n";
+        			s += "<ul>" + item.getKey().getMonth().name() + " " + item.getKey().getYear() + "<br>";
         			Map<String, Integer> lines = item.getValue();
             		for(var l : lines.entrySet()) {
             			s += "<li>" + l.getKey() + " : " + l.getValue() + "</li>\n";
             		}
-            		s+= "</ul>\n\n";
+            		s+= "</ul><br>";
         		}
         	}
         	s += "</ul></div>";
