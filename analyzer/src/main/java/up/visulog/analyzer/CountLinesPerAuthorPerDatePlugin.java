@@ -38,16 +38,13 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     static Result processLog(List<Commit> gitLog) {
     	var result = new Result();
     	result.setHowToSort(howToSort);
-    	result.setLines(lines);
-    	
+    	result.setLines(lines);	
     	Map<LocalDate, List<Commit>> commitsPerDate = sortCommitsPerDays(gitLog);
-    	
     	for(var commitsPerDays : commitsPerDate.entrySet()) {
     		LocalDate m = commitsPerDays.getKey();
     		Map<String, Integer> linesAddedDeleted = linesPerAuthor(commitsPerDays.getValue());
     		result.linesPerAuthorPerDate.put(m, linesAddedDeleted);
     	}
-    	
     	return result;
     }
     
@@ -60,7 +57,6 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         }
     	return res;
     }
-    
     
     static List<Commit> makeCommitsList(LocalDate m, List<Commit> gitLog) {
     	List<Commit> list = new LinkedList<>();
@@ -76,26 +72,21 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     // to sort commits by author, it adds the added or deleted lines
     static Map<String, Integer> linesPerAuthor(List<Commit> listCommits) {
     	Map<String, Integer> res = new HashMap<>();
-        Map<String,String> emailToName = new HashMap<String,String>();
         for (var commit : listCommits) {
-        	if(commit.mergedFrom == null) {
-        		String[] author = commit.author.split(" ");
-            	String email = author[author.length-1];
-            	if(emailToName.get(email) == null) {
-            		emailToName.put(email, commit.author);
-            	}
-        		var oldNbLines = res.getOrDefault(email, 0);
-	        	Integer nbLines;
-	        	if(lines) nbLines = oldNbLines + commit.linesAdded;
-	        	else nbLines = oldNbLines + commit.linesDeleted;
-	        	res.put(email, nbLines);
-        	}
-        	
+    		//The plugin don't count the line added/deleted from the merged commit
+        	//because the lines will added and deleted twice
+    		if(commit.mergedFrom == null) {
+	        	String m = commit.author;
+	        	var oldNbLines = res.getOrDefault(m, 0);
+	        	int nbLines = 0;
+	        	if(lines) {
+	        		nbLines = oldNbLines + commit.linesAdded;
+	        	} else {
+	        		nbLines = oldNbLines + commit.linesDeleted;
+	        	}
+	        	res.put(m, nbLines);
+    		}
         }
-        for(var e : emailToName.entrySet()) {
-         	int nbCommit = res.remove(e.getKey());
-         	res.put(e.getValue(), nbCommit);
-         }
         return res;
     }
     
@@ -113,7 +104,6 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     }    
     
     
-  
     static class Result implements AnalyzerPlugin.Result {
         private Map<LocalDate, Map<String, Integer>> linesPerAuthorPerDate = new TreeMap<>();
         private String howToSort = "month";
@@ -127,8 +117,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         // function which set the variable lines
         public void setLines(boolean lines) {
         	this.lines = lines;
-        }
-        
+        }    
         
         // if you want to test the plugin, here s a function to print the map linesPerAuthorPerDate
         public void afficher() {
@@ -147,14 +136,13 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
             return linesPerAuthorPerDate;
         }
         
-     
         //function which sort the lines Added/Deleted per months
         public Map<LocalDate, Map<String, Integer>> resultPerMonths() {
         	Map<LocalDate, Map<String, Integer>> res = new TreeMap<>();
         	for(var date : linesPerAuthorPerDate.entrySet()) {
-        		LocalDate m = LocalDate.of(date.getKey().getYear(), date.getKey().getMonth(), 1);
-        		
+        		LocalDate m = LocalDate.of(date.getKey().getYear(), date.getKey().getMonth(), 1);		
         		Map<String, Integer> res2 = authorsAndMonths(m);
+        		res2 = sameAuthor(res2);
         		res.put(m, res2);
         	}
         	return res;
@@ -162,7 +150,6 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         
         public Map<String, Integer> authorsAndMonths(LocalDate months) {
         	Map<String, Integer> res = new HashMap<>();
-        	
         	for(var date : linesPerAuthorPerDate.entrySet()) {
         		LocalDate m = LocalDate.of(date.getKey().getYear(), date.getKey().getMonth(), 1);
         		if(months.equals(m)) {
@@ -176,14 +163,33 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         	return res;
         }
         
+     // to sort commits by author, it adds the added or deleted lines
+        static Map<String, Integer> sameAuthor(Map<String, Integer> listCommits) {
+        	Map<String, Integer> res = new HashMap<>();
+            Map<String,String> emailToName = new HashMap<String,String>();
+            for (var commit : listCommits.entrySet()) {
+            	String[] author = commit.getKey().split(" ");
+                String email = author[author.length-1];
+                if(emailToName.get(email) == null) {
+                	emailToName.put(email, commit.getKey());
+                }
+            	var lines = res.getOrDefault(email, 0);
+    	    	res.put(email, lines + commit.getValue());
+            }
+            for(var e : emailToName.entrySet()) {
+             	int nbCommit = res.remove(e.getKey());
+             	res.put(e.getValue(), nbCommit);
+             }
+            return res;
+        }
+        
         // function which sort the lines Added/Deleted per weeks
         public Map<String, Map<String, Integer>> resultPerWeeks() {
         	Map<String, Map<String, Integer>> res = new TreeMap<>();
-        	
         	for(var date : linesPerAuthorPerDate.entrySet()) {
-        		String m = Integer.toString(date.getKey().getYear()) + " Week " + Integer.toString(date.getKey().getDayOfYear()/7);
-        		
+        		String m = Integer.toString(date.getKey().getYear()) + " Week " + Integer.toString(date.getKey().getDayOfYear()/7);	
         		Map<String, Integer> res2 = authorAndWeeks(m);
+        		res2 = sameAuthor(res2);
         		res.put(m, res2);
         	}
         	return res;
@@ -191,7 +197,6 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         
         public Map<String, Integer> authorAndWeeks(String week) {
         	Map<String, Integer> res = new HashMap<>();
-        	
         	for(var date : linesPerAuthorPerDate.entrySet()) {
         		String m = Integer.toString(date.getKey().getYear()) + " Week " + Integer.toString(date.getKey().getDayOfYear()/7);
         		if(week.equals(m)) {

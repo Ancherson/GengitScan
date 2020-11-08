@@ -89,13 +89,13 @@ public class Analyzer {
             case "countLinesDeletedForAllBranchs" : return Optional.of(new CountLinesPerAuthorPlugin(config, false, true));
             
             case "countLinesAddedPerAuthorPerDays": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "days", true, false));
-            case "countLinesAddedPerAuthorPerDaysForAllBranchs": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "weeks", true, true));
+            case "countLinesAddedPerAuthorPerDaysForAllBranchs": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "days", true, true));
             case "countLinesAddedPerAuthorPerWeeks": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "weeks", true, false));
             case "countLinesAddedPerAuthorPerWeeksForAllBranchs": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "weeks", true, true));
             case "countLinesAddedPerAuthorPerMonths": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "months", true, false));
             case "countLinesAddedPerAuthorPerMonthsForAllBranchs": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "months", true, true));
             case "countLinesDeletedPerAuthorPerDays": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "days", false, false));
-            case "countLinesDeletedPerAuthorPerDaysForAllBranchs": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "weeks", false, true));
+            case "countLinesDeletedPerAuthorPerDaysForAllBranchs": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "days", false, true));
             case "countLinesDeletedPerAuthorPerWeeks": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "weeks", false, false));
             case "countLinesDeletedPerAuthorPerWeeksForAllBranchs": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "weeks", false, true));
             case "countLinesDeletedPerAuthorPerMonths": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "months", false, false));
