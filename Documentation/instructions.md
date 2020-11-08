@@ -227,7 +227,15 @@ brew install curl
 ./gradlew run --args='. --addPlugin=countLinesDeletedPerDays'
 ```
 
+6. **Avoir le nombre de lignes ajoutés et supprimés par auteur**
+```
+./gradlew run --args='. --addPlugin=countLinesAdded'
+./gradlew run --args='. --addPlugin=countLinesDeleted'
+```
 
-
+7. **Avoir la contribution finale de chacun**
+```
+./gradlew run --args='. --addPlugin=countContribution'
+```
 
 Liste à compléter au fur et à mesure de l'avancée du projet et des fonctionnalités ajoutées...
