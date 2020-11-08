@@ -254,7 +254,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         			s += "<ul>" + item.getKey().getMonth().name() + " " + item.getKey().getYear() + "<br>";
         			Map<String, Integer> lines = item.getValue();
             		for(var l : lines.entrySet()) {
-            			s += "<li>" + l.getKey() + " : " + l.getValue() + "</li>\n";
+            			s += "<li>" + l.getKey() + " : " + l.getValue() + "</li><br>";
             		}
             		s+= "</ul><br>";
         		}
