@@ -10,9 +10,11 @@ import java.util.Map;
 public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
     private final Configuration configuration;
     private Result result;
+    private boolean allBranchs;
 
-    public CountCommitsPerAuthorPlugin(Configuration generalConfiguration) {
+    public CountCommitsPerAuthorPlugin(Configuration generalConfiguration, boolean allBranchs) {
         this.configuration = generalConfiguration;
+        this.allBranchs = allBranchs;
     }
 
     static Result processLog(List<Commit> gitLog) {
@@ -36,7 +38,7 @@ public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
 
     @Override
     public void run() {
-        result = processLog(Commit.parseLogFromCommand(configuration.getGitPath()));
+        result = processLog(Commit.parseLogFromCommand(configuration.getGitPath(), allBranchs));
     }
 
     @Override

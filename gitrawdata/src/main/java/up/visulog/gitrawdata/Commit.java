@@ -93,8 +93,13 @@ public class Commit {
     	}
     }
     
-    public static List<Commit> parseLogFromCommand(Path gitPath) {
-    	BufferedReader reader = command(gitPath, "git", "log");
+    public static List<Commit> parseLogFromCommand(Path gitPath, boolean allBranches) {
+    	BufferedReader reader;
+    	if(allBranches) {
+    		reader = command(gitPath, "git", "log", "--all");
+    	} else {
+    		reader = command(gitPath, "git", "log");
+    	}
         return getNumberLines(gitPath,parseLog(reader));
     }
 

@@ -38,7 +38,7 @@ public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
 
     @Override
     public void run() {
-        result = processLog(Commit.parseLogFromCommand(configuration.getGitPath()));
+        result = processLog(Commit.parseLogFromCommand(configuration.getGitPath(), false));
     }
 
     @Override
