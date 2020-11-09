@@ -35,8 +35,9 @@ public class CLILauncher {
         if (config.isPresent()) {
             var analyzer = new Analyzer(config.get());
             var results = analyzer.computeResults();
-            System.out.println(results.toHTML());
-        } else displayHelpAndExit();
+            if(args[0].equals("--help")) return;
+            else System.out.println(results.toHTML());
+        } else displayHelpAndExit(args);
     }
 
     static Optional<Configuration> makeConfigFromCommandLineArgs(String[] args) {
@@ -50,7 +51,7 @@ public class CLILauncher {
                 String[] parts = arg.split("=");
                 if (parts.length != 2) {
                 	if(parts.length == 1 && arg.equals("--help")) {
-                    	printAllPossiblePlugins();
+                		displayHelpAndExit(args);
                 	}
                 	else return Optional.empty();
                 }
@@ -288,14 +289,14 @@ public class CLILauncher {
     }
     
 
-    private static void displayHelpAndExit() {
-        System.out.println("Wrong command...");
-        //TODO: print the list of options and their syntax
-        System.out.println("Here is a list of what we can do : ");
-        printAllPossiblePlugins();
-        System.out.println("--loadConfigFile allows you to load options from a file");
-        System.out.println("--justSaveConfigFile save command line options to a file instead of running the analysis");
-        System.exit(0);
+    private static void displayHelpAndExit(String[] args) {
+    	if(!args[0].contentEquals("--help")) System.out.println("Wrong command...");
+    	//TODO: print the list of options and their syntax
+	    System.out.println("Here is a list of what we can do : ");
+	    printAllPossiblePlugins();
+	    System.out.println("--loadConfigFile allows you to load options from a file\n");
+	    System.out.println("--justSaveConfigFile save command line options to a file instead of running the analysis\n");
+	    System.exit(0);
     }
     
     private static void printAllPossiblePlugins() {
