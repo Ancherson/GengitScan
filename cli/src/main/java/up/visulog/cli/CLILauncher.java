@@ -48,7 +48,12 @@ public class CLILauncher {
         for (var arg : args) {
             if (arg.startsWith("--")) {
                 String[] parts = arg.split("=");
-                if (parts.length != 2) return Optional.empty();
+                if (parts.length != 2) {
+                	if(parts.length == 1 && arg.equals("--help")) {
+                    	printAllPossiblePlugins();
+                	}
+                	else return Optional.empty();
+                }
                 else {
                     String pName = parts[0];
                     String pValue = parts[1];
@@ -190,12 +195,6 @@ public class CLILauncher {
                            	     	break;
                         	}
                         	break;
-                        case "--loadConfigFile":
-                            // TODO (load options from a file)
-                            break;
-                        case "--justSaveConfigFile":
-                            // TODO (save command line options to a file instead of running the analysis)
-                            break;
                         case "--load":
                         	//Format command: --load=name of the config
                         	//Example: ./gradlew run --args='--load=test'
@@ -292,10 +291,14 @@ public class CLILauncher {
     private static void displayHelpAndExit() {
         System.out.println("Wrong command...");
         //TODO: print the list of options and their syntax
-        System.out.println("Different options: ");
-        System.out.println("--addPlugin allows you to add new plugins");
+        System.out.println("Here is a list of what we can do : ");
+        printAllPossiblePlugins();
         System.out.println("--loadConfigFile allows you to load options from a file");
         System.out.println("--justSaveConfigFile save command line options to a file instead of running the analysis");
         System.exit(0);
+    }
+    
+    private static void printAllPossiblePlugins() {
+    	return;
     }
 }
