@@ -101,6 +101,7 @@ public class Analyzer {
             case "countLinesDeletedPerAuthorPerMonths": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "months", false, false));
             case "countLinesDeletedPerAuthorPerMonthsForAllBranchs": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "months", false, true));
             
+            case "countContribution" : return Optional.of(new CountContributionPlugin(config));
             default : return Optional.empty();
         }
     }

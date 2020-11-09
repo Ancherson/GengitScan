@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -27,6 +28,54 @@ public class Commit {
         this.date = date;
         this.description = description;
         this.mergedFrom = mergedFrom;
+    }
+    
+    //This function counts the number of lines per Author
+    public static HashMap<String, Integer> countLinesContribution(Path path) {
+    	HashMap<String, Integer> tot = new HashMap<String, Integer>();
+    	BufferedReader b = command(path, "git", "ls-files", "--exclude-standard");
+    	String line;
+    	try {
+			while((line = b.readLine()) != null) {
+				BufferedReader reader = command(path, "git", "blame", "-e", line);
+				var result = parseLinesContribution(reader);
+				for(var ass : result.entrySet()) {
+					String author = ass.getKey();
+					Integer nb = ass.getValue();
+					Integer oldNb = tot.getOrDefault(author, 0);
+					tot.put(author, nb + oldNb);
+				}
+			}
+    		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	return tot;
+    }
+    
+    //This function parses the results of the command git blame
+    public static HashMap<String, Integer> parseLinesContribution(BufferedReader b) {
+    	HashMap<String, Integer> hm = new HashMap<String, Integer>();
+    	String line;
+    	try {
+			while((line = b.readLine()) != null) {
+				Scanner sc = new Scanner(line);
+				if(sc.hasNext()) {
+					sc.next();
+					if(sc.hasNext()) {
+						String email = sc.next();
+						if(!(email.startsWith("(<") && email.endsWith(">"))) return hm;
+						email = email.substring(1);
+						
+						Integer nb = hm.getOrDefault(email, 0);
+						hm.put(email, nb + 1);
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	return hm;
     }
     
     //this function execute the command args from directory whose path is "path"

@@ -51,6 +51,19 @@ public class TestCommit {
     	}
     	
     }
+    
+    @Test
+    public void testParseLinesContribution() throws URISyntaxException {
+    	String expected = "{<ismail.badaoui@etu.univ-paris-diderot.fr>=13, <etienne.nedjai@laposte.net>=4, <adegorre@irif.fr>=57, <elodytang@hotmail.fr>=35, <not.committed.yet>=12, <julescherion@yahoo.fr>=10, <yoyo031201@orange.fr>=105}";
+    	var uri = getClass().getClassLoader().getResource("git.blame").toURI();
+    	try {
+			var reader = Files.newBufferedReader(Paths.get(uri));
+			assertEquals(expected, Commit.parseLinesContribution(reader).toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
 }
 
