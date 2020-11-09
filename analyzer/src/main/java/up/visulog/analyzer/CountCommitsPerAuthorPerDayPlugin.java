@@ -17,6 +17,8 @@ public class CountCommitsPerAuthorPerDayPlugin implements AnalyzerPlugin {
 
     static Result processLog(List<Commit> gitLog) {
         var result = new Result();
+        //rester a modifier
+        //ajouter la date
         for (var commit : gitLog) {
             var nb = result.commitsPerAuthorPerDay.getOrDefault(commit.author, 0);
             result.commitsPerAuthorPerDay.put(commit.author, nb + 1);
@@ -36,21 +38,21 @@ public class CountCommitsPerAuthorPerDayPlugin implements AnalyzerPlugin {
     }
 
     static class Result implements AnalyzerPlugin.Result {
-        private final Map<String, Integer> commitsPerAuthor = new HashMap<>();
+        private final Map<String, Integer> commitsPerAuthorPerDay = new HashMap<>();
 
-        Map<String, Integer> getCommitsPerAuthor() {
-            return commitsPerAuthor;
+        Map<String, Integer> getCommitsPerAuthorPerDay() {
+            return commitsPerAuthorPerDay;
         }
 
         @Override
         public String getResultAsString() {
-            return commitsPerAuthor.toString();
+            return commitsPerAuthorPerDay.toString();
         }
 
         @Override
         public String getResultAsHtmlDiv() {
-            StringBuilder html = new StringBuilder("<div>Commits per author: <ul>");
-            for (var item : commitsPerAuthor.entrySet()) {
+            StringBuilder html = new StringBuilder("<div>Commits per author per day: <ul>");
+            for (var item : commitsPerAuthorPerDay.entrySet()) {
                 html.append("<li>").append(item.getKey()).append(": ").append(item.getValue()).append("</li>");
             }
             html.append("</ul></div>");
