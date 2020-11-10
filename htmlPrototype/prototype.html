@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Prototype</title>
+        <script src="chartsMin.js"></script>
+    </head>
+    <body>
+        <div>
+        <canvas id="linesPerWeek"></canvas>
+        <script>
+            var ctx = document.getElementById('linesPerWeek').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ["Week 34 (2020)", "Week 36 (2020)", "Week 38 (2020)", "Week 39 (2020)", "Week 40 (2020)", "Week 41 (2020)", "Week 42 (2020)", "Week 43 (2020)", "Week 44 (2020)"],
+                    datasets: [{
+                        label: 'Number of lines',
+                        backgroundColor: 'rgb(66, 135, 245)',
+                        borderColor: 'rgb(66, 135, 245)',
+                        data: [52, 965, 541, 267, 323, 1052, 604, 309, 501],
+                        lineTension: 0
+                    }]
+                },
+                options: {}
+            });
+        </script>
+        </div>
+        <hr>
+        <div>
+            <canvas id="myChart2"></canvas>
+            <script>
+                var ctx = document.getElementById('myChart2').getContext('2d');
+                var chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Alexandre LEYMARIE", "ROUGEOLLE yoan", "cherion", "nejdai", "zhangxxu", "Aldric Degorre", "Colin Gonzalez", "Elody", "Victor Spehar", "Ismail BADAOUI", "root"],
+                        datasets: [{
+                            label: 'Number of commits',
+                            backgroundColor: 'rgb(66, 135, 245)',
+                            borderColor: 'rgb(66, 135, 245)',
+                            data: [6, 33, 12, 5, 4, 13, 1, 46, 4, 3, 1],
+                            lineTension: 0
+                        }]
+                    },
+                    options: {}
+                });
+            </script>
+            </div>
+    </body>
+</html>
