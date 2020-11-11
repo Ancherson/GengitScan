@@ -3,6 +3,10 @@ package up.visulog.webgen;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.xmlet.htmlapifaster.Body;
 import org.xmlet.htmlapifaster.Html;
 
@@ -26,7 +30,17 @@ public class WebGen {
 		return view.__().__().render();
 	}
 	
-	//Faire la fonction write en utilisant getHtml()
+	//Write in the file index.html the result of the different plugin
+	public void write(){
+		try{
+			FileWriter file = new FileWriter("../htmlResult/index.html");
+			file.write(getHtml());
+			file.close();
+		}catch(IOException e){
+			throw new RuntimeException("Error SaveConfig", e);
+		}
+
+	}
 	
 	
 	
