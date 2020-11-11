@@ -1,19 +1,34 @@
 package up.visulog.webgen;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.xmlet.htmlapifaster.Body;
+import org.xmlet.htmlapifaster.Html;
+
 import htmlflow.HtmlView;
 import htmlflow.StaticHtml;
 
 public class WebGen {
-	private HtmlView view = StaticHtml.view();
+	//Ajouter le head
+	private Body<Html<HtmlView>> view = StaticHtml.view().html().body();
 	
-	public void open() {
-		//TO DO : add head (with the link to the css, and title, ...)
-		view.html().body();
+	public void addListAuthor(Map<String, Integer>list, String title) {
+		var body = view.ul().text(title);
+		for(var item : list.entrySet()) {
+			String content = item.getKey() + ": " + item.getValue();
+			
+			body.li().text(content).__();
+		}		
 	}
 	
-	public void close() {
-		//Close the html and body
-		view.__().__();
+	public String getHtml() {
+		return view.__().__().render();
 	}
+	
+	//Faire la fonction write en utilisant getHtml()
+	
+	
+	
 	
 }
