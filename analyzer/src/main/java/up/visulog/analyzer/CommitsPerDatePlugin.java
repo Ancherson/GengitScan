@@ -2,6 +2,7 @@ package up.visulog.analyzer;
 
 import up.visulog.config.Configuration;
 import up.visulog.gitrawdata.Commit;
+import up.visulog.webgen.WebGen;
 
 import java.util.HashMap;
 import java.time.LocalDate;
@@ -115,6 +116,11 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
         	s += "</ul></div>";
         	html.append(s);
             return html.toString();
+        }
+        
+        @Override
+        public void getResultAsHtmlDiv(WebGen wg) {
+        	
         }
     }
 }

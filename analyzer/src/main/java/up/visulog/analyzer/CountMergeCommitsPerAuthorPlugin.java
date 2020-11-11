@@ -2,6 +2,7 @@ package up.visulog.analyzer;
 
 import up.visulog.config.Configuration;
 import up.visulog.gitrawdata.Commit;
+import up.visulog.webgen.WebGen;
 
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +68,11 @@ public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
             }
             html.append("</ul></div>");
             return html.toString();
+        }
+        
+        @Override
+        public void getResultAsHtmlDiv(WebGen wg) {
+        	
         }
     }
 }
