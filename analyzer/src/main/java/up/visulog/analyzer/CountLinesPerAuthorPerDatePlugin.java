@@ -2,6 +2,7 @@ package up.visulog.analyzer;
 
 import up.visulog.config.Configuration;
 import up.visulog.gitrawdata.Commit;
+import up.visulog.webgen.WebGen;
 
 import java.util.HashMap;
 import java.time.LocalDate;
@@ -217,6 +218,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
 
         @Override
         public String getResultAsHtmlDiv() {
+        	
 //        	this.afficher();
         	StringBuilder html = new StringBuilder();
         	String s = ""; //I create this variable to change the output easily
@@ -262,6 +264,11 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         	s += "</ul></div>";
         	html.append(s);
             return html.toString();
+        }
+        
+        @Override
+        public void getResultAsHtmlDiv(WebGen wg) {
+        	
         }
     }
 }
