@@ -6,6 +6,7 @@ import up.visulog.config.PluginConfig;
 import up.visulog.gitrawdata.Commit;
 import up.visulog.webgen.WebGen;
 
+import java.awt.Desktop;
 // a library that allows you to read an inputReader (for example an FileReader or an InputStreamReader)
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -19,7 +20,8 @@ import java.io.FileWriter;
 //When we have a java error when we open a file or write to a file, it creates an IOException
 //So we need to catch it, that's why I use the couple try,catch
 import java.io.IOException;
-
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.FileSystems;
 
 //libraries that allow you to find files thanks to their path
@@ -32,7 +34,7 @@ import java.util.Scanner;
 
 public class CLILauncher {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, URISyntaxException {
         var config = makeConfigFromCommandLineArgs(args);
         if (config.isPresent()) {
             var analyzer = new Analyzer(config.get());
@@ -40,6 +42,9 @@ public class CLILauncher {
 			var wg = new WebGen();
 			results.toHTML(wg);
 			wg.write();
+			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+			    Desktop.getDesktop().browse(Paths.get("../htmlResult/index.html").toUri());
+			}
         } else displayHelpAndExit();
     }
 
