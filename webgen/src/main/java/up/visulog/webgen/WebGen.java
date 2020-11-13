@@ -2,6 +2,7 @@ package up.visulog.webgen;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -38,15 +39,39 @@ public class WebGen {
 		for(String l : labels){
 			labelsJs += l+",";
 		}
-		labelsJs = labelsJs.substring(0, labelsJs.length-1);
+		labelsJs = labelsJs.substring(0, labelsJs.length()-1);
 		labelsJs += "];";
 
 		String dataJs = "var data = [";
 		for(String d : data){
 			dataJs += d+",";
 		}
-		dataJs = dataJs.substring(0, dataJs.length-1);
+		dataJs = dataJs.substring(0, dataJs.length()-1);
 		dataJs += "];";
+
+		String genChartJs = "genChart("+type+","+title+", labels, data);";
+
+		String js = labelsJs+"\n"+dataJs+"\n"+genChartJs+"\n";
+
+		view.div()
+				.script().text(js).__()
+			.__();
+	}
+
+	public void addChartDouble(String type, String title, ArrayList<String> labels, ArrayList<Double> data){
+		String labelsJs="var labels = [";
+		for(String l : labels){
+			labelsJs +=l+",";
+		}
+		labelsJs = labelsJs.substring(0, labelsJs.length()-1);
+		labelsJs += "];";
+
+		String dataJs = "var data = [";
+		for(String d : data){
+			dataJs+= d+",";
+		}
+		dataJs = dataJs.substring(0, dataJs.length()-1);
+		dataJs+="];";
 
 		String genChartJs = "genChart("+type+","+title+", labels, data);";
 
