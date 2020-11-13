@@ -2,6 +2,8 @@ package up.visulog.analyzer;
 
 import java.util.List;
 
+import up.visulog.webgen.WebGen;
+
 public class AnalyzerResult {
     public List<AnalyzerPlugin.Result> getSubResults() {
         return subResults;
@@ -19,6 +21,12 @@ public class AnalyzerResult {
     }
 
     public String toHTML() {
-        return "<html><body>"+subResults.stream().map(AnalyzerPlugin.Result::getResultAsHtmlDiv).reduce("", (acc, cur) -> acc + cur) + "</body></html>";
+        return "<html><body>"+subResults.stream().map(AnalyzerPlugin.Result::getResultAsHtmlDiv).reduce("", (acc,cur) -> acc + cur )+"</body></html>";
+    }
+
+    public void toHTML(WebGen wg){
+        for(var result : subResults){
+            result.getResultAsHtmlDiv(wg);
+        }
     }
 }
