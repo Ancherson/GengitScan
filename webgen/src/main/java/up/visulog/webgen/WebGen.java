@@ -36,14 +36,14 @@ public class WebGen {
 	public void addChart(String type, String title, ArrayList<String> labels, ArrayList<Integer> data){
 		String labelsJs = "var labels = [";
 		for(String l : labels){
-			labelsJs += l;
+			labelsJs += l+",";
 		}
 		labelsJs = labelsJs.substring(0, labelsJs.length-1);
 		labelsJs += "];";
 
 		String dataJs = "var data = [";
 		for(String d : data){
-			dataJs += d;
+			dataJs += d+",";
 		}
 		dataJs = dataJs.substring(0, dataJs.length-1);
 		dataJs += "];";
