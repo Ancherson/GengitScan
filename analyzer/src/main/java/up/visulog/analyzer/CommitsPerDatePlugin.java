@@ -111,6 +111,9 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
         // return the results in String
         @Override
         public String getResultAsString() {
+        	if(commitsPerWeeks.size() != 0) {
+        		return commitsPerWeeks.toString();
+        	}
             return commitsPerDate.toString();
         }
 
