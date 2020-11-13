@@ -78,7 +78,15 @@ public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
         
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
-        	wg.addListAuthor(commentPerAuthor, "Commits per author : ");
+        	ArrayList<String> label = new ArrayList<String>(); 
+        	ArrayList<Integer> data = new ArrayList<Integer>();
+        	
+        	for(var item : commentPerAuthor.entrySet()) {
+        		label.add(item.getKey());
+        		data.add(item.getValue());
+        	}
+        	
+        	//TO DO : Call WebGen Function
         }
     }
 }

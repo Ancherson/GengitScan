@@ -4,6 +4,7 @@ import up.visulog.config.Configuration;
 import up.visulog.gitrawdata.Commit;
 import up.visulog.webgen.WebGen;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
