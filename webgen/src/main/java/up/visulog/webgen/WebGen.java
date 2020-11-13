@@ -15,10 +15,10 @@ import htmlflow.HtmlView;
 import htmlflow.StaticHtml;
 
 public class WebGen {
-	//Ajouter le head
 	private Body<Html<HtmlView>> view = StaticHtml.view()
 			.html()
 				.head()
+					.meta().attrCharset("utf-8").__()
 					.title().text("GenGit Scan").__()
 					.script().attrSrc("chartsMin.js").__()
 					.script().attrSrc("chartGenjs").__()
@@ -43,7 +43,7 @@ public class WebGen {
 		labelsJs += "];";
 
 		String dataJs = "var data = [";
-		for(String d : data){
+		for(Integer d : data){
 			dataJs += d+",";
 		}
 		dataJs = dataJs.substring(0, dataJs.length()-1);
@@ -67,7 +67,7 @@ public class WebGen {
 		labelsJs += "];";
 
 		String dataJs = "var data = [";
-		for(String d : data){
+		for(Double d : data){
 			dataJs+= d+",";
 		}
 		dataJs = dataJs.substring(0, dataJs.length()-1);
