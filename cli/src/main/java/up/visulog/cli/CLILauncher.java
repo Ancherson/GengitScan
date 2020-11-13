@@ -4,6 +4,7 @@ import up.visulog.analyzer.Analyzer;
 import up.visulog.config.Configuration;
 import up.visulog.config.PluginConfig;
 import up.visulog.gitrawdata.Commit;
+import up.visulog.webgen.WebGen;
 
 // a library that allows you to read an inputReader (for example an FileReader or an InputStreamReader)
 import java.io.BufferedReader;
@@ -35,8 +36,10 @@ public class CLILauncher {
         var config = makeConfigFromCommandLineArgs(args);
         if (config.isPresent()) {
             var analyzer = new Analyzer(config.get());
-            var results = analyzer.computeResults();
-            System.out.println(results.toHTML());
+			var results = analyzer.computeResults();
+			var wg = new WebGen();
+			results.toHTML(wg);
+			wg.write();
         } else displayHelpAndExit();
     }
 

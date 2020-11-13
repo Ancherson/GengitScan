@@ -143,7 +143,7 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
         		}
             }
 
-            ///TODO: Call the webGen function that generates a chart
+            wg.addChart("line", "Number of commits", labels, data);
         }
     }
 }

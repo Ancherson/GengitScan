@@ -21,7 +21,7 @@ public class WebGen {
 					.meta().attrCharset("utf-8").__()
 					.title().text("GenGit Scan").__()
 					.script().attrSrc("chartsMin.js").__()
-					.script().attrSrc("chartGenjs").__()
+					.script().attrSrc("chartGen.js").__()
 				.__()
 				.body();
 	
@@ -37,7 +37,7 @@ public class WebGen {
 	public void addChart(String type, String title, ArrayList<String> labels, ArrayList<Integer> data){
 		String labelsJs = "var labels = [";
 		for(String l : labels){
-			labelsJs += l+",";
+			labelsJs += "'" + l + "',";
 		}
 		labelsJs = labelsJs.substring(0, labelsJs.length()-1);
 		labelsJs += "];";
@@ -49,7 +49,7 @@ public class WebGen {
 		dataJs = dataJs.substring(0, dataJs.length()-1);
 		dataJs += "];";
 
-		String genChartJs = "genChart("+type+","+title+", labels, data);";
+		String genChartJs = "genChart('"+type+"','"+title+"', labels, data);";
 
 		String js = labelsJs+"\n"+dataJs+"\n"+genChartJs+"\n";
 
@@ -61,7 +61,7 @@ public class WebGen {
 	public void addChartDouble(String type, String title, ArrayList<String> labels, ArrayList<Double> data){
 		String labelsJs="var labels = [";
 		for(String l : labels){
-			labelsJs +=l+",";
+			labelsJs += "'" + l + "',";
 		}
 		labelsJs = labelsJs.substring(0, labelsJs.length()-1);
 		labelsJs += "];";
@@ -73,7 +73,7 @@ public class WebGen {
 		dataJs = dataJs.substring(0, dataJs.length()-1);
 		dataJs+="];";
 
-		String genChartJs = "genChart("+type+","+title+", labels, data);";
+		String genChartJs = "genChart('"+type+"','"+title+"', labels, data);";
 
 		String js = labelsJs+"\n"+dataJs+"\n"+genChartJs+"\n";
 
