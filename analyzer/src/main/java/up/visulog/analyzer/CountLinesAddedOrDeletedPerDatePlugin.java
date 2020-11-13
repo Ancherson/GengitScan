@@ -20,14 +20,14 @@ public class CountLinesAddedOrDeletedPerDatePlugin implements AnalyzerPlugin {
     //if the variable is true, the plugin count the lines added of commits
     //if the variable is false, the plugin count the lines deleted of commits
     private Result result;
-    private boolean allBranchs;
+    private boolean allBranches;
 
   //if the user wants to count the number of lines added/deleted, the plugin use this constructor
-    public CountLinesAddedOrDeletedPerDatePlugin(Configuration generalConfiguration, String howToSort, boolean lines, boolean allBranchs) {
+    public CountLinesAddedOrDeletedPerDatePlugin(Configuration generalConfiguration, String howToSort, boolean lines, boolean allBranches) {
         this.configuration = generalConfiguration;
         this.howToSort = howToSort;
         this.lines = lines;
-        this.allBranchs = allBranchs;
+        this.allBranches = allBranches;
     }
 
     //Sort commits per date
@@ -60,7 +60,7 @@ public class CountLinesAddedOrDeletedPerDatePlugin implements AnalyzerPlugin {
     //function which executes the plugin
     @Override
     public void run() {
-        result = processLog(Commit.parseLogFromCommand(configuration.getGitPath(), allBranchs));
+        result = processLog(Commit.parseLogFromCommand(configuration.getGitPath(), allBranches));
     }
 
     //function which returns the results of the analysis

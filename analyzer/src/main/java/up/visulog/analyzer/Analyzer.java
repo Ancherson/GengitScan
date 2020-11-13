@@ -55,51 +55,51 @@ public class Analyzer {
     private Optional<AnalyzerPlugin> makePlugin(String pluginName, PluginConfig pluginConfig) {
         switch (pluginName) {
             case "countCommits" : return Optional.of(new CountCommitsPerAuthorPlugin(config, false));
-            case "countCommitsForAllBranchs" : return Optional.of(new CountCommitsPerAuthorPlugin(config, true));
+            case "countCommitsForAllBranches" : return Optional.of(new CountCommitsPerAuthorPlugin(config, true));
             
             case "countMergeCommits" : return Optional.of(new CountMergeCommitsPerAuthorPlugin(config));
             
             case "countCommitsPerMonths" : return Optional.of(new CommitsPerDatePlugin(config, "months", false));
-            case "countCommitsPerMonthsForAllBranchs" : return Optional.of(new CommitsPerDatePlugin(config, "months", true));
+            case "countCommitsPerMonthsForAllBranches" : return Optional.of(new CommitsPerDatePlugin(config, "months", true));
             case "countCommitsPerDays" : return Optional.of(new CommitsPerDatePlugin(config, "days", false));
-            case "countCommitsPerDaysForAllBranchs" : return Optional.of(new CommitsPerDatePlugin(config, "days", true));
+            case "countCommitsPerDaysForAllBranches" : return Optional.of(new CommitsPerDatePlugin(config, "days", true));
             case "countCommitsPerWeeks" : return Optional.of(new CommitsPerDatePlugin(config, "weeks", false));
-            case "countCommitsPerWeeksForAllBranchs" : return Optional.of(new CommitsPerDatePlugin(config, "weeks", true));
+            case "countCommitsPerWeeksForAllBranches" : return Optional.of(new CommitsPerDatePlugin(config, "weeks", true));
             
             case "countComments" : return Optional.of(new CountCommentsPerAuthorPlugin(config));
             case "getMembers" : return Optional.of(new GetMembersPerProjectPlugin(config));
             case "countIssues" : return Optional.of(new CountIssuesPerMemberPlugin(config));
             
             case "countLinesAddedPerDays" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "days", true, false));
-            case "countLinesAddedPerDaysForAllBranchs" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "days", true, true));
+            case "countLinesAddedPerDaysForAllBranches" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "days", true, true));
             case "countLinesDeletedPerDays" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "days", false, false));
-            case "countLinesDeletedPerDaysForAllBranchs" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "days", false, true));
+            case "countLinesDeletedPerDaysForAllBranches" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "days", false, true));
             case "countLinesAddedPerMonths" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "months", true, false));
-            case "countLinesAddedPerMonthsForAllBranchs" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "months", true, true));
+            case "countLinesAddedPerMonthsForAllBranches" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "months", true, true));
             case "countLinesDeletedPerMonths" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "months", false, false));
-            case "countLinesDeletedPerMonthsForAllBranchs" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "months", false, true));
+            case "countLinesDeletedPerMonthsForAllBranches" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "months", false, true));
             case "countLinesAddedPerWeeks" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "weeks", true, false));
-            case "countLinesAddedPerWeeksForAllBranchs" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "weeks", true, true));
+            case "countLinesAddedPerWeeksForAllBranches" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "weeks", true, true));
             case "countLinesDeletedPerWeeks" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "weeks", false, false));
-            case "countLinesDeletedPerWeeksForAllBranchs" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "weeks", false, true));
+            case "countLinesDeletedPerWeeksForAllBranches" : return Optional.of(new CountLinesAddedOrDeletedPerDatePlugin(config, "weeks", false, true));
         
             case "countLinesAdded" : return Optional.of(new CountLinesPerAuthorPlugin(config, true, false));
-            case "countLinesAddedForAllBranchs" : return Optional.of(new CountLinesPerAuthorPlugin(config, true, true));
+            case "countLinesAddedForAllBranches" : return Optional.of(new CountLinesPerAuthorPlugin(config, true, true));
             case "countLinesDeleted" : return Optional.of(new CountLinesPerAuthorPlugin(config, false, false));
-            case "countLinesDeletedForAllBranchs" : return Optional.of(new CountLinesPerAuthorPlugin(config, false, true));
+            case "countLinesDeletedForAllBranches" : return Optional.of(new CountLinesPerAuthorPlugin(config, false, true));
             
             case "countLinesAddedPerAuthorPerDays": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "days", true, false));
-            case "countLinesAddedPerAuthorPerDaysForAllBranchs": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "days", true, true));
+            case "countLinesAddedPerAuthorPerDaysForAllBranches": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "days", true, true));
             case "countLinesAddedPerAuthorPerWeeks": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "weeks", true, false));
-            case "countLinesAddedPerAuthorPerWeeksForAllBranchs": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "weeks", true, true));
+            case "countLinesAddedPerAuthorPerWeeksForAllBranches": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "weeks", true, true));
             case "countLinesAddedPerAuthorPerMonths": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "months", true, false));
-            case "countLinesAddedPerAuthorPerMonthsForAllBranchs": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "months", true, true));
+            case "countLinesAddedPerAuthorPerMonthsForAllBranches": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "months", true, true));
             case "countLinesDeletedPerAuthorPerDays": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "days", false, false));
-            case "countLinesDeletedPerAuthorPerDaysForAllBranchs": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "days", false, true));
+            case "countLinesDeletedPerAuthorPerDaysForAllBranches": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "days", false, true));
             case "countLinesDeletedPerAuthorPerWeeks": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "weeks", false, false));
-            case "countLinesDeletedPerAuthorPerWeeksForAllBranchs": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "weeks", false, true));
+            case "countLinesDeletedPerAuthorPerWeeksForAllBranches": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "weeks", false, true));
             case "countLinesDeletedPerAuthorPerMonths": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "months", false, false));
-            case "countLinesDeletedPerAuthorPerMonthsForAllBranchs": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "months", false, true));
+            case "countLinesDeletedPerAuthorPerMonthsForAllBranches": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "months", false, true));
             
             case "countContribution" : return Optional.of(new CountContributionPlugin(config));
             default : return Optional.empty();
