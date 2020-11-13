@@ -72,7 +72,12 @@ public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
         
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
-        	
+            ArrayList<String> authorOfCommits = new ArrayList<String>();
+            ArrayList<Integer> numberOfCommits= new ArrayList<Integer>();
+            for(var data : getCommitsPerAuthor().entrySet()){
+                authorOfCommits.add(data.getKey());
+                numberOfCommits.add(data.getValue());    
+            }
         }
     }
 }
