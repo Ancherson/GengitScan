@@ -63,8 +63,8 @@ public class CLILauncher {
                                 case "countCommits":
                             		plugins.put("countCommits", new PluginConfig() {});
                             		break;
-                                case "countCommitsForAllBranchs":
-                            		plugins.put("countCommitsForAllBranchs", new PluginConfig() {});
+                                case "countCommitsForAllBranches":
+                            		plugins.put("countCommitsForAllBranches", new PluginConfig() {});
                             		break;
                             		
                             	case "countMergeCommits":
@@ -82,20 +82,20 @@ public class CLILauncher {
                             	case "countCommitsPerMonths":
                             		plugins.put("countCommitsPerMonths", new PluginConfig() {});
                             		break;
-                            	case "countCommitsPerMonthsForAllBranchs":
-                            		plugins.put("countCommitsPerMonthsForAllBranchs", new PluginConfig() {});
+                            	case "countCommitsPerMonthsForAllBranches":
+                            		plugins.put("countCommitsPerMonthsForAllBranches", new PluginConfig() {});
                             		break;
                             	case "countCommitsPerWeeks":
                             		plugins.put("countCommitsPerWeeks", new PluginConfig() {});
                             		break;
-                            	case "countCommitsPerWeeksForAllBranchs":
-                            		plugins.put("countCommitsPerWeeksForAllBranchs", new PluginConfig() {});
+                            	case "countCommitsPerWeeksForAllBranches":
+                            		plugins.put("countCommitsPerWeeksForAllBranches", new PluginConfig() {});
                             		break;
                             	case "countCommitsPerDays":
                             		plugins.put("countCommitsPerDays", new PluginConfig() {});
                             		break;
-                            	case "countCommitsPerDaysForAllBranchs":
-                            		plugins.put("countCommitsPerDaysForAllBranchs", new PluginConfig() {});
+                            	case "countCommitsPerDaysForAllBranches":
+                            		plugins.put("countCommitsPerDaysForAllBranches", new PluginConfig() {});
                             		break;
                             		
                             	case "countIssues":
@@ -106,88 +106,88 @@ public class CLILauncher {
                             	case "countLinesDeleted":
                             		plugins.put("countLinesDeleted", new PluginConfig() {});
                             		break;
-                            	case "countLinesDeletedForAllBranchs":
-                            		plugins.put("countLinesDeletedForAllBranchs", new PluginConfig() {});
+                            	case "countLinesDeletedForAllBranches":
+                            		plugins.put("countLinesDeletedForAllBranches", new PluginConfig() {});
                             		break;
                             	case "countLinesAdded":
                             		plugins.put("countLinesAdded", new PluginConfig() {});
                             		break;
-                            	case "countLinesAddedForAllBranchs":
-                            		plugins.put("countLinesAddedForAllBranchs", new PluginConfig() {});
+                            	case "countLinesAddedForAllBranches":
+                            		plugins.put("countLinesAddedForAllBranches", new PluginConfig() {});
                             		break;
                             		
                             	case "countLinesAddedPerDays":
                             	    plugins.put("countLinesAddedPerDays", new PluginConfig() {});
                             	    break;
-                            	case "countLinesAddedPerDaysForAllBranchs":
-                           	     	plugins.put("countLinesAddedPerDaysForAllBranchs", new PluginConfig() {});
+                            	case "countLinesAddedPerDaysForAllBranches":
+                           	     	plugins.put("countLinesAddedPerDaysForAllBranches", new PluginConfig() {});
                            	     	break;
                             	case "countLinesAddedPerWeeks":
                             	    plugins.put("countLinesAddedPerWeeks", new PluginConfig() {});
                             	    break;
-                            	case "countLinesAddedPerWeeksForAllBranchs":
-                           	     	plugins.put("countLinesAddedPerWeeksForAllBranchs", new PluginConfig() {});
+                            	case "countLinesAddedPerWeeksForAllBranches":
+                           	     	plugins.put("countLinesAddedPerWeeksForAllBranches", new PluginConfig() {});
                            	     	break;
                             	case "countLinesAddedPerMonths":
                             	    plugins.put("countLinesAddedPerMonths", new PluginConfig() {});
                             	    break;
-                            	case "countLinesAddedPerMonthsForAllBranchs":
-                           	     	plugins.put("countLinesAddedPerMonthsForAllBranchs", new PluginConfig() {});
+                            	case "countLinesAddedPerMonthsForAllBranches":
+                           	     	plugins.put("countLinesAddedPerMonthsForAllBranches", new PluginConfig() {});
                            	     	break;
                             	case "countLinesDeletedPerDays":
                             	    plugins.put("countLinesDeletedPerDays", new PluginConfig() {});
                             	    break;
-                            	case "countLinesDeletedPerDaysForAllBranchs":
-                           	     	plugins.put("countLinesDeletedPerDaysForAllBranchs", new PluginConfig() {});
+                            	case "countLinesDeletedPerDaysForAllBranches":
+                           	     	plugins.put("countLinesDeletedPerDaysForAllBranches", new PluginConfig() {});
                            	     	break;
                             	case "countLinesDeletedPerWeeks":
                             	    plugins.put("countLinesDeletedPerWeeks", new PluginConfig() {});
                             	    break;
-                            	case "countLinesDeletedPerWeeksForAllBranchs":
-                           	     	plugins.put("countLinesDeletedPerWeeksForAllBranchs", new PluginConfig() {});
+                            	case "countLinesDeletedPerWeeksForAllBranches":
+                           	     	plugins.put("countLinesDeletedPerWeeksForAllBranches", new PluginConfig() {});
                            	     	break;
                             	case "countLinesDeletedPerMonths":
                             	    plugins.put("countLinesDeletedPerMonths", new PluginConfig() {});
                             	    break;
-                            	case "countLinesDeletedPerMonthsForAllBranchs":
-                           	     	plugins.put("countLinesDeletedPerMonthsForAllBranchs", new PluginConfig() {});
+                            	case "countLinesDeletedPerMonthsForAllBranches":
+                           	     	plugins.put("countLinesDeletedPerMonthsForAllBranches", new PluginConfig() {});
                            	     	break;
                            	                           	     	
                             	case "countLinesAddedPerAuthorPerDays":
                            	     	plugins.put("countLinesAddedPerAuthorPerDays", new PluginConfig() {});
                            	     	break;
-                            	case "countLinesAddedPerAuthorPerDaysForAllBranchs":
-                           	     	plugins.put("countLinesAddedPerAuthorPerDaysForAllBranchs", new PluginConfig() {});
+                            	case "countLinesAddedPerAuthorPerDaysForAllBranches":
+                           	     	plugins.put("countLinesAddedPerAuthorPerDaysForAllBranches", new PluginConfig() {});
                            	     	break;
                             	case "countLinesAddedPerAuthorPerWeeks":
                            	     	plugins.put("countLinesAddedPerAuthorPerWeeks", new PluginConfig() {});
                            	     	break;
-                            	case "countLinesAddedPerAuthorPerWeeksForAllBranchs":
-                           	     	plugins.put("countLinesAddedPerAuthorPerWeeksForAllBranchs", new PluginConfig() {});
+                            	case "countLinesAddedPerAuthorPerWeeksForAllBranches":
+                           	     	plugins.put("countLinesAddedPerAuthorPerWeeksForAllBranches", new PluginConfig() {});
                            	     	break;
                             	case "countLinesAddedPerAuthorPerMonths":
                            	     	plugins.put("countLinesAddedPerAuthorPerMonths", new PluginConfig() {});
                            	     	break;
-                            	case "countLinesAddedPerAuthorPerMonthsForAllBranchs":
-                           	     	plugins.put("countLinesAddedPerAuthorPerMonthsForAllBranchs", new PluginConfig() {});
+                            	case "countLinesAddedPerAuthorPerMonthsForAllBranches":
+                           	     	plugins.put("countLinesAddedPerAuthorPerMonthsForAllBranches", new PluginConfig() {});
                            	     	break;
                             	case "countLinesDeletedPerAuthorPerDays":
                            	     	plugins.put("countLinesDeletedPerAuthorPerDays", new PluginConfig() {});
                            	     	break;
-                            	case "countLinesDeletedPerAuthorPerDaysForAllBranchs":
-                           	     	plugins.put("countLinesDeletedPerAuthorPerDaysForAllBranchs", new PluginConfig() {});
+                            	case "countLinesDeletedPerAuthorPerDaysForAllBranches":
+                           	     	plugins.put("countLinesDeletedPerAuthorPerDaysForAllBranches", new PluginConfig() {});
                            	     	break;
                             	case "countLinesDeletedPerAuthorPerWeeks":
                            	     	plugins.put("countLinesDeletedPerAuthorPerWeeks", new PluginConfig() {});
                            	     	break;
-                            	case "countLinesDeletedPerAuthorPerWeeksForAllBranchs":
-                           	     	plugins.put("countLinesDeletedPerAuthorPerWeeksForAllBranchs", new PluginConfig() {});
+                            	case "countLinesDeletedPerAuthorPerWeeksForAllBranches":
+                           	     	plugins.put("countLinesDeletedPerAuthorPerWeeksForAllBranches", new PluginConfig() {});
                            	     	break;
                             	case "countLinesDeletedPerAuthorPerMonths":
                            	     	plugins.put("countLinesDeletedPerAuthorPerMonths", new PluginConfig() {});
                            	     	break;
-                            	case "countLinesDeletedPerAuthorPerMonthsForAllBranchs":
-                           	     	plugins.put("countLinesDeletedPerAuthorPerMonthsForAllBranchs", new PluginConfig() {});
+                            	case "countLinesDeletedPerAuthorPerMonthsForAllBranches":
+                           	     	plugins.put("countLinesDeletedPerAuthorPerMonthsForAllBranches", new PluginConfig() {});
                            	     	break;
                             	case "countContribution":
                             		plugins.put("countContribution", new PluginConfig() {});
