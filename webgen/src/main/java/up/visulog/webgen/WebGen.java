@@ -15,7 +15,14 @@ import htmlflow.StaticHtml;
 
 public class WebGen {
 	//Ajouter le head
-	private Body<Html<HtmlView>> view = StaticHtml.view().html().body();
+	private Body<Html<HtmlView>> view = StaticHtml.view()
+			.html()
+				.head()
+					.title().text("GenGit Scan").__()
+					.script().attrSrc("chartsMin.js").__()
+					.script().attrSrc("chartGenjs").__()
+				.__()
+				.body();
 	
 	public void addListAuthor(Map<String, Integer>list, String title) {
 		var body = view.ul().text(title);
