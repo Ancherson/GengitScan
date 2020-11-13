@@ -4,6 +4,7 @@ import up.visulog.config.Configuration;
 import up.visulog.gitrawdata.Commit;
 import up.visulog.webgen.WebGen;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -120,7 +121,29 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
         
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
-        	
+            ArrayList<String> labels = new ArrayList<String>();
+            ArrayList<Integer> data = new ArrayList<Integer>();
+
+            if(this.howToSort.equals("days")) {
+        		for(var item : commitsPerDate.entrySet()) {
+                    labels.add(item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() + " " + item.getKey().getYear());
+                    data.add(item.getValue());
+        		}
+        	} else if(this.howToSort.equals("weeks")) {
+        		Map<String, Integer> res = resultPerWeeks();
+        		for(var item : res.entrySet()) {
+                    labels.add("Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")");
+                    data.add(item.getValue());
+        		}
+        	} else {
+        		Map<LocalDate, Integer> res = resultPerMonths();
+        		for(var item : res.entrySet()) {
+                    labels.add(item.getKey().getMonth().name() + " " + item.getKey().getYear());
+                    data.add(item.getValue());
+        		}
+            }
+
+            ///TODO: Call the webGen function that generates a chart
         }
     }
 }
