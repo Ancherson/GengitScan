@@ -48,7 +48,7 @@ public class GetExtensionsPerProjectPlugin implements AnalyzerPlugin {
 
         @Override
         public String getResultAsHtmlDiv() {
-            StringBuilder html = new StringBuilder("<div>Comments per author: <ul>");
+            StringBuilder html = new StringBuilder("<div>Extensions in project: <ul>");
             for (var item : extensionsResult.entrySet()) {
                 html.append("<li>").append(item.getKey()).append(": ").append(item.getValue()).append("</li>");
             }
