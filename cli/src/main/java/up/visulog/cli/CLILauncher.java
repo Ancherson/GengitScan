@@ -344,7 +344,7 @@ public class CLILauncher {
     	System.out.println();
     	
     	System.out.println("FILES AND EXTENSION :");
-    	//Just add the command of percentage of each extension
+    	System.out.println("getExtensions" + space + "Get Extensions" + prohibition);
     	System.out.println();       
     }
 }
