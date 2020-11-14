@@ -13,38 +13,45 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.time.Month;
 
-public class CommitsPerDatePlugin implements AnalyzerPlugin {
+public class CountLinesPerDatePlugin implements AnalyzerPlugin {
     private final Configuration configuration;
     private static String howToSort = "months";
-    //the plugin sort commits per months, this is a default value 
+    //the plugin sort commits per months, this is a default value
+    //the value change if the user wants the number of commits par weeks or per days
+    private static boolean lines;
+    //if the variable is true, the plugin count the lines added of commits
+    //if the variable is false, the plugin count the lines deleted of commits
     private Result result;
     private boolean allBranches;
     // if allBranches is true, the plugin counts commits on all branches
-    // if allBranches is false, the plugin counts commits on the remote branch 
+    // if allBranches is false, the plugin counts commits on the remote branch
+    
 
     // constructor
-    public CommitsPerDatePlugin(Configuration generalConfiguration, String howToSort, boolean allBranches) {
+    public CountLinesPerDatePlugin(Configuration generalConfiguration, String howToSort, boolean lines, boolean allBranches) {
         this.configuration = generalConfiguration;
         this.howToSort = howToSort;
+        this.lines = lines;
         this.allBranches = allBranches;
     }
 
-    // sort commits per month and per date
+    // sort commits per date
     static Result processLog(List<Commit> gitLog) {
     	var result = new Result();
     	// change the values of the object Result
     	result.setHowToSort(howToSort);
-    	sortPerDays(gitLog, result);
+    	result.setLines(lines);
+    	countLinesAddedOrDeletedPerDays(gitLog, result);
     	
     	// sort the commits per Months and per Weeks
     	if(howToSort.equals("months")) {
     		Map<LocalDate, Integer> res = new TreeMap<>();
-        	// change the key of the number of the commits
-        	// for example, the key of the commits that were made in January 2020 will be January 1, 2020
         	for (var date : result.commitsPerDate.entrySet()) {
+        		// change the key of the number of the commits
+            	// for example, the key of the commits that were made in January 2020 will be January 1, 2020
         		LocalDate m = LocalDate.of(date.getKey().getYear(), date.getKey().getMonth(), 1);
             	var nb = res.getOrDefault(m, 0);
-            	res.put(m, nb + 1);
+            	res.put(m, nb + date.getValue());            
             }
         	// change the key and the value of result.commitsPerDate
         	result.commitsPerDate.clear();
@@ -54,31 +61,40 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
     	// sort the commits per Months and per Weeks
     	else if(howToSort.equals("weeks")) {
     		Map<String, Integer> res = new TreeMap<>();
-            // change the key of the number of the commits in String
-            // for example, the key of the commits that were made in January 2020 will be "2020 Week 1"
-            for (var date : result.commitsPerDate.entrySet()) {
-               	String m = Integer.toString(date.getKey().getYear()) + " " + Integer.toString(date.getKey().getDayOfYear()/7);
-               	var nb = res.getOrDefault(m, 0);
-               	res.put(m, nb + 1);            
+        	for (var date : result.commitsPerDate.entrySet()) {
+        		// change the key of the number of the commits in String
+            	// for example, the key of the commits that were made in January 2020 will be "2020 Week 1"
+            	String m = Integer.toString(date.getKey().getYear()) + " " + Integer.toString(date.getKey().getDayOfYear()/7);
+            	var nb = res.getOrDefault(m, 0);
+            	res.put(m, nb + date.getValue());            
             }
          // change the key and the value of result.commitsPerWeeks
             result.commitsPerWeeks.putAll(res);
     	}
-    	
     	return result;
     }
     
-    // function fills the result variable with the way of sorting    
-    static void sortPerDays(List<Commit> gitLog, Result result) {
+    // function fills the result variable with the way of sorting  
+    static void countLinesAddedOrDeletedPerDays(List<Commit> gitLog, Result result) {
     	// browse the list of commits and count them according to the date of the commit
     	for (var commit : gitLog) {
-    		LocalDate m = commit.date.toLocalDate();
-        	var nb = result.commitsPerDate.getOrDefault(m, 0);
-        	// enter the values in the map
-        	result.commitsPerDate.put(m, nb + 1);
+    		//The plugin don't count the line added/deleted from the merged commit
+        	//because the lines will added and deleted twice
+    		if(commit.mergedFrom == null) {
+	        	LocalDate m = commit.date.toLocalDate();
+	        	var oldNbLines = result.commitsPerDate.getOrDefault(m, 0);
+	        	int nbLines = 0;
+	        	if(lines) {
+	        		nbLines = oldNbLines + commit.linesAdded;
+	        	} else {
+	        		nbLines = oldNbLines + commit.linesDeleted;
+	        	}
+	        	// enter the values in the map
+	        	result.commitsPerDate.put(m, nbLines);
+    		}
         }
     }
-    
+   
     // function which executes the plugin
     @Override
     public void run() {
@@ -93,6 +109,8 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
     }    
     
     
+    
+    
     static class Result implements AnalyzerPlugin.Result {
         private Map<LocalDate, Integer> commitsPerDate = new TreeMap<>();
         private Map<String, Integer> commitsPerWeeks = new TreeMap<>();
@@ -100,12 +118,18 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
         // String = a -> z
         // int = 0,1,2...
         private String howToSort = "month";
+        private boolean lines;
         
+        // function which set the variable howToSort
         public void setHowToSort(String howToSort) {
         	this.howToSort = howToSort;
         }
+        
+        // function which set the variable lines
+        public void setLines(boolean lines) {
+        	this.lines = lines;
+        }
 
-        // get the variable commitsPerDate
         Map<LocalDate, Integer> getCommitsPerDate() {
             return commitsPerDate;
         }
@@ -122,14 +146,21 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
         // return the results with HTML tags
         @Override
         public String getResultAsHtmlDiv() {
-        	StringBuilder html = new StringBuilder("<div>Number of Commits per " + this.howToSort + ": <ul>");
-        	// the variable s is filled according to the way of sorting
+        	StringBuilder html = new StringBuilder();
         	String s = "";
+        	// the variable s is filled according to the way of sorting
         	
-        	// test the content of the variable howToSort
+        	//check if the user wants the number of the lines added/deleted or the number of commits
+        	if(lines) {
+        		s += "<div>Number of lines added of commits per " + this.howToSort + ": <ul>";
+        	} else {
+        		s += "<div>Number of lines deleted per " + this.howToSort + ": <ul>";
+        	}
+        	
+        	//display the commits (or lines added/deleted) by the way of sorting
         	if(this.howToSort.equals("days")) {
         		for(var item : commitsPerDate.entrySet()) {
-        			s += "<li>" + item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() + " " + item.getKey().getYear() + ": " + item.getValue() + "</li>";
+        			s += "<li>" + item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() +  " " + item.getKey().getYear() + ": " + item.getValue() + "</li>";
         		}
         	} else if(this.howToSort.equals("weeks")) {
         		for(var item : commitsPerWeeks.entrySet()) {
@@ -138,7 +169,7 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
         		}
         	} else {
         		for(var item : commitsPerDate.entrySet()) {
-        			s += "<li>"  + item.getKey().getMonth().name() + " " + item.getKey().getYear() + ": " + item.getValue() + "</li>";
+        			s += "<li>"  + item.getKey().getMonth().name() + " (" + item.getKey().getYear() + ") : " + item.getValue() + "</li>";
         		}
         	}
         	s += "</ul></div>";
@@ -148,7 +179,7 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
         
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
-            ArrayList<String> labels = new ArrayList<String>();
+        	ArrayList<String> labels = new ArrayList<String>();
             ArrayList<Integer> data = new ArrayList<Integer>();
 
             if(this.howToSort.equals("days")) {
@@ -169,6 +200,9 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
             }
             
             wg.addChart("line", "Number of commits", labels, data);
+        	
         }
+
     }
 }
+
