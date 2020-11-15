@@ -30,3 +30,47 @@ function genChart(type, title, labels, data){
     }
     let chart = new Chart(context, parameters);
 }
+
+
+function genChart2(title, labels, datasets) {
+    let canvas = document.createElement("canvas");
+    document.body.appendChild(canvas);
+
+    let context = canvas.getContext('2d');
+
+    let parameters = {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [],
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    stacked: true
+                }],
+                xAxes: [{
+                    stacked: true
+                }]
+            }
+        }
+    }
+
+    colors = [];
+    for(let i = 0; i < datasets.length; i++){
+        let c = 360*i/datasets.length;
+        colors[i] = "hsl("+c+", 100%, 65%)";
+    }
+
+    for(let i = 0; i < datasets.length; i++) {
+        console.log(datasets[i]);
+        parameters.data.datasets.push({
+            label: datasets[i][0],
+            backgroundColor: colors[i],
+            borderColor: colors[i],
+            data: datasets[i][1],
+        });
+    }
+
+    let chart = new Chart(context, parameters);
+}
