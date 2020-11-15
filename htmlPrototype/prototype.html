@@ -28,6 +28,49 @@
         </div>
         <hr>
         <div>
+            <canvas id="linesPerWeekPerAuthor"></canvas>
+            <script>
+                var ctx = document.getElementById('linesPerWeekPerAuthor').getContext('2d');
+                var chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Week 34 (2020)", "Week 36 (2020)", "Week 38 (2020)", "Week 39 (2020)", "Week 40 (2020)", "Week 41 (2020)", "Week 42 (2020)", "Week 43 (2020)", "Week 44 (2020)"],
+                        datasets: [{
+                            label: 'Author1',
+                            backgroundColor: 'rgb(66, 135, 245)',
+                            borderColor: 'rgb(66, 135, 245)',
+                            data: [10, 965, 60, 100, 323, 800, 604, 700, 501],
+                            lineTension: 0
+                        },
+                        {
+                            label: 'Author2',
+                            backgroundColor: 'red',
+                            borderColor: 'red',
+                            data: [30, 100, 300, 267, 323, 20, 200, 309, 501],
+                            lineTension: 0
+                        },
+                        {
+                            label: 'Author3',
+                            backgroundColor: 'green',
+                            borderColor: 'green',
+                            data: [52, 200, 541, 200, 100, 900, 100, 30, 20],
+                            lineTension: 0
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                stacked: true
+                            }],
+                            xAxes: [{
+                                stacked: true
+                            }]
+                        }}
+                });
+            </script>
+            </div>
+            <hr>
+        <div>
             <canvas id="commitsPerAuthor"></canvas>
             <script>
                 var ctx = document.getElementById('commitsPerAuthor').getContext('2d');
