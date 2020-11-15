@@ -80,7 +80,9 @@ public class CLILauncher {
 								API = true;
 								break;
 							}
-                        	break;
+                        	else{
+								return Optional.empty();
+							}
    
                         case "--load":
                         	//Format command: --load=name of the config
