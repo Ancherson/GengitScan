@@ -78,7 +78,10 @@ public class CLILauncher {
                             		plugins.put("getMembers", new PluginConfig() {});
                             		API = true;
                             		break;
-                            		
+								case "getExtensions":
+									plugins.put("getExtensions", new PluginConfig() {});
+									API = true;
+									break;
                             	case "countCommitsPerMonths":
                             		plugins.put("countCommitsPerMonths", new PluginConfig() {});
                             		break;
