@@ -40,7 +40,7 @@ public class CLILauncher {
 										"countLinesAddedPerAuthorPerWeeksForAllBranchs","countLinesAddedPerAuthorPerMonths","countLinesAddedPerAuthorPerMonthsForAllBranchs",
 										"countLinesDeletedPerAuthorPerDays","countLinesDeletedPerAuthorPerDaysForAllBranchs","countLinesDeletedPerAuthorPerWeeks","countLinesDeletedPerAuthorPerWeeksForAllBranchs",
 										"countLinesDeletedPerAuthorPerMonths","countLinesDeletedPerAuthorPerMonthsForAllBranchs"};
-	private String[] pluginWithAPI = {"countComments","getMembers","getExtensions","countIssues"}
+	private String[] pluginWithAPI = {"countComments","getMembers","getExtensions","countIssues"};
 	public boolean in(String p,String[] arr){
 		for(String s:arr){
 			if(p.equals(s)) return true;
