@@ -67,7 +67,14 @@ public class CountIssuesPerMemberPlugin implements AnalyzerPlugin {
         
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
-        	
+            ArrayList<String>  members = new ArrayList<String>();
+            ArrayList<Integer> numberOfIssues = new ArrayList<Integer>();
+
+            for(var item : issuesPerMember.entrySet()) {
+                members.add(item.getKey());
+                numberOfIssues.add(item.getValue());
+            }
+            wg.addChart("bar", "Number of issues", members, numberOfIssues);
         }
     }
 }
