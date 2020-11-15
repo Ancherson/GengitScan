@@ -30,7 +30,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class CLILauncher {
-	private String[] pluginWithoutAPI = {"countCommits","countCommitsForAllBranchs","countMergeCommits","countCommitsPerMonths","countCommitsPerMonthsForAllBranchs",
+	private static String[] pluginWithoutAPI = {"countCommits","countCommitsForAllBranchs","countMergeCommits","countCommitsPerMonths","countCommitsPerMonthsForAllBranchs",
 										"countCommitsPerWeeks","countCommitsPerWeeksForAllBranchs","countCommitsPerDays","countCommitsPerDaysForAllBranchs",
 										"countLinesDeleted","countLinesDeletedForAllBranchs","countLinesAdded","countLinesAddedForAllBranchs","countLinesAddedPerDays",
 										"countLinesAddedPerDaysForAllBranchs","countLinesAddedPerWeeks","countLinesAddedPerWeeksForAllBranchs","countLinesAddedPerMonths",
@@ -40,8 +40,8 @@ public class CLILauncher {
 										"countLinesAddedPerAuthorPerWeeksForAllBranchs","countLinesAddedPerAuthorPerMonths","countLinesAddedPerAuthorPerMonthsForAllBranchs",
 										"countLinesDeletedPerAuthorPerDays","countLinesDeletedPerAuthorPerDaysForAllBranchs","countLinesDeletedPerAuthorPerWeeks","countLinesDeletedPerAuthorPerWeeksForAllBranchs",
 										"countLinesDeletedPerAuthorPerMonths","countLinesDeletedPerAuthorPerMonthsForAllBranchs"};
-	private String[] pluginWithAPI = {"countComments","getMembers","getExtensions","countIssues"};
-	public boolean in(String p,String[] arr){
+	private static String[] pluginWithAPI = {"countComments","getMembers","getExtensions","countIssues"};
+	public static boolean in(String p,String[] arr){
 		for(String s:arr){
 			if(p.equals(s)) return true;
 		}
