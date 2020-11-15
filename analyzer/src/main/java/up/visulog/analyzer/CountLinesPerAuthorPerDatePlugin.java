@@ -36,14 +36,15 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     }
     
     // when the program starts, the first function is called, it starts the plugin
-    static Result processLog(List<Commit> gitLog) {	
+    static Result processLog(List<Commit> gitLog) {
+    	List<Commit> gitLog2 = sameAuthor2(gitLog);
     	var result = new Result();
     	// change the values of the object Result
     	result.setHowToSort(howToSort);
     	result.setLines(lines);
     	
     	// first, we find the commits sorting per the days
-    	Map<LocalDate, List<Commit>> commitsPerDate = sortCommitsPerDays(gitLog);
+    	Map<LocalDate, List<Commit>> commitsPerDate = sortCommitsPerDays(gitLog2);
     	
     	// then, we create a new Map with a Key which associates an author and his number of added/deleted lines
     	for(var commitsPerDays : commitsPerDate.entrySet()) {
@@ -64,8 +65,6 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         		LocalDate m = LocalDate.of(date.getKey().getYear(), date.getKey().getMonth(), 1);
         		// we create a new Map which gives the right number of lines to the authors
         		Map<String, Integer> res2 = authorsAndMonths(m, result);
-        		// we change the value if the authors appear several times
-        		res2 = sameAuthor(res2);
         		res.put(m, res2);
         	}
         	
@@ -83,8 +82,6 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         		String m = Integer.toString(date.getKey().getYear()) + " Week " + Integer.toString(date.getKey().getDayOfYear()/7);
         		// we create a new Map which gives the right number of lines to the authors
         		Map<String, Integer> res2 = authorAndWeeks(m, result);
-        		// we change the value if the authors appear several times
-        		res2 = sameAuthor(res2);
         		res.put(m, res2);
         	}
     		
@@ -152,24 +149,29 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     	return res;
     }
 
-    // to sort commits by author, it adds the added or deleted lines
-    static Map<String, Integer> sameAuthor(Map<String, Integer> listCommits) {
-    	Map<String, Integer> res = new HashMap<>();
-        Map<String,String> emailToName = new HashMap<String,String>();
-        for (var commit : listCommits.entrySet()) {
-        	String[] author = commit.getKey().split(" ");
-            String email = author[author.length-1];
-            if(emailToName.get(email) == null) {
-            	emailToName.put(email, commit.getKey());
+    // it is the same list of commits, but the authors do not appear twice.
+    static List<Commit> sameAuthor2(List<Commit> gitLog) {
+    	List<Commit> gitLog2 = new LinkedList<Commit>();
+    	Map<String,String> emailToName = new HashMap<String,String>();
+    	for(var commit : gitLog) {
+    		String[] a = commit.author.split(" ");
+    		String email = a[a.length-1];
+    		if(emailToName.get(email) == null) {
+            	emailToName.put(email, commit.author);
             }
-        	var lines = res.getOrDefault(email, 0);
-	    	res.put(email, lines + commit.getValue());
-        }
-        for(var e : emailToName.entrySet()) {
-         	int nbCommit = res.remove(e.getKey());
-         	res.put(e.getValue(), nbCommit);
-         }
-        return res;
+    	}
+    	for(var commit : gitLog) {
+    		String[] a = commit.author.split(" ");
+    		String email = a[a.length-1];
+    		if(emailToName.containsKey(email)) {
+    			var name = emailToName.get(email);
+    			Commit m = new Commit(commit.id, name, commit.date, commit.description, commit.mergedFrom);
+    			m.linesAdded = commit.linesAdded;
+    			m.linesDeleted = commit.linesDeleted;
+    			gitLog2.add(m);
+            }
+    	}
+    	return gitLog2;
     }
     
     static Map<String, Integer> authorAndWeeks(String week, Result r) {
@@ -279,7 +281,59 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
+        	ArrayList<String> labels = new ArrayList<String>();
+        	HashMap<String, ArrayList<Integer>> datasets = new HashMap<String, ArrayList<Integer>>();
+        	int cmp = 0;
+        	
+            if(this.howToSort.equals("days")) {
+            	for(var item : linesPerAuthorPerDate.entrySet()) {
+            		labels.add(item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() +  " " + item.getKey().getYear());
+            		Map<String, Integer> lines = item.getValue();
+            		for(var l : lines.entrySet()) {
+            			String author = l.getKey();
+            			var authorAndInteger = datasets.getOrDefault(author, new ArrayList<Integer>());
+            			while(authorAndInteger.size() != cmp) {
+            				authorAndInteger.add(0);
+            			}
+            			authorAndInteger.add(l.getValue());
+            			datasets.put(author, authorAndInteger);
+            		}
+            		cmp++;
+            	}
+            } else if(this.howToSort.equals("weeks")) {
+            	for(var item : linesPerAuthorPerWeeks.entrySet()) {
+            		labels.add("Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")");
+            		Map<String, Integer> lines = item.getValue();
+            		for(var l : lines.entrySet()) {
+            			String author = l.getKey();
+            			var authorAndInteger = datasets.getOrDefault(author, new ArrayList<Integer>());
+            			while(authorAndInteger.size() != cmp) {
+            				authorAndInteger.add(0);
+            			}
+            			authorAndInteger.add(l.getValue());
+            			datasets.put(author, authorAndInteger);
+            		}
+            		cmp++;
+            	}
+            } else {
+            	for(var item : linesPerAuthorPerDate.entrySet()) {
+            		labels.add(item.getKey().getMonth().name() + " " + item.getKey().getYear());
+            		Map<String, Integer> lines = item.getValue();
+            		for(var l : lines.entrySet()) {
+            			String author = l.getKey();
+            			var authorAndInteger = datasets.getOrDefault(author, new ArrayList<Integer>());
+            			while(authorAndInteger.size() != cmp) {
+            				authorAndInteger.add(0);
+            			}
+            			authorAndInteger.add(l.getValue());
+            			datasets.put(author, authorAndInteger);
+            		}
+            		cmp++;
+            	}
+            }
+            wg.addChart("Number of lines " +(this.lines ? "added" : "deleted") + " per author and per " + this.howToSort, labels, datasets);
         }
+        
     }
 }
 
