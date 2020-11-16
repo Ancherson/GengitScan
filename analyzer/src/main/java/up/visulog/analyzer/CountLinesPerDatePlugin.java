@@ -183,24 +183,69 @@ public class CountLinesPerDatePlugin implements AnalyzerPlugin {
             ArrayList<Integer> data = new ArrayList<Integer>();
 
             if(this.howToSort.equals("days")) {
+            	var labels0 = commitsPerDate.entrySet().iterator().next().getKey();
+        		LocalDate cmp = labels0;
+        		LocalDate expected = cmp;
         		for(var item : commitsPerDate.entrySet()) {
-                    labels.add(item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() + " " + item.getKey().getYear());
-                    data.add(item.getValue());
+        			cmp = item.getKey();
+        			if(cmp.equals(expected)) {
+        				labels.add(item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() + " " + item.getKey().getYear());
+                        data.add(item.getValue());
+        			} else {
+        				while(!expected.equals(cmp)) {
+        					labels.add(expected.getDayOfMonth() + " " + expected.getMonth().name() + " " + expected.getYear());
+            				data.add(0);
+            				expected = expected.plusDays(1);
+        				}
+        				labels.add(item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() + " " + item.getKey().getYear());
+                        data.add(item.getValue());
+        			}
+        			expected = expected.plusDays(1);
         		}
         	} else if(this.howToSort.equals("weeks")) {
+        		var labels0 = commitsPerWeeks.entrySet().iterator().next().getKey();
+        		int cmp = Integer.parseInt(labels0.substring(labels0.length()-2, labels0.length()));
+        		int expected = cmp;
         		for(var item : commitsPerWeeks.entrySet()) {
-                    labels.add("Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")");
-                    data.add(item.getValue());
+        			cmp = Integer.parseInt(item.getKey().substring(item.getKey().length()-2, item.getKey().length()));
+        			if(cmp == expected) {
+        				labels.add("Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")");
+                        data.add(item.getValue());
+        			} else {
+        				while(expected != cmp) {
+        					labels.add("Week " + expected + " (" + item.getKey().substring(0,4) + ")");
+            				data.add(0);
+            				expected++;
+        				}
+        				labels.add("Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")");
+                        data.add(item.getValue());
+        				expected++;
+        			}
+        			expected++;
         		}
         	} else {
+        		var labels0 = commitsPerDate.entrySet().iterator().next().getKey();
+        		LocalDate cmp = labels0;
+        		LocalDate expected = cmp;
         		for(var item : commitsPerDate.entrySet()) {
-                    labels.add(item.getKey().getMonth().name() + " " + item.getKey().getYear());
-                    data.add(item.getValue());
+        			cmp = item.getKey();
+        			if(cmp.equals(expected)) {
+        				labels.add(item.getKey().getMonth().name() + " " + item.getKey().getYear());
+                        data.add(item.getValue());
+        			} else {
+        				while(!expected.equals(cmp)) {
+        					labels.add(item.getKey().getMonth().name() + " " + item.getKey().getYear());
+            				data.add(0);
+            				expected = expected.plusMonths(1);
+        				}
+        				labels.add(item.getKey().getMonth().name() + " " + item.getKey().getYear());
+                        data.add(item.getValue());
+        			}
+        			expected = expected.plusMonths(1);
         		}
             }
             
             wg.addChart("line", "Number of lines " + (this.lines ? "added" : "deleted") + " per " + this.howToSort, labels, data);
-        	
         }
 
     }
