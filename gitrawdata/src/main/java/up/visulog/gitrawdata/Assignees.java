@@ -14,7 +14,9 @@ public class Assignees {
     public Assignees(){
         this.assignees = null;
     }
-
+    public Assignees(Collection<Assignee> assignees){
+        this.assignees = assignees;
+    }
     public Collection<Assignee> getAssigneesList() {
         return assignees;
     }
