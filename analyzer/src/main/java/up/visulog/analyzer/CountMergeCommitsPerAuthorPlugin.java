@@ -4,6 +4,7 @@ import up.visulog.config.Configuration;
 import up.visulog.gitrawdata.Commit;
 import up.visulog.webgen.WebGen;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +73,13 @@ public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
         
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
-        	
+            ArrayList<String> labels = new ArrayList<String>();
+            ArrayList<Integer> data = new ArrayList<Integer>();
+            for(var item : mergeCommitsPerAuthor.entrySet()){
+                labels.add(item.getKey());
+                data.add(item.getValue());
+            }
+            wg.addChart("bar", "Number of merge commits", labels, data);
         }
     }
 }
