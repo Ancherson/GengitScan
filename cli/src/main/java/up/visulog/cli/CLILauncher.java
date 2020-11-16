@@ -8,19 +8,14 @@ import up.visulog.webgen.WebGen;
 
 import java.awt.Desktop;
 // a library that allows you to read an inputReader (for example an FileReader or an InputStreamReader)
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.File;
-//a library that allows you to read a File, creates an FileReader 
+import java.io.*;
+//a library that allows you to read a File, creates an FileReader
 //A FileReader alone is useless, we need to use it in a BufferedReader
-import java.io.FileReader;
 
 // a library that allows you to write to files
-import java.io.FileWriter;
 
 //When we have a java error when we open a file or write to a file, it creates an IOException
 //So we need to catch it, that's why I use the couple try,catch
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.FileSystems;
@@ -87,8 +82,11 @@ public class CLILauncher {
                             		plugins.put("getMembers", new PluginConfig() {});
                             		API = true;
                             		break;
-                            		
-                            	case "countCommitsPerMonths":
+								case "getExtensions":
+									plugins.put("getExtensions", new PluginConfig() {});
+									API = true;
+									break;
+								case "countCommitsPerMonths":
                             		plugins.put("countCommitsPerMonths", new PluginConfig() {});
                             		break;
                             	case "countCommitsPerMonthsForAllBranchs":
@@ -108,9 +106,9 @@ public class CLILauncher {
                             		break;
                             		
                             	case "countIssues":
-                            		plugins.put("countIssues", new PluginConfig() {});
-                            		API = true;
-                            		break;
+									plugins.put("countIssues", new PluginConfig() {});
+									API = true;
+									break;
                             		
                             	case "countLinesDeleted":
                             		plugins.put("countLinesDeleted", new PluginConfig() {});

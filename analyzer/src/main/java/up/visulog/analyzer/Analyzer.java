@@ -69,7 +69,8 @@ public class Analyzer {
             case "countComments" : return Optional.of(new CountCommentsPerAuthorPlugin(config));
             case "getMembers" : return Optional.of(new GetMembersPerProjectPlugin(config));
             case "countIssues" : return Optional.of(new CountIssuesPerMemberPlugin(config));
-            
+            case "getExtensions" : return Optional.of(new GetExtensionsPerProjectPlugin(config));
+
             case "countLinesAddedPerDays" : return Optional.of(new CountLinesPerDatePlugin(config, "days", true, false));
             case "countLinesAddedPerDaysForAllBranchs" : return Optional.of(new CountLinesPerDatePlugin(config, "days", true, true));
             case "countLinesDeletedPerDays" : return Optional.of(new CountLinesPerDatePlugin(config, "days", false, false));

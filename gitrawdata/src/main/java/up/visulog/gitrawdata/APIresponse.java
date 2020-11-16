@@ -141,4 +141,31 @@ public class APIresponse {
             e.printStackTrace();
         }
     }
+    public void createLogFileForExtensions(String privateToken,int idProject){
+        Process process;
+        try {
+
+            //creating a json file
+            File jsonFile = new File("../GitLog/resultsExtensions.json");
+            FileWriter writeJsonFile = new FileWriter("../GitLog/resultsExtensions.json");
+            //Command to terminal
+            String[] command = {"curl",
+                    "--header",
+                    "PRIVATE-TOKEN:"+privateToken,
+                    "https://gaufre.informatique.univ-paris-diderot.fr/api/v4/projects/"+idProject+"/languages?per_page=1000"};
+            //Sending to GitLab API a request
+            process = Runtime.getRuntime().exec(command);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            //Writing in JSON file
+            while ((line = reader.readLine()) != null) {
+                writeJsonFile.write(line);
+            }
+            //closing the file
+            writeJsonFile.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
