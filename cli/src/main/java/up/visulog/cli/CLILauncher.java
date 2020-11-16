@@ -10,6 +10,7 @@ import java.awt.Desktop;
 // a library that allows you to read an inputReader (for example an FileReader or an InputStreamReader)
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.File;
 //a library that allows you to read a File, creates an FileReader 
 //A FileReader alone is useless, we need to use it in a BufferedReader
 import java.io.FileReader;
@@ -43,7 +44,7 @@ public class CLILauncher {
 			results.toHTML(wg);
 			wg.write();
 			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-			    Desktop.getDesktop().browse(Paths.get("../htmlResult/index.html").toUri());
+				Desktop.getDesktop().open(new File("../htmlResult/index.html"));
 			}
         } else displayHelpAndExit();
     }
