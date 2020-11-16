@@ -78,15 +78,15 @@ public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
         
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
-        	ArrayList<String> label = new ArrayList<String>(); 
-        	ArrayList<Integer> data = new ArrayList<Integer>();
+        	ArrayList<String> authorOfComment = new ArrayList<String>();
+        	ArrayList<Integer> numberOfComments = new ArrayList<Integer>();
         	
         	for(var item : commentPerAuthor.entrySet()) {
-        		label.add(item.getKey());
-        		data.add(item.getValue());
+                authorOfComment.add(item.getKey());
+                numberOfComments.add(item.getValue());
         	}
-        	
-        	//TO DO : Call WebGen Function
+
+            wg.addChart("bar", "Number of comments", authorOfComment, numberOfComments);
         }
     }
 }
