@@ -21,29 +21,73 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     // if the variable is true, the plugin count the lines added of commits
     // if the variable is false, the plugin count the lines deleted of commits
     private Result result;
-    private boolean allBranchs;
-    // if the variable is true, the plugin count the lines for all branchs
+    private boolean allBranches;
+    // if the variable is true, the plugin count the lines for all branches
     // if the variable is false, the plugin count the lines for the branch where the user is
     
-    
     // Constructor
-    public CountLinesPerAuthorPerDatePlugin(Configuration generalConfiguration, String howToSort, boolean lines, boolean allBranchs) {
+    public CountLinesPerAuthorPerDatePlugin(Configuration generalConfiguration, String howToSort, boolean lines, boolean allBranches) {
         this.configuration = generalConfiguration;
         this.howToSort = howToSort;
         this.lines = lines;
-        this.allBranchs = allBranchs;
+        this.allBranches = allBranches;
     }
     
     // when the program starts, the first function is called, it starts the plugin
-    static Result processLog(List<Commit> gitLog) {
+    static Result processLog(List<Commit> gitLog) {	
     	var result = new Result();
+    	// change the values of the object Result
     	result.setHowToSort(howToSort);
-    	result.setLines(lines);	
+    	result.setLines(lines);
+    	
+    	// first, we find the commits sorting per the days
     	Map<LocalDate, List<Commit>> commitsPerDate = sortCommitsPerDays(gitLog);
+    	
+    	// then, we create a new Map with a Key which associates an author and his number of added/deleted lines
     	for(var commitsPerDays : commitsPerDate.entrySet()) {
     		LocalDate m = commitsPerDays.getKey();
     		Map<String, Integer> linesAddedDeleted = linesPerAuthor(commitsPerDays.getValue());
     		result.linesPerAuthorPerDate.put(m, linesAddedDeleted);
+    	}
+    	
+    	// now, the linesPerAuthorPerDate attribute associates the list of authors (and its number of added/deleted lines) per day
+    	// we just have to sort them by month or week
+    	
+    	// sort the commits per Months
+    	if(howToSort.equals("months")) {
+    		// first, we create a new Map
+    		Map<LocalDate, Map<String, Integer>> res = new TreeMap<>();
+    		// we sort the number of added/deleted lines per months
+        	for(var date : result.linesPerAuthorPerDate.entrySet()) {
+        		LocalDate m = LocalDate.of(date.getKey().getYear(), date.getKey().getMonth(), 1);
+        		// we create a new Map which gives the right number of lines to the authors
+        		Map<String, Integer> res2 = authorsAndMonths(m, result);
+        		// we change the value if the authors appear several times
+        		res2 = sameAuthor(res2);
+        		res.put(m, res2);
+        	}
+        	
+        	// change the key and the value of result.commitsPerDate
+        	result.linesPerAuthorPerDate.clear();
+        	result.linesPerAuthorPerDate.putAll(res);
+    	}
+    	
+    	// sort the commits per Weeks
+    	else if(howToSort.equals("weeks")) {
+    		// first, we create a new Map
+    		Map<String, Map<String, Integer>> res = new TreeMap<>();
+    		// we sort the number of added/deleted lines per weeks
+        	for(var date : result.linesPerAuthorPerDate.entrySet()) {
+        		String m = Integer.toString(date.getKey().getYear()) + " Week " + Integer.toString(date.getKey().getDayOfYear()/7);
+        		// we create a new Map which gives the right number of lines to the authors
+        		Map<String, Integer> res2 = authorAndWeeks(m, result);
+        		// we change the value if the authors appear several times
+        		res2 = sameAuthor(res2);
+        		res.put(m, res2);
+        	}
+    		
+         // change the key and the value of result.commitsPerWeeks
+            result.linesPerAuthorPerWeeks.putAll(res);
     	}
     	return result;
     }
@@ -90,10 +134,61 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         return res;
     }
     
+    // to sort the lines by authors and per months
+    static Map<String, Integer> authorsAndMonths(LocalDate months, Result r) {
+    	Map<String, Integer> res = new HashMap<>();
+    	for(var date : r.linesPerAuthorPerDate.entrySet()) {
+    		LocalDate m = LocalDate.of(date.getKey().getYear(), date.getKey().getMonth(), 1);
+    		if(months.equals(m)) {
+    			for(var lines : date.getValue().entrySet()) {
+    				String a = lines.getKey();
+                	var nb = res.getOrDefault(a, 0);
+                	res.put(a, nb + lines.getValue());
+    			}
+    		}
+    	}
+    	return res;
+    }
+
+    // to sort commits by author, it adds the added or deleted lines
+    static Map<String, Integer> sameAuthor(Map<String, Integer> listCommits) {
+    	Map<String, Integer> res = new HashMap<>();
+        Map<String,String> emailToName = new HashMap<String,String>();
+        for (var commit : listCommits.entrySet()) {
+        	String[] author = commit.getKey().split(" ");
+            String email = author[author.length-1];
+            if(emailToName.get(email) == null) {
+            	emailToName.put(email, commit.getKey());
+            }
+        	var lines = res.getOrDefault(email, 0);
+	    	res.put(email, lines + commit.getValue());
+        }
+        for(var e : emailToName.entrySet()) {
+         	int nbCommit = res.remove(e.getKey());
+         	res.put(e.getValue(), nbCommit);
+         }
+        return res;
+    }
+    
+    static Map<String, Integer> authorAndWeeks(String week, Result r) {
+    	Map<String, Integer> res = new HashMap<>();
+    	for(var date : r.linesPerAuthorPerDate.entrySet()) {
+    		String m = Integer.toString(date.getKey().getYear()) + " Week " + Integer.toString(date.getKey().getDayOfYear()/7);
+    		if(week.equals(m)) {
+    			for(var lines : date.getValue().entrySet()) {
+    				String a = lines.getKey();
+                	var nb = res.getOrDefault(a, 0);
+                	res.put(a, nb + lines.getValue());
+    			}
+    		}
+    	}
+    	return res;
+    }
+    
     // function which executes the plugin
     @Override
     public void run() {
-        result = processLog(Commit.parseLogFromCommand(configuration.getGitPath(), allBranchs));
+        result = processLog(Commit.parseLogFromCommand(configuration.getGitPath(), allBranches));
     }
 
     // function which returns the results of the analysis
@@ -103,9 +198,9 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         return result;
     }    
     
-    
     static class Result implements AnalyzerPlugin.Result {
         private Map<LocalDate, Map<String, Integer>> linesPerAuthorPerDate = new TreeMap<>();
+        private Map<String, Map<String, Integer>> linesPerAuthorPerWeeks = new TreeMap<>();
         private String howToSort = "month";
         private boolean lines;
         
@@ -117,18 +212,6 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         // function which set the variable lines
         public void setLines(boolean lines) {
         	this.lines = lines;
-        }    
-        
-        // if you want to test the plugin, here s a function to print the map linesPerAuthorPerDate
-        public void afficher() {
-        	for(var commits : linesPerAuthorPerDate.entrySet()) {
-        		System.out.println(commits.getKey());
-        		Map<String, Integer> lines = commits.getValue();
-        		for(var l : lines.entrySet()) {
-            		System.out.println(l.getKey() + " : " + l.getValue());
-            	}
-        		System.out.println();        		
-        	}
         }
         
         // get linesPerAuthorPerDate
@@ -136,99 +219,29 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
             return linesPerAuthorPerDate;
         }
         
-        //function which sort the lines Added/Deleted per months
-        public Map<LocalDate, Map<String, Integer>> resultPerMonths() {
-        	Map<LocalDate, Map<String, Integer>> res = new TreeMap<>();
-        	for(var date : linesPerAuthorPerDate.entrySet()) {
-        		LocalDate m = LocalDate.of(date.getKey().getYear(), date.getKey().getMonth(), 1);		
-        		Map<String, Integer> res2 = authorsAndMonths(m);
-        		res2 = sameAuthor(res2);
-        		res.put(m, res2);
-        	}
-        	return res;
-        }
-        
-        public Map<String, Integer> authorsAndMonths(LocalDate months) {
-        	Map<String, Integer> res = new HashMap<>();
-        	for(var date : linesPerAuthorPerDate.entrySet()) {
-        		LocalDate m = LocalDate.of(date.getKey().getYear(), date.getKey().getMonth(), 1);
-        		if(months.equals(m)) {
-        			for(var lines : date.getValue().entrySet()) {
-        				String a = lines.getKey();
-                    	var nb = res.getOrDefault(a, 0);
-                    	res.put(a, nb + lines.getValue());
-        			}
-        		}
-        	}
-        	return res;
-        }
-        
-     // to sort commits by author, it adds the added or deleted lines
-        static Map<String, Integer> sameAuthor(Map<String, Integer> listCommits) {
-        	Map<String, Integer> res = new HashMap<>();
-            Map<String,String> emailToName = new HashMap<String,String>();
-            for (var commit : listCommits.entrySet()) {
-            	String[] author = commit.getKey().split(" ");
-                String email = author[author.length-1];
-                if(emailToName.get(email) == null) {
-                	emailToName.put(email, commit.getKey());
-                }
-            	var lines = res.getOrDefault(email, 0);
-    	    	res.put(email, lines + commit.getValue());
-            }
-            for(var e : emailToName.entrySet()) {
-             	int nbCommit = res.remove(e.getKey());
-             	res.put(e.getValue(), nbCommit);
-             }
-            return res;
-        }
-        
-        // function which sort the lines Added/Deleted per weeks
-        public Map<String, Map<String, Integer>> resultPerWeeks() {
-        	Map<String, Map<String, Integer>> res = new TreeMap<>();
-        	for(var date : linesPerAuthorPerDate.entrySet()) {
-        		String m = Integer.toString(date.getKey().getYear()) + " Week " + Integer.toString(date.getKey().getDayOfYear()/7);	
-        		Map<String, Integer> res2 = authorAndWeeks(m);
-        		res2 = sameAuthor(res2);
-        		res.put(m, res2);
-        	}
-        	return res;
-        }
-        
-        public Map<String, Integer> authorAndWeeks(String week) {
-        	Map<String, Integer> res = new HashMap<>();
-        	for(var date : linesPerAuthorPerDate.entrySet()) {
-        		String m = Integer.toString(date.getKey().getYear()) + " Week " + Integer.toString(date.getKey().getDayOfYear()/7);
-        		if(week.equals(m)) {
-        			for(var lines : date.getValue().entrySet()) {
-        				String a = lines.getKey();
-                    	var nb = res.getOrDefault(a, 0);
-                    	res.put(a, nb + lines.getValue());
-        			}
-        		}
-        	}
-        	return res;
-        }
-        
         @Override
         public String getResultAsString() {
-            return linesPerAuthorPerDate.toString();
+        	if(linesPerAuthorPerWeeks.size() != 0) {
+        		return linesPerAuthorPerWeeks.toString();
+        	}
+        	return linesPerAuthorPerDate.toString();
         }
 
         @Override
         public String getResultAsHtmlDiv() {
-//        	this.afficher();
         	StringBuilder html = new StringBuilder();
-        	String s = ""; //I create this variable to change the output easily
+        	String s = "";
+        	//I create this variable to change the output easily
+        	// the variable s is filled according to the way of sorting
         	
-        	//check if the user wants the number of the lines added/deleted or the number of commits
+        	// check if the user wants the number of the lines added/deleted or the number of commits
         	if(lines) {
-        		s += "<div>Number of lines added of commits per " + this.howToSort + "and per author : <ul><br>";
+        		s += "<div>Number of lines added of commits per " + this.howToSort + " and per author : <ul><br>";
         	} else {
-        		s += "<div>Number of lines deleted per " + this.howToSort + "and per author : <ul><br>";
+        		s += "<div>Number of lines deleted per " + this.howToSort + " and per author : <ul><br>";
         	}
         	
-        	//display the commits (or lines added/deleted) by the way of sorting
+        	// display the commits (or lines added/deleted) by the way of sorting
         	if(this.howToSort.equals("days")) {
         		for(var item : linesPerAuthorPerDate.entrySet()) {
         			s += "<ul>" + item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() +  " " + item.getKey().getYear() + "<br>";
@@ -239,8 +252,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
             		s+= "</ul><br>";
         		}
         	} else if(this.howToSort.equals("weeks")) {
-        		Map<String, Map<String, Integer>> res = resultPerWeeks();
-        		for(var item : res.entrySet()) {
+        		for(var item : linesPerAuthorPerWeeks.entrySet()) {
         			s += "<ul>Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")<br>";
         			Map<String, Integer> lines = item.getValue();
             		for(var l : lines.entrySet()) {
@@ -249,8 +261,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
             		s+= "</ul><br>";
         		}
         	} else {
-        		Map<LocalDate, Map<String, Integer>> res = resultPerMonths();
-        		for(var item : res.entrySet()) {
+        		for(var item : linesPerAuthorPerDate.entrySet()) {
         			s += "<ul>" + item.getKey().getMonth().name() + " " + item.getKey().getYear() + "<br>";
         			Map<String, Integer> lines = item.getValue();
             		for(var l : lines.entrySet()) {

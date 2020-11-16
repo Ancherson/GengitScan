@@ -14,12 +14,12 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 	    
 	    // true means sort lines added, false means sort lines deleted
 	    private boolean sortLineAdded;
-	    private boolean allBranchs;
+	    private boolean allBranches;
 
-	    public CountLinesPerAuthorPlugin(Configuration generalConfiguration, boolean sortLineAdded, boolean allBranchs) {
+	    public CountLinesPerAuthorPlugin(Configuration generalConfiguration, boolean sortLineAdded, boolean allBranches) {
 	        this.configuration = generalConfiguration;
 	        this.sortLineAdded = sortLineAdded;
-	        this.allBranchs = allBranchs;
+	        this.allBranches = allBranches;
 	    }
 
 	    Result processLog(List<Commit> gitLog) {
@@ -52,7 +52,7 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 
 	    @Override
 	    public void run() {
-	        result = processLog(Commit.parseLogFromCommand(configuration.getGitPath(), allBranchs));
+	        result = processLog(Commit.parseLogFromCommand(configuration.getGitPath(), allBranches));
 	    }
 
 	    @Override
