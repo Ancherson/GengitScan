@@ -285,125 +285,69 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         	HashMap<String, ArrayList<Integer>> datasets = new HashMap<String, ArrayList<Integer>>();
         	int nbr = 0;
         	
-            if(this.howToSort.equals("days")) {
+            if(this.howToSort.equals("days") || this.howToSort.equals("months")) {
             	var labels0 = linesPerAuthorPerDate.entrySet().iterator().next().getKey();
         		LocalDate cmp = labels0;
         		LocalDate expected = cmp;
         		for(var item : linesPerAuthorPerDate.entrySet()) {
         			cmp = item.getKey();
-        			if(cmp.equals(expected)) {
-        				labels.add(item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() +  " " + item.getKey().getYear());
-                		Map<String, Integer> lines = item.getValue();
-                		for(var l : lines.entrySet()) {
-                			String author = l.getKey();
-                			var authorAndInteger = datasets.getOrDefault(author, new ArrayList<Integer>());
-                			while(authorAndInteger.size() != nbr) {
-                				authorAndInteger.add(0);
-                			}
-                			authorAndInteger.add(l.getValue());
-                			datasets.put(author, authorAndInteger);
-                		}
-                		nbr++;
-        			} else {
+        			if(!cmp.equals(expected)) {
         				while(!expected.equals(cmp)) {
-        					labels.add(expected.getDayOfMonth() + " " + expected.getMonth().name() + " " + expected.getYear());
-            				expected = expected.plusDays(1);
+        					if(howToSort.equals("days")) {
+        						labels.add(expected.getDayOfMonth() + " " + expected.getMonth().name() + " " + expected.getYear());
+        						expected = expected.plusDays(1);
+        					} else {
+        						labels.add(expected.getMonth().name() + " " + expected.getYear());
+        						expected = expected.plusMonths(1);
+        					}
             				nbr++;
         				}
-        				labels.add(item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() +  " " + item.getKey().getYear());
-                		Map<String, Integer> lines = item.getValue();
-                		for(var l : lines.entrySet()) {
-                			String author = l.getKey();
-                			var authorAndInteger = datasets.getOrDefault(author, new ArrayList<Integer>());
-                			while(authorAndInteger.size() != nbr) {
-                				authorAndInteger.add(0);
-                			}
-                			authorAndInteger.add(l.getValue());
-                			datasets.put(author, authorAndInteger);
-                		}
-                		nbr++;
         			}
-        			expected = expected.plusDays(1);
+        			if(howToSort.equals("days")) {
+        				labels.add(item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() +  " " + item.getKey().getYear());
+        				expected = expected.plusDays(1);
+					} else {
+						labels.add(item.getKey().getMonth().name() + " " + item.getKey().getYear());
+						expected = expected.plusMonths(1);
+					}
+            		Map<String, Integer> lines = item.getValue();
+            		for(var l : lines.entrySet()) {
+            			String author = l.getKey();
+            			var authorAndInteger = datasets.getOrDefault(author, new ArrayList<Integer>());
+            			while(authorAndInteger.size() != nbr) {
+            				authorAndInteger.add(0);
+            			}
+            			authorAndInteger.add(l.getValue());
+            			datasets.put(author, authorAndInteger);
+            		}
+            		nbr++;
         		}
-            } else if(this.howToSort.equals("weeks")) {
+            } else {
             	var labels0 = linesPerAuthorPerWeeks.entrySet().iterator().next().getKey();
         		int cmp = Integer.parseInt(labels0.substring(labels0.length()-2, labels0.length()));
         		int expected = cmp;
         		for(var item : linesPerAuthorPerWeeks.entrySet()) {
         			cmp = Integer.parseInt(item.getKey().substring(item.getKey().length()-2, item.getKey().length()));
-        			if(cmp == expected) {
-        				labels.add("Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")");
-        				Map<String, Integer> lines = item.getValue();
-                		for(var l : lines.entrySet()) {
-                			String author = l.getKey();
-                			var authorAndInteger = datasets.getOrDefault(author, new ArrayList<Integer>());
-                			while(authorAndInteger.size() != nbr) {
-                				authorAndInteger.add(0);
-                			}
-                			authorAndInteger.add(l.getValue());
-                			datasets.put(author, authorAndInteger);
-                		}
-                		nbr++;
-                	} else {
+        			if(cmp != expected) {
         				while(expected != cmp) {
         					labels.add("Week " + expected + " (" + item.getKey().substring(0,4) + ")");
             				expected++;
             				nbr++;
         				}
-        				labels.add("Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")");
-        				Map<String, Integer> lines = item.getValue();
-                		for(var l : lines.entrySet()) {
-                			String author = l.getKey();
-                			var authorAndInteger = datasets.getOrDefault(author, new ArrayList<Integer>());
-                			while(authorAndInteger.size() != nbr) {
-                				authorAndInteger.add(0);
-                			}
-                			authorAndInteger.add(l.getValue());
-                			datasets.put(author, authorAndInteger);
-                		}
-                		nbr++;
         			}
+        			labels.add("Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")");
+    				Map<String, Integer> lines = item.getValue();
+            		for(var l : lines.entrySet()) {
+            			String author = l.getKey();
+            			var authorAndInteger = datasets.getOrDefault(author, new ArrayList<Integer>());
+            			while(authorAndInteger.size() != nbr) {
+            				authorAndInteger.add(0);
+            			}
+            			authorAndInteger.add(l.getValue());
+            			datasets.put(author, authorAndInteger);
+            		}
+            		nbr++;
         			expected++;
-        		}
-        	} else {
-        		var labels0 = linesPerAuthorPerDate.entrySet().iterator().next().getKey();
-        		LocalDate cmp = labels0;
-        		LocalDate expected = cmp;
-        		for(var item : linesPerAuthorPerDate.entrySet()) {
-        			cmp = item.getKey();
-        			if(cmp.equals(expected)) {
-        				labels.add(item.getKey().getMonth().name() + " " + item.getKey().getYear());
-                		Map<String, Integer> lines = item.getValue();
-                		for(var l : lines.entrySet()) {
-                			String author = l.getKey();
-                			var authorAndInteger = datasets.getOrDefault(author, new ArrayList<Integer>());
-                			while(authorAndInteger.size() != nbr) {
-                				authorAndInteger.add(0);
-                			}
-                			authorAndInteger.add(l.getValue());
-                			datasets.put(author, authorAndInteger);
-                		}
-                		nbr++;
-        			} else {
-        				while(!expected.equals(cmp)) {
-        					labels.add(expected.getMonth().name() + " " + expected.getYear());
-            				expected = expected.plusMonths(1);
-            				nbr++;
-        				}
-        				labels.add(item.getKey().getMonth().name() + " " + item.getKey().getYear());
-                		Map<String, Integer> lines = item.getValue();
-                		for(var l : lines.entrySet()) {
-                			String author = l.getKey();
-                			var authorAndInteger = datasets.getOrDefault(author, new ArrayList<Integer>());
-                			while(authorAndInteger.size() != nbr) {
-                				authorAndInteger.add(0);
-                			}
-                			authorAndInteger.add(l.getValue());
-                			datasets.put(author, authorAndInteger);
-                		}
-                		nbr++;
-        			}
-        			expected = expected.plusMonths(1);
         		}
             }
             
