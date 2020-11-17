@@ -33,7 +33,7 @@ public class WebGen {
 			body.li().text(content).__();
 		}		
 	}
-	
+
 	public void addChart(String type, String title, ArrayList<String> labels, ArrayList<Integer> data){
 		String labelsJs = "var labels = [";
 		for(String l : labels){
@@ -76,6 +76,33 @@ public class WebGen {
 		String genChartJs = "genChart('"+type+"','"+title+"', labels, data);";
 
 		String js = labelsJs+"\n"+dataJs+"\n"+genChartJs+"\n";
+
+		view.div()
+				.script().text(js).__()
+			.__();
+	}
+
+	public void addChart(String title, ArrayList<String> labels, HashMap<String, ArrayList<Integer>> datasets){
+		String labelsJs = "var labels = [";
+		for(String l : labels){
+			labelsJs += "'" + l + "',";
+		}
+		labelsJs = labelsJs.substring(0, labelsJs.length()-1);
+		labelsJs += "];";
+
+		String datasetsJs = "var datasets = [";
+		for(var d : datasets.entrySet()){
+			datasetsJs += "['" + d.getKey() + "', [";
+			for(int n : d.getValue()){
+				datasetsJs += n + ",";
+			}
+			datasetsJs = datasetsJs.substring(0, datasetsJs.length()-1)+"]],";
+		}
+		datasetsJs = datasetsJs.substring(0, datasetsJs.length()-1)+"];";
+
+		String genChartJs = "genChart2('"+title+"', labels, datasets);";
+
+		String js = labelsJs+"\n"+datasetsJs+"\n"+genChartJs+"\n";
 
 		view.div()
 				.script().text(js).__()
