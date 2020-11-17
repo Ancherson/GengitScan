@@ -50,7 +50,7 @@ public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
     static class Result implements AnalyzerPlugin.Result {
         private final Map<String, Integer> mergeCommitsPerAuthor = new HashMap<>();
 
-        Map<String, Integer> getCommitsPerAuthor() {
+        Map<String, Integer> getMergeCommitsPerAuthor() {
             return mergeCommitsPerAuthor;
         }
 
