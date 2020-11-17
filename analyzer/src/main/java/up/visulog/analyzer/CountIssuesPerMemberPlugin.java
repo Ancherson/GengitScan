@@ -45,7 +45,7 @@ public class CountIssuesPerMemberPlugin implements AnalyzerPlugin {
     static class Result implements AnalyzerPlugin.Result {
         private final Map<String, Integer> issuesPerMember = new HashMap<>();
 
-        Map<String, Integer> getCommitsPerAuthor() {
+        Map<String, Integer> getIssuesPerMember() {
             return issuesPerMember;
         }
 
