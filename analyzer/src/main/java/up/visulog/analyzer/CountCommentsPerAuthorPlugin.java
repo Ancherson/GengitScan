@@ -56,7 +56,7 @@ public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
     static class Result implements AnalyzerPlugin.Result {
         private final Map<String, Integer> commentPerAuthor = new HashMap<>();
 
-        Map<String, Integer> getCommitsPerAuthor() {
+        Map<String, Integer> getCommentsPerAuthor() {
             return commentPerAuthor;
         }
 
