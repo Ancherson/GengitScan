@@ -3,7 +3,9 @@ package up.visulog.analyzer;
 import up.visulog.analyzer.CountCommitsPerAuthorPlugin.Result;
 import up.visulog.config.Configuration;
 import up.visulog.gitrawdata.Commit;
+import up.visulog.webgen.WebGen;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +85,17 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 	            }
 	            html.append("</ul></div>");
 	            return html.toString();
+	        }
+	        
+	        @Override
+	        public void getResultAsHtmlDiv(WebGen wg) {
+				ArrayList<String> labels = new ArrayList<String>();
+				ArrayList<Integer> data = new ArrayList<Integer>();
+				for (var item : linesPerAuthor.entrySet()) {
+					labels.add(item.getKey());
+					data.add(item.getValue());
+				}
+				wg.addChart("bar", sortLineAdded ? "Lines Added" : "Lines Deleted", labels, data);
 	        }
 	    }
 }

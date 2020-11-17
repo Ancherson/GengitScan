@@ -2,6 +2,7 @@ package up.visulog.analyzer;
 
 import up.visulog.config.Configuration;
 import up.visulog.gitrawdata.*;
+import up.visulog.webgen.WebGen;
 
 import java.util.*;
 
@@ -73,6 +74,19 @@ public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
             }
             html.append("</ul></div>");
             return html.toString();
+        }
+        
+        @Override
+        public void getResultAsHtmlDiv(WebGen wg) {
+        	ArrayList<String> authorOfComment = new ArrayList<String>();
+        	ArrayList<Integer> numberOfComments = new ArrayList<Integer>();
+        	
+        	for(var item : commentPerAuthor.entrySet()) {
+                authorOfComment.add(item.getKey());
+                numberOfComments.add(item.getValue());
+        	}
+
+            wg.addChart("bar", "Number of comments", authorOfComment, numberOfComments);
         }
     }
 }

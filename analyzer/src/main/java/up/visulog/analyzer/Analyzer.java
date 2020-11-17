@@ -82,6 +82,8 @@ public class Analyzer {
             case "countLinesAddedPerWeeksForAllBranches" : return Optional.of(new CountLinesPerDatePlugin(config, "weeks", true, true));
             case "countLinesDeletedPerWeeks" : return Optional.of(new CountLinesPerDatePlugin(config, "weeks", false, false));
             case "countLinesDeletedPerWeeksForAllBranches" : return Optional.of(new CountLinesPerDatePlugin(config, "weeks", false, true));
+            
+            case "getExtensions" : return Optional.of(new GetExtensionsPerProjectPlugin(config));
         
             case "countLinesAdded" : return Optional.of(new CountLinesPerAuthorPlugin(config, true, false));
             case "countLinesAddedForAllBranches" : return Optional.of(new CountLinesPerAuthorPlugin(config, true, true));

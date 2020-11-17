@@ -2,7 +2,9 @@ package up.visulog.analyzer;
 
 import up.visulog.config.Configuration;
 import up.visulog.gitrawdata.Commit;
+import up.visulog.webgen.WebGen;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +69,18 @@ public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
             }
             html.append("</ul></div>");
             return html.toString();
+        }
+        
+        @Override
+        public void getResultAsHtmlDiv(WebGen wg) {
+            ArrayList<String> authorOfCommits = new ArrayList<String>();
+            ArrayList<Integer> numberOfCommits= new ArrayList<Integer>();
+            for(var data : getCommitsPerAuthor().entrySet()){
+                authorOfCommits.add(data.getKey());
+                numberOfCommits.add(data.getValue());    
+            }
+
+            wg.addChart("bar", "Number of commits", authorOfCommits, numberOfCommits);
         }
     }
 }

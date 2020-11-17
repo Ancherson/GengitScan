@@ -2,6 +2,7 @@ package up.visulog.analyzer;
 
 import up.visulog.config.Configuration;
 import up.visulog.gitrawdata.*;
+import up.visulog.webgen.WebGen;
 
 import java.util.*;
 
@@ -62,6 +63,18 @@ public class CountIssuesPerMemberPlugin implements AnalyzerPlugin {
             }
             html.append("</ul></div>");
             return html.toString();
+        }
+        
+        @Override
+        public void getResultAsHtmlDiv(WebGen wg) {
+            ArrayList<String>  members = new ArrayList<String>();
+            ArrayList<Integer> numberOfIssues = new ArrayList<Integer>();
+
+            for(var item : issuesPerMember.entrySet()) {
+                members.add(item.getKey());
+                numberOfIssues.add(item.getValue());
+            }
+            wg.addChart("bar", "Number of issues", members, numberOfIssues);
         }
     }
 }

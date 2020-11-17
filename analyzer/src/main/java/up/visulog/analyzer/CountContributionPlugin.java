@@ -3,10 +3,12 @@ package up.visulog.analyzer;
 import up.visulog.analyzer.CountCommitsPerAuthorPlugin.Result;
 import up.visulog.config.Configuration;
 import up.visulog.gitrawdata.Commit;
+import up.visulog.webgen.WebGen;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class CountContributionPlugin implements AnalyzerPlugin{
 	 private final Configuration configuration;
@@ -97,5 +99,17 @@ public class CountContributionPlugin implements AnalyzerPlugin{
 	            html.append("</ul></div>");
 	            return html.toString();
 	        }
+	        
+	        @Override
+	        public void getResultAsHtmlDiv(WebGen wg) {
+				ArrayList<String> authorOfCommit = new ArrayList<String>();
+				ArrayList<Double> percentageOfContribution = new ArrayList<Double>();
+				for(var data : getCommitsPerAuthor().entrySet()){
+					authorOfCommit.add(data.getKey());
+					percentageOfContribution.add(data.getValue());
+				}
+				wg.addChartDouble("pie","Countribution",authorOfCommit,percentageOfContribution);
+	        }
 	    }
+	    
 }

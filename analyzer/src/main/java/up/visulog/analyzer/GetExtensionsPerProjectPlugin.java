@@ -2,6 +2,7 @@ package up.visulog.analyzer;
 
 import up.visulog.config.Configuration;
 import up.visulog.gitrawdata.*;
+import up.visulog.webgen.WebGen;
 
 import java.util.*;
 
@@ -54,6 +55,19 @@ public class GetExtensionsPerProjectPlugin implements AnalyzerPlugin {
             }
             html.append("</ul></div>");
             return html.toString();
+        }
+        
+        @Override
+        public void getResultAsHtmlDiv(WebGen wg) {
+            ArrayList<String> extension = new ArrayList<String>();
+            ArrayList<Double> percentage = new ArrayList<Double>();
+
+            for(var item : extensionsResult.entrySet()) {
+                extension.add(item.getKey());
+                percentage.add(item.getValue());
+            }
+
+            wg.addChartDouble("pie", "Number of comments", extension, percentage);
         }
     }
 }
