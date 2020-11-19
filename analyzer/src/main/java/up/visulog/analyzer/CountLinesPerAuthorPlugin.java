@@ -24,7 +24,7 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 	        this.allBranches = allBranches;
 	    }
 
-	    Result processLog(List<Commit> gitLog) {
+	    public Result processLog(List<Commit> gitLog) {
 	        var result = new Result();
 	        result.sortLineAdded = this.sortLineAdded;
 	        Map<String,String>emailToName = new HashMap<String,String>();
@@ -63,7 +63,7 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 	        return result;
 	    }
 
-	    static class Result implements AnalyzerPlugin.Result {
+	    public class Result implements AnalyzerPlugin.Result {
 	        private final Map<String, Integer> linesPerAuthor = new HashMap<>();
 	        private boolean sortLineAdded;
 	        

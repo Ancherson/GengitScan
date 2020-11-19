@@ -16,7 +16,7 @@ import java.time.Month;
 
 public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     private final Configuration configuration;
-    private static String howToSort = "months";
+    private String howToSort = "months";
     // the plugin sort commits per months, this is a default value
     // the value change if the user wants the number of commits par weeks or per days
     private static boolean lines;
@@ -36,7 +36,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     }
     
     // when the program starts, the first function is called, it starts the plugin
-    static Result processLog(List<Commit> gitLog) {
+    public Result processLog(List<Commit> gitLog) {
     	List<Commit> gitLog2 = sameAuthor2(gitLog);
     	var result = new Result();
     	// change the values of the object Result
@@ -92,7 +92,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     }
     
     // to get the list of commits on a specific day --> Returns Map<LocalDate, List<Commit>>
-    static Map<LocalDate, List<Commit>> sortCommitsPerDays(List<Commit> gitLog) {
+    public Map<LocalDate, List<Commit>> sortCommitsPerDays(List<Commit> gitLog) {
     	Map<LocalDate, List<Commit>> res = new TreeMap<>();
     	for (var commit : gitLog) {
     		LocalDate m = commit.date.toLocalDate();
@@ -101,7 +101,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     	return res;
     }
     
-    static List<Commit> makeCommitsList(LocalDate m, List<Commit> gitLog) {
+    public List<Commit> makeCommitsList(LocalDate m, List<Commit> gitLog) {
     	List<Commit> list = new LinkedList<>();
     	for (var commit : gitLog) {
     		LocalDate c = commit.date.toLocalDate();
@@ -113,7 +113,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     }
     
     // to sort commits by author, it adds the added or deleted lines
-    static Map<String, Integer> linesPerAuthor(List<Commit> listCommits) {
+    public Map<String, Integer> linesPerAuthor(List<Commit> listCommits) {
     	Map<String, Integer> res = new HashMap<>();
         for (var commit : listCommits) {
     		//The plugin don't count the line added/deleted from the merged commit
@@ -134,7 +134,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     }
     
     // to sort the lines by authors and per months
-    static Map<String, Integer> authorsAndMonths(LocalDate months, Result r) {
+    public Map<String, Integer> authorsAndMonths(LocalDate months, Result r) {
     	Map<String, Integer> res = new HashMap<>();
     	for(var date : r.linesPerAuthorPerDate.entrySet()) {
     		LocalDate m = LocalDate.of(date.getKey().getYear(), date.getKey().getMonth(), 1);
@@ -150,7 +150,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     }
 
     // it is the same list of commits, but the authors do not appear twice.
-    static List<Commit> sameAuthor2(List<Commit> gitLog) {
+    public List<Commit> sameAuthor2(List<Commit> gitLog) {
     	List<Commit> gitLog2 = new LinkedList<Commit>();
     	Map<String,String> emailToName = new HashMap<String,String>();
     	for(var commit : gitLog) {
@@ -174,7 +174,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     	return gitLog2;
     }
     
-    static Map<String, Integer> authorAndWeeks(String week, Result r) {
+    public Map<String, Integer> authorAndWeeks(String week, Result r) {
     	Map<String, Integer> res = new HashMap<>();
     	for(var date : r.linesPerAuthorPerDate.entrySet()) {
     		String m = Integer.toString(date.getKey().getYear()) + " Week " + Integer.toString(date.getKey().getDayOfYear()/7);
@@ -202,7 +202,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         return result;
     }    
     
-    static class Result implements AnalyzerPlugin.Result {
+    public class Result implements AnalyzerPlugin.Result {
         private Map<LocalDate, Map<String, Integer>> linesPerAuthorPerDate = new TreeMap<>();
         private Map<String, Map<String, Integer>> linesPerAuthorPerWeeks = new TreeMap<>();
         private String howToSort = "month";
