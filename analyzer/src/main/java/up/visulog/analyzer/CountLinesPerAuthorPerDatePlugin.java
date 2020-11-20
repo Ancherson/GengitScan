@@ -19,7 +19,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     private String howToSort = "months";
     // the plugin sort commits per months, this is a default value
     // the value change if the user wants the number of commits par weeks or per days
-    private static boolean lines;
+    private boolean lines;
     // if the variable is true, the plugin count the lines added of commits
     // if the variable is false, the plugin count the lines deleted of commits
     private Result result;
