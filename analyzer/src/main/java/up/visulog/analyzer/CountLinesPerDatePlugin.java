@@ -228,7 +228,7 @@ public class CountLinesPerDatePlugin implements AnalyzerPlugin {
         		}
         	}
             
-            wg.addChart("line", "Number of commits", labels, data);
+            wg.addChart("line", "Number of lines " + (lines ? "added" : "deleted") + " per " + this.howToSort, labels, data);
         }
 
     }
