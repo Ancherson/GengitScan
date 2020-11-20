@@ -6,6 +6,7 @@ import up.visulog.gitrawdata.Commit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.time.*;
 
 public class CountCommitsPerAuthorPerDayPlugin implements AnalyzerPlugin {
     private final Configuration configuration;
@@ -17,14 +18,35 @@ public class CountCommitsPerAuthorPerDayPlugin implements AnalyzerPlugin {
 
     static Result processLog(List<Commit> gitLog) {
         var result = new Result();
-        //rester a modifier
-        //ajouter la date
-        for (var commit : gitLog) {
-            var nb = result.commitsPerAuthorPerDay.getOrDefault(commit.author, 0);
+        Map<LocalDate, List<Commit>> commitsPerDay = sortCommitsPerDay(gitLog);
+        for (var commit : commitsPerDay.entrySet()) {
+          LocalDate m = commit.getKey();
+    		  nb = result.commitsPerAuthorPerDay.getOrDefault(commit.author, 0);
             result.commitsPerAuthorPerDay.put(commit.author, nb + 1);
         }
         return result;
     }
+
+    //commitsPerDay
+    static Map<LocalDate, List<Commit>> sortCommitsPerDay(List<Commit> gitLog) {
+     Map<LocalDate, List<Commit>> res = new TreeMap<>();
+     for (var commit : gitLog) {
+       LocalDate m = commit.date.toLocalDate();
+         res.put(m, makeCommitsList(m, gitLog));
+       }
+     return res;
+   }
+
+   static List<Commit> makeCommitsList(LocalDate m, List<Commit> gitLog) {
+     List<Commit> list = new LinkedList<>();
+     for (var commit : gitLog) {
+       LocalDate c = commit.date.toLocalDate();
+       if(c.equals(m)) {
+         list.add(commit);
+       }
+       }
+     return list;
+   }
 
     @Override
     public void run() {
@@ -38,9 +60,9 @@ public class CountCommitsPerAuthorPerDayPlugin implements AnalyzerPlugin {
     }
 
     static class Result implements AnalyzerPlugin.Result {
-        private final Map<String, Integer> commitsPerAuthorPerDay = new HashMap<>();
+        private final Map<LocalDate, Map<String, Integer>> commitsPerAuthorPerDay = new HashMap<>();
 
-        Map<String, Integer> getCommitsPerAuthorPerDay() {
+        Map<LocalDate, Map<String, Integer>> getCommitsPerAuthorPerDay() {
             return commitsPerAuthorPerDay;
         }
 
@@ -52,10 +74,11 @@ public class CountCommitsPerAuthorPerDayPlugin implements AnalyzerPlugin {
         @Override
         public String getResultAsHtmlDiv() {
             StringBuilder html = new StringBuilder("<div>Commits per author per day: <ul>");
+            String s;
             for (var item : commitsPerAuthorPerDay.entrySet()) {
-                html.append("<li>").append(item.getKey()).append(": ").append(item.getValue()).append("</li>");
+                s += "<ul>" + item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() +  " " + item.getKey().getYear() + "<br>";
             }
-            html.append("</ul></div>");
+            html.append(s).append("</ul></div>");
             return html.toString();
         }
     }
