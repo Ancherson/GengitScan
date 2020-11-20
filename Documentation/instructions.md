@@ -133,11 +133,11 @@ Vous pouvez maintenant compiler et exécuter les commandes suivantes.
 
 --------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------
-# Liste des arguments acceptés et leurs résultats
+## Liste des arguments acceptés et leurs résultats
 ------------------------------------------------------------------------------
 
 
-## STATISTIQUES GENERALES :
+### STATISTIQUES GENERALES :
 
 1. Liste des membres (API) (X) :
 ```
@@ -145,7 +145,7 @@ Vous pouvez maintenant compiler et exécuter les commandes suivantes.
 ```
 
 
-## ACTIVITES PAR DATE :
+### ACTIVITES PAR DATE :
 
 2. Nombre de Commits par Jour, Semaine et Mois :
 ```
@@ -157,15 +157,15 @@ Vous pouvez maintenant compiler et exécuter les commandes suivantes.
 3. Nombre de lignes ajoutées/supprimées par Jour, Semaine et Mois :
 ```
 ./gradlew run --args="--addPlugin=countLinesAddedPerDays"
-./gradlew run --args="--addPlugin=countCommitsAddedPerWeeks"
-./gradlew run --args="--addPlugin=countCommitsAddedPerMonths"
+./gradlew run --args="--addPlugin=countLinesAddedPerWeeks"
+./gradlew run --args="--addPlugin=countLinesAddedPerMonths"
 
 ./gradlew run --args="--addPlugin=countLinesDeletedPerDays"
-./gradlew run --args="--addPlugin=countCommitsDeletedPerWeeks"
-./gradlew run --args="--addPlugin=countCommitsDeletedPerMonths"
+./gradlew run --args="--addPlugin=countLinesDeletedPerWeeks"
+./gradlew run --args="--addPlugin=countLinesDeletedPerMonths"
 ```
 
-## ACTIVITES PAR AUTEUR :
+### ACTIVITES PAR AUTEUR :
 
 4. Nombre de Commits :
 ```
@@ -198,7 +198,7 @@ Vous pouvez maintenant compiler et exécuter les commandes suivantes.
 ./gradlew run --args="--addPlugin=countIssues --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
 ```
 
-## ACTIVITES PAR DATE ET PAR AUTEUR :
+### ACTIVITES PAR DATE ET PAR AUTEUR :
 
 10. Nombre de lignes ajoutées/supprimées par Jour, Semaine et Mois et par Auteur :
 ```
@@ -216,7 +216,7 @@ Vous pouvez maintenant compiler et exécuter les commandes suivantes.
 TODO : À compléter dès que le plugin est fait
 ```
 
-## FICHIERS ET EXTENSIONS :
+### FICHIERS ET EXTENSIONS :
 
 12. Pourcentage de chaque extensions (API) (X):
 ```
