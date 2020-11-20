@@ -40,7 +40,7 @@ public class GetMembersPerProjectPlugin implements AnalyzerPlugin {
     static class Result implements AnalyzerPlugin.Result {
         private final List<String> membersList = new ArrayList<>();
 
-        List<String> getMembers() {
+        List<String> getMembersList() {
             return membersList;
         }
 
