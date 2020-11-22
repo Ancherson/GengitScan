@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 public class APIresponse {
     public APIresponse(){
     }
@@ -24,6 +23,14 @@ public class APIresponse {
             String line;
             //Writing in JSON file
             while ((line = reader.readLine()) != null) {
+                if(line.equals("{\"message\":\"404 Project Not Found\"}")){
+                    System.out.println("Project not found, please check the projectId");
+                    displayHelpAndExit();
+                }
+                else if(line.equals("{\"message\":\"401 Unauthorized\"}")){
+                    System.out.println("Please check the Private Token or you don't have access to this project");
+                    displayHelpAndExit();
+                }
                 writeJsonFile.write(line);
             }
             //closing the file
@@ -45,6 +52,14 @@ public class APIresponse {
             String line;
             //Writing in JSON file
             while ((line = reader.readLine()) != null) {
+                if(line.equals("{\"message\":\"404 Project Not Found\"}")){
+                    System.out.println("Project not found, please check the projectId");
+                    displayHelpAndExit();
+                }
+                else if(line.equals("{\"message\":\"401 Unauthorized\"}")){
+                    System.out.println("Please check the Private Token or you don't have access to this project");
+                    displayHelpAndExit();
+                }
                 writeJsonFile.write(line);
             }
             //closing the file
@@ -72,6 +87,14 @@ public class APIresponse {
             String line;
             //Writing in JSON file
             while ((line = reader.readLine()) != null) {
+                if(line.equals("{\"message\":\"404 Project Not Found\"}")){
+                    System.out.println("Project not found, please check the projectId");
+                    displayHelpAndExit();
+                }
+                else if(line.equals("{\"message\":\"401 Unauthorized\"}")){
+                    System.out.println("Please check the Private Token or you don't have access to this project");
+                    displayHelpAndExit();
+                }
                 writeJsonFile.write(line);
             }
             //closing the file
@@ -101,6 +124,14 @@ public class APIresponse {
             String line;
             //Writing in JSON file
             while ((line = reader.readLine()) != null) {
+                if(line.equals("{\"message\":\"404 Project Not Found\"}")){
+                    System.out.println("Project not found, please check the projectId");
+                    displayHelpAndExit();
+                }
+                else if(line.equals("{\"message\":\"401 Unauthorized\"}")){
+                    System.out.println("Please check the Private Token or you don't have access to this project");
+                    displayHelpAndExit();
+                }
                 writeJsonFile.write(line);
             }
 
@@ -132,6 +163,14 @@ public class APIresponse {
             String line;
             //Writing in JSON file
             while ((line = reader.readLine()) != null) {
+                if(line.equals("{\"message\":\"404 Project Not Found\"}")){
+                        System.out.println("Project not found, please check the projectId");
+                        displayHelpAndExit();
+                }
+                else if(line.equals("{\"message\":\"401 Unauthorized\"}")){
+                        System.out.println("Please check the Private Token or you don't have access to this project");
+                        displayHelpAndExit();
+                }
                 writeJsonFile.write(line);
             }
             //closing the file
@@ -159,6 +198,14 @@ public class APIresponse {
             String line;
             //Writing in JSON file
             while ((line = reader.readLine()) != null) {
+                if(line.equals("{\"message\":\"404 Project Not Found\"}")){
+                    System.out.println("Project not found, please check the projectId");
+                    displayHelpAndExit();
+                }
+                else if(line.equals("{\"message\":\"401 Unauthorized\"}")){
+                    System.out.println("Please check the Private Token or you don't have access to this project");
+                    displayHelpAndExit();
+                }
                 writeJsonFile.write(line);
             }
             //closing the file
@@ -167,5 +214,14 @@ public class APIresponse {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    private static void displayHelpAndExit() {
+        System.out.println("Wrong command...");
+        //TODO: print the list of options and their syntax
+        System.out.println("Different options: ");
+        System.out.println("--addPlugin allows you to add new plugins");
+        System.out.println("--loadConfigFile allows you to load options from a file");
+        System.out.println("--justSaveConfigFile save command line options to a file instead of running the analysis");
+        System.exit(0);
     }
 }
