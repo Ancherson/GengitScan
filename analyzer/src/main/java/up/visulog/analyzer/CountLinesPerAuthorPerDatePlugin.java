@@ -170,9 +170,6 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     			for(int i=0; i<nameTab.length-1; i++) {
     				name += nameTab[i] + " ";
     			}
-    			if(name.equals("BADAOUI ismail ")) {
-        			name = "Ismail BADAOUI ";
-        		}
     			Commit m = new Commit(commit.id, name, commit.date, commit.description, commit.mergedFrom);
     			m.linesAdded = commit.linesAdded;
     			m.linesDeleted = commit.linesDeleted;
