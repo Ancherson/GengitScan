@@ -4,6 +4,7 @@ import up.visulog.config.Configuration;
 import up.visulog.gitrawdata.Commit;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.List;
 import java.util.Map;
 import java.time.*;
@@ -21,10 +22,18 @@ public class CountCommitsPerAuthorPerWeekPlugin implements AnalyzerPlugin {
         Map<LocalDate, List<Commit>> commitsPerDay = sortCommitsPerDay(gitLog);
         for (var commit : commitsPerDay.entrySet()) {
           LocalDate m = commit.getKey();
-    		  nb = result.commitsPerAuthorPerDay.getOrDefault(commit.author, 0);
+    		  var nb = result.commitsPerAuthorPerDay.getOrDefault(commit.author, 0);
             result.commitsPerAuthorPerDay.put(commit.author, nb + 1);
         }
-        return result;
+        Map<String, Map<String, Integer>> res = new TreeMap<>();
+    		// we sort the number of commits per week
+        	for(var date : result.getCommitsPerAuthorPerWeek().entrySet()) {
+        		String m = Integer.toString(date.getKey().getYear()) + " Week " + Integer.toString(date.getKey().getDayOfYear()/7);
+        		Map<String, Integer> res2 = authorAndWeeks(m, result);
+        		res.put(m, res2);
+        	}
+          result.CommitsPerAuthorPerWeek.putAll(res);
+          return result;
     }
 
     //commitsPerDay
@@ -50,13 +59,13 @@ public class CountCommitsPerAuthorPerWeekPlugin implements AnalyzerPlugin {
 
    public Map<String, Integer> authorAndWeeks(String week, Result r) {
       	Map<String, Integer> res = new HashMap<>();
-      	for(var date : r.linesPerAuthorPerDate.entrySet()) {
+      	for(var date : r.commitsPerAuthorPerDay.entrySet()) {
       		String m = Integer.toString(date.getKey().getYear()) + " Week " + Integer.toString(date.getKey().getDayOfYear()/7);
       		if(week.equals(m)) {
-      			for(var lines : date.getValue().entrySet()) {
-      				String a = lines.getKey();
+      			for(var c : date.getValue().entrySet()) {
+      				String a = c.getKey();
                   	var nb = res.getOrDefault(a, 0);
-                  	res.put(a, nb + lines.getValue());
+                  	res.put(a, nb + 1);
       			}
       		}
       	}
@@ -75,7 +84,8 @@ public class CountCommitsPerAuthorPerWeekPlugin implements AnalyzerPlugin {
     }
 
     static class Result implements AnalyzerPlugin.Result {
-        private final Map<LocalDate, Map<String, Integer>> commitsPerAuthorPerWeek = new HashMap<>();
+        public final Map<LocalDate, Map<String, Integer>> commitsPerAuthorPerDay = new TreeMap<>();
+        public Map<String, Map<String, Integer>> commitsPerAuthorPerWeek = new TreeMap<>();
 
         Map<LocalDate, Map<String, Integer>> getCommitsPerAuthorPerWeek() {
             return commitsPerAuthorPerWeek;
