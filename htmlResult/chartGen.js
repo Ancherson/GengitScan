@@ -27,6 +27,11 @@ function genChart(type, title, labels, data){
         parameters.data.datasets[0].backgroundColor = colors;
         parameters.data.datasets[0].hoverBackgroundColor = colors;
         parameters.data.datasets[0].borderColor = "white";
+        parameters.options.title = {
+            display: true,
+            fontSize: 24,
+            text: title
+        }
     }
     let chart = new Chart(context, parameters);
 }
@@ -52,6 +57,11 @@ function genChart2(title, labels, datasets) {
                 xAxes: [{
                     stacked: true
                 }]
+            },
+            title: {
+                display: true,
+                fontSize: 24,
+                text: title
             }
         }
     }
