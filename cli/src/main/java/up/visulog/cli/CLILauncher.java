@@ -45,6 +45,9 @@ public class CLILauncher {
     }
 
     static Optional<Configuration> makeConfigFromCommandLineArgs(String[] args) {
+    	if(args.length==0){
+    		return Optional.empty();
+		}
         var gitPath = FileSystems.getDefault().getPath("../");
         var plugins = new HashMap<String, PluginConfig>();
         String pPrivateToken = "";
