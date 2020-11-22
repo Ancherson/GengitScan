@@ -226,7 +226,10 @@ public class CLILauncher {
                     }
                 }
             } else {
-                gitPath = FileSystems.getDefault().getPath(arg);
+            	String path = arg;
+            	if(!arg.startsWith("/")) path = "../" + path;
+            	if(!isGitDirectory(path)) displayHelpAndExit();
+                gitPath = FileSystems.getDefault().getPath(path);
             }
         }
         if(API && (pProjectId==-1 || pPrivateToken.equals(""))){
@@ -234,6 +237,31 @@ public class CLILauncher {
         }
         return (API)?Optional.of(new Configuration(pPrivateToken,plugins,pProjectId)):Optional.of(new Configuration(gitPath, plugins));
     }
+    
+    private static boolean isGitDirectory(String path) {
+    	File file = new File(path);
+    	if(!file.exists()) {
+    		if(!path.startsWith("/")) path = path.substring(3);
+    		System.out.println("Error to find the file " + path);
+    		return false;
+    	}
+    	
+    	if(!file.isDirectory()) {
+    		if(!path.startsWith("/")) path = path.substring(3);
+    		System.out.println("the file : " + path + " is not a directory !");
+    		return false;
+    	}
+    	
+    	File[] files = file.listFiles();
+    	for(File f : files) {
+    		if(f.getName().equals(".git")) {
+    			return true;
+    		}
+    	}
+    	if(!path.startsWith("/")) path = path.substring(3);
+		System.out.println("the file : " + path + " is not a git directory !");
+		return false;
+     }
     
     //this function save the command in the file whose path is "path"
     private static String saveConfig(String[] args, String name) {
@@ -297,11 +325,10 @@ public class CLILauncher {
 
     private static void displayHelpAndExit() {
         System.out.println("Wrong command...");
-        //TODO: print the list of options and their syntax
         System.out.println("Different options: ");
-        System.out.println("--addPlugin allows you to add new plugins");
-        System.out.println("--loadConfigFile allows you to load options from a file");
-        System.out.println("--justSaveConfigFile save command line options to a file instead of running the analysis");
+        System.out.println("--addPlugin=nameOfPlugin allows you to add new plugins");
+        System.out.println("--load=nameOfOption allows you to load options from a file");
+        System.out.println("--save=nameOfOption save command line options to a file instead of running the analysis");
         System.exit(0);
     }
 }
