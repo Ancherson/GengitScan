@@ -32,7 +32,7 @@ public class CountCommitsPerAuthorPerMonthPlugin implements AnalyzerPlugin {
         		Map<String, Integer> res2 = authorsAndMonths(m, result);
         		res.put(m, res2);
         	}
-          result.CommitsPerAuthorPerWeek.putAll(res);
+          result.CommitsPerAuthorPerMonth.putAll(res);
           return result;
     }
 
@@ -100,7 +100,7 @@ public class CountCommitsPerAuthorPerMonthPlugin implements AnalyzerPlugin {
         public String getResultAsHtmlDiv() {
             StringBuilder html = new StringBuilder("<div>Commits per author per month: <ul>");
             String s;
-            for (var item : commitsPerAuthorPerWeek.entrySet()) {
+            for (var item : commitsPerAuthorPerMonth.entrySet()) {
         			s += "<ul>" + item.getKey().getMonth().name() + " " + item.getKey().getYear() + "<br>";
         			Map<String, Integer> commits = item.getValue();
             		for(var c : commits.entrySet()) {
