@@ -86,7 +86,7 @@ public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
                 numberOfComments.add(item.getValue());
         	}
 
-            wg.addChart("bar", "Number of comments", authorOfComment, numberOfComments);
+            wg.addChart("bar", "Number of comments per member", "Number of comments", authorOfComment, numberOfComments);
         }
     }
 }

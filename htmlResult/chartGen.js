@@ -1,4 +1,4 @@
-function genChart(type, title, labels, data){
+function genChart(type, title, label, labels, data){
     let canvas = document.createElement("canvas");
     document.body.appendChild(canvas);
 
@@ -9,13 +9,19 @@ function genChart(type, title, labels, data){
         data: {
             labels: labels,
             datasets: [{
-                label: title,
+                label: label,
                 backgroundColor: 'rgb(66, 135, 245)',
                 borderColor: 'rgb(66, 135, 245)',
                 data: data,
             }]
         },
-        options: {}
+        options: {
+            title : {
+                display: true,
+                fontSize: 24,
+                text: title
+            }    
+        }
     }
     if(type == "line") parameters.data.datasets[0].lineTension = 0;
     if(type == "pie"){
@@ -45,6 +51,11 @@ function genChart2(title, labels, datasets) {
             datasets: [],
         },
         options: {
+            title : {
+                display: true,
+                fontSize: 24,
+                text: title
+            },    
             scales: {
                 yAxes: [{
                     stacked: true

@@ -79,7 +79,7 @@ public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
                 labels.add(item.getKey());
                 data.add(item.getValue());
             }
-            wg.addChart("bar", "Number of merge commits", labels, data);
+            wg.addChart("bar", "Number of merge commits per member", "Number of merge commits", labels, data);
         }
     }
 }

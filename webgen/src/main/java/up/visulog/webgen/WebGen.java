@@ -43,7 +43,7 @@ public class WebGen {
 		body.__().__();
 	}
 
-	public void addChart(String type, String title, ArrayList<String> labels, ArrayList<Integer> data){
+	public void addChart(String type, String title, String label, ArrayList<String> labels, ArrayList<Integer> data){
 		String labelsJs = "var labels = [";
 		for(String l : labels){
 			labelsJs += "'" + l + "',";
@@ -58,7 +58,7 @@ public class WebGen {
 		dataJs = dataJs.substring(0, dataJs.length()-1);
 		dataJs += "];";
 
-		String genChartJs = "genChart('"+type+"','"+title+"', labels, data);";
+		String genChartJs = "genChart('"+type+"','"+title+"','"+label+"', labels, data);";
 
 		String js = labelsJs+"\n"+dataJs+"\n"+genChartJs+"\n";
 
@@ -67,7 +67,7 @@ public class WebGen {
 			.__();
 	}
 
-	public void addChartDouble(String type, String title, ArrayList<String> labels, ArrayList<Double> data){
+	public void addChartDouble(String type, String title, String label, ArrayList<String> labels, ArrayList<Double> data){
 		String labelsJs="var labels = [";
 		for(String l : labels){
 			labelsJs += "'" + l + "',";
@@ -82,7 +82,7 @@ public class WebGen {
 		dataJs = dataJs.substring(0, dataJs.length()-1);
 		dataJs+="];";
 
-		String genChartJs = "genChart('"+type+"','"+title+"', labels, data);";
+		String genChartJs = "genChart('"+type+"','"+title+"','"+label+"', labels, data);";
 
 		String js = labelsJs+"\n"+dataJs+"\n"+genChartJs+"\n";
 

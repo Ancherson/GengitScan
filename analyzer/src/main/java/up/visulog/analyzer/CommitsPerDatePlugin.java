@@ -197,7 +197,7 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
         		}
         	}
             
-            wg.addChart("line", "Number of commits Per " + this.howToSort, labels, data);
+            wg.addChart("line", "Number of commits Per " + this.howToSort, "Number of commits", labels, data);
         }
     }
 }

@@ -67,7 +67,7 @@ public class GetExtensionsPerProjectPlugin implements AnalyzerPlugin {
                 percentage.add(item.getValue());
             }
 
-            wg.addChartDouble("pie", "Number of comments", extension, percentage);
+            wg.addChartDouble("pie", "Percentage of each extension", "Percentage of each extension", extension, percentage);
         }
     }
 }

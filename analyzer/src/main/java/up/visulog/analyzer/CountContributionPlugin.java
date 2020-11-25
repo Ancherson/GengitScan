@@ -108,7 +108,7 @@ public class CountContributionPlugin implements AnalyzerPlugin{
 					authorOfCommit.add(data.getKey());
 					percentageOfContribution.add(data.getValue());
 				}
-				wg.addChartDouble("pie","Countribution",authorOfCommit,percentageOfContribution);
+				wg.addChartDouble("pie", "Contribution", "Contribution", authorOfCommit, percentageOfContribution);
 	        }
 	    }
 	    

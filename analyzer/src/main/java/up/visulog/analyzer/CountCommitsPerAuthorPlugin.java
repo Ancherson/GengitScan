@@ -80,7 +80,7 @@ public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
                 numberOfCommits.add(data.getValue());    
             }
 
-            wg.addChart("bar", "Number of commits", authorOfCommits, numberOfCommits);
+            wg.addChart("bar", "Number of commits per member", "Number of commits", authorOfCommits, numberOfCommits);
         }
     }
 }
