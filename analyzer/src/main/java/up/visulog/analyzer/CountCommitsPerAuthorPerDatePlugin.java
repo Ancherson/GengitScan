@@ -1,4 +1,4 @@
-
+package up.visulog.analyzer;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -10,7 +10,7 @@ import up.visulog.config.Configuration;
 import up.visulog.gitrawdata.Commit;
 import up.visulog.webgen.WebGen;
 
-public class CountCommitsPerAuthorPerDatePlugin/* implements AnalyzerPlugin*/{
+public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
 	
 	private final Configuration configuration;
     private String howToSort = "months";
@@ -176,15 +176,17 @@ public class CountCommitsPerAuthorPerDatePlugin/* implements AnalyzerPlugin*/{
         return result;
     }    
 	
-	public class Result /*implements AnalyzerPlugin.Result*/{
+	public class Result implements AnalyzerPlugin.Result {
 		private Map<LocalDate, Map<String, Integer>> commitsPerAuthorPerDate = new TreeMap<>();
         private Map<String, Map<String, Integer>> commitsPerAuthorPerWeeks = new TreeMap<>();
-        private String howToSort = "month";
+        private String howToSort = "months";
 
 	
 		public String getResultAsString() {
-			// TODO Auto-generated method stub
-			return null;
+			if(howToSort.equals("weeks")) {
+				return commitsPerAuthorPerWeeks.toString();
+			}
+			return commitsPerAuthorPerDate.toString();
 		}
 
 		public String getResultAsHtmlDiv() {

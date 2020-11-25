@@ -35,12 +35,13 @@ public class CLILauncher {
         if (config.isPresent()) {
             var analyzer = new Analyzer(config.get());
 			var results = analyzer.computeResults();
-			var wg = new WebGen();
+			System.out.println(results);
+			/*var wg = new WebGen();
 			results.toHTML(wg);
 			wg.write();
 			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 				Desktop.getDesktop().open(new File("../htmlResult/index.html"));
-			}
+			}*/
         } else displayHelpAndExit();
     }
 
@@ -198,6 +199,25 @@ public class CLILauncher {
                            	     	break;
                             	case "countContribution":
                             		plugins.put("countContribution", new PluginConfig() {});
+                            		break;
+                            		
+                            	case "countCommitsPerAuthorPerDays" :
+                            		plugins.put("countCommitsPerAuthorPerDays", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerAuthorPerDaysForAllBranches" :
+                            		plugins.put("countCommitsPerAuthorPerDaysForAllBranches", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerAuthorPerMonths" :
+                            		plugins.put("countCommitsPerAuthorPerMonths", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerAuthorPerMonthsForAllBranches" :
+                            		plugins.put("countCommitsPerAuthorPerMonthsForAllBranches", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerAuthorPerWeeks" :
+                            		plugins.put("countCommitsPerAuthorPerWeeks", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerAuthorPerWeeksForAllBranches" :
+                            		plugins.put("countCommitsPerAuthorPerWeeksForAllBranches", new PluginConfig() {});
                             		break;
                         	}
                         	break;
