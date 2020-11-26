@@ -235,7 +235,7 @@ public class CLILauncher {
         if(API && (pProjectId==-1 || pPrivateToken.equals(""))){
             return Optional.empty();
         }
-        return (API)?Optional.of(new Configuration(pPrivateToken,plugins,pProjectId)):Optional.of(new Configuration(gitPath, plugins));
+        return Optional.of(new Configuration(gitPath,pPrivateToken,plugins,pProjectId));
     }
     
     private static boolean isGitDirectory(String path) {
