@@ -213,7 +213,9 @@ Vous pouvez maintenant compiler et exécuter les commandes suivantes.
 
 11. Nombre de Commits par Jour, Semaine et Mois et par Auteur :
 ```
-TODO : À compléter dès que le plugin est fait
+./gradlew run --args="--addPlugin=countCommitsPerAuthorPerDays"
+./gradlew run --args="--addPlugin=countCommitsPerAuthorPerWeeks"
+./gradlew run --args="--addPlugin=countCommitsPerAuthorPerMonths"
 ```
 
 ### FICHIERS ET EXTENSIONS :
