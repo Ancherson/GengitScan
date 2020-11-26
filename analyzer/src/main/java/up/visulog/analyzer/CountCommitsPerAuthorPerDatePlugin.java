@@ -190,8 +190,38 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
 		}
 
 		public String getResultAsHtmlDiv() {
-			// TODO Auto-generated method stub
-			return null;
+			String s = "<div>Number of Commits per " + this.howToSort + " and per author : <ul><br>";
+        	// display the commits by the way of sorting
+        	if(this.howToSort.equals("days")) {
+        		for(var item : commitsPerAuthorPerDate.entrySet()) {
+        			s += "<ul>" + item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() +  " " + item.getKey().getYear() + "<br>";
+        			Map<String, Integer> commits = item.getValue();
+            		for(var c : commits.entrySet()) {
+            			s += "<li>" + c.getKey() + " : " + c.getValue() + "</li><br>";
+            		}
+            		s+= "</ul><br>";
+        		}
+        	} else if(this.howToSort.equals("weeks")) {
+        		for(var item : commitsPerAuthorPerWeeks.entrySet()) {
+        			s += "<ul>Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")<br>";
+        			Map<String, Integer> commits = item.getValue();
+            		for(var c : commits.entrySet()) {
+            			s += "<li>" + c.getKey() + " : " + c.getValue() + "</li><br>";
+            		}
+            		s+= "</ul><br>";
+        		}
+        	} else {
+        		for(var item : commitsPerAuthorPerDate.entrySet()) {
+        			s += "<ul>" + item.getKey().getMonth().name() + " " + item.getKey().getYear() + "<br>";
+        			Map<String, Integer> commits = item.getValue();
+            		for(var c : commits.entrySet()) {
+            			s += "<li>" + c.getKey() + " : " + c.getValue() + "</li><br>";
+            		}
+            		s+= "</ul><br>";
+        		}
+        	}
+        	s += "</ul></div>";
+        	return s;
 		}
 
 
