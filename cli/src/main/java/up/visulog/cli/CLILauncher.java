@@ -341,8 +341,8 @@ public class CLILauncher {
     	System.out.println("countLinesAddedPerAuthorPerMonths" + space + "Lines added by author and per months");
     	System.out.println("countLinesDeletedPerAuthorPerMonths" + space + "Lines deleted by author and per months");
     	System.out.println("countCommitsPerAuthorPerDays"+ space + "Commits by author and per days");
-    	System.out.println("countCommitsPerAuthorPerWeeks" + space + "Lines added by author and per weeks");
-    	System.out.println("countCommitsPerAuthorPerMonths" + space + "Lines added by author and per months");
+    	System.out.println("countCommitsPerAuthorPerWeeks" + space + "Commits by author and per weeks");
+    	System.out.println("countCommitsPerAuthorPerMonths" + space + "Commits by author and per months");
     	System.out.println();
     	
     	System.out.println("FILES AND EXTENSION :");
