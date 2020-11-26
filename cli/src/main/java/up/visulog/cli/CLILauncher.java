@@ -35,15 +35,15 @@ public class CLILauncher {
         if (config.isPresent()) {
             var analyzer = new Analyzer(config.get());
 			var results = analyzer.computeResults();
-			System.out.println(results);
-			/*var wg = new WebGen();
+			var wg = new WebGen();
 			results.toHTML(wg);
 			wg.write();
 			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 				Desktop.getDesktop().open(new File("../htmlResult/index.html"));
-			}*/
+			}
         } else displayHelpAndExit();
     }
+
 
     static Optional<Configuration> makeConfigFromCommandLineArgs(String[] args) {
         var gitPath = FileSystems.getDefault().getPath("../");
