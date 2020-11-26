@@ -1,7 +1,9 @@
 package up.visulog.analyzer;
 import java.time.LocalDate;
+
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -226,7 +228,77 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
 
 
 		public void getResultAsHtmlDiv(WebGen wg) {
-			// TODO Auto-generated method stub
+			ArrayList<String> labels = new ArrayList<String>();
+        	HashMap<String, ArrayList<Integer>> datasets = new HashMap<String, ArrayList<Integer>>();
+        	int nbr = 0;
+        	
+            if(this.howToSort.equals("days") || this.howToSort.equals("months")) {
+            	var labels0 = commitsPerAuthorPerDate.entrySet().iterator().next().getKey();
+        		LocalDate cmp = labels0;
+        		LocalDate expected = cmp;
+        		for(var item : commitsPerAuthorPerDate.entrySet()) {
+        			cmp = item.getKey();
+        			if(!cmp.equals(expected)) {
+        				while(!expected.equals(cmp)) {
+        					if(howToSort.equals("days")) {
+        						labels.add(expected.getDayOfMonth() + " " + expected.getMonth().name() + " " + expected.getYear());
+        						expected = expected.plusDays(1);
+        					} else {
+        						labels.add(expected.getMonth().name() + " " + expected.getYear());
+        						expected = expected.plusMonths(1);
+        					}
+            				nbr++;
+        				}
+        			}
+        			if(howToSort.equals("days")) {
+        				labels.add(item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() +  " " + item.getKey().getYear());
+        				expected = expected.plusDays(1);
+					} else {
+						labels.add(item.getKey().getMonth().name() + " " + item.getKey().getYear());
+						expected = expected.plusMonths(1);
+					}
+            		Map<String, Integer> commits = item.getValue();
+            		for(var c : commits.entrySet()) {
+            			String author = c.getKey();
+            			var authorAndInteger = datasets.getOrDefault(author, new ArrayList<Integer>());
+            			while(authorAndInteger.size() != nbr) {
+            				authorAndInteger.add(0);
+            			}
+            			authorAndInteger.add(c.getValue());
+            			datasets.put(author, authorAndInteger);
+            		}
+            		nbr++;
+        		}
+            } else {
+            	var labels0 = commitsPerAuthorPerWeeks.entrySet().iterator().next().getKey();
+        		int cmp = Integer.parseInt(labels0.substring(labels0.length()-2, labels0.length()));
+        		int expected = cmp;
+        		for(var item : commitsPerAuthorPerWeeks.entrySet()) {
+        			cmp = Integer.parseInt(item.getKey().substring(item.getKey().length()-2, item.getKey().length()));
+        			if(cmp != expected) {
+        				while(expected != cmp) {
+        					labels.add("Week " + expected + " (" + item.getKey().substring(0,4) + ")");
+            				expected++;
+            				nbr++;
+        				}
+        			}
+        			labels.add("Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")");
+    				Map<String, Integer> commits = item.getValue();
+            		for(var c : commits.entrySet()) {
+            			String author = c.getKey();
+            			var authorAndInteger = datasets.getOrDefault(author, new ArrayList<Integer>());
+            			while(authorAndInteger.size() != nbr) {
+            				authorAndInteger.add(0);
+            			}
+            			authorAndInteger.add(c.getValue());
+            			datasets.put(author, authorAndInteger);
+            		}
+            		nbr++;
+        			expected++;
+        		}
+            }
+            
+            wg.addChart("Number of commits per author and per " + this.howToSort, labels, datasets);
 			
 		}
 		
