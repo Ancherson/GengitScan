@@ -31,7 +31,16 @@ public class WebGen {
 			String content = item.getKey() + ": " + item.getValue();
 			
 			body.li().text(content).__();
-		}		
+		}
+		body.__().__();		
+	}
+
+	public void addListAuthor(ArrayList<String>list, String title){
+		var body = view.div().ul().text(title);
+		for(String author : list){
+			body.li().text(author).__();
+		}
+		body.__().__();
 	}
 
 	public void addChart(String type, String title, ArrayList<String> labels, ArrayList<Integer> data){

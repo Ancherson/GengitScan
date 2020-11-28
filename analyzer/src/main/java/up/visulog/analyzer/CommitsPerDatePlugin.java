@@ -15,7 +15,7 @@ import java.time.Month;
 
 public class CommitsPerDatePlugin implements AnalyzerPlugin {
     private final Configuration configuration;
-    private static String howToSort = "months";
+    private String howToSort = "months";
     //the plugin sort commits per months, this is a default value 
     private Result result;
     private boolean allBranches;
@@ -30,7 +30,7 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
     }
 
     // sort commits per month and per date
-    static Result processLog(List<Commit> gitLog) {
+    public Result processLog(List<Commit> gitLog) {
     	var result = new Result();
     	// change the values of the object Result
     	result.setHowToSort(howToSort);
@@ -44,7 +44,7 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
         	for (var date : result.commitsPerDate.entrySet()) {
         		LocalDate m = LocalDate.of(date.getKey().getYear(), date.getKey().getMonth(), 1);
             	var nb = res.getOrDefault(m, 0);
-            	res.put(m, nb + 1);
+            	res.put(m, nb + date.getValue());
             }
         	// change the key and the value of result.commitsPerDate
         	result.commitsPerDate.clear();
@@ -59,7 +59,7 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
             for (var date : result.commitsPerDate.entrySet()) {
                	String m = Integer.toString(date.getKey().getYear()) + " " + Integer.toString(date.getKey().getDayOfYear()/7);
                	var nb = res.getOrDefault(m, 0);
-               	res.put(m, nb + 1);            
+               	res.put(m, nb + date.getValue());            
             }
          // change the key and the value of result.commitsPerWeeks
             result.commitsPerWeeks.putAll(res);
@@ -69,7 +69,7 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
     }
     
     // function fills the result variable with the way of sorting    
-    static void sortPerDays(List<Commit> gitLog, Result result) {
+    public void sortPerDays(List<Commit> gitLog, Result result) {
     	// browse the list of commits and count them according to the date of the commit
     	for (var commit : gitLog) {
     		LocalDate m = commit.date.toLocalDate();
@@ -93,7 +93,7 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
     }    
     
     
-    static class Result implements AnalyzerPlugin.Result {
+    public class Result implements AnalyzerPlugin.Result {
         private Map<LocalDate, Integer> commitsPerDate = new TreeMap<>();
         private Map<String, Integer> commitsPerWeeks = new TreeMap<>();
         // I chose a TreeMap<>() because the objects are sorted with the keys naturally
@@ -197,7 +197,7 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
         		}
         	}
             
-            wg.addChart("line", "Number of commits", labels, data);
+            wg.addChart("line", "Number of commits Per " + this.howToSort, labels, data);
         }
     }
 }

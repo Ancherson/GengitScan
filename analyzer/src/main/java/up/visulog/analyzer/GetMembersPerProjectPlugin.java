@@ -61,7 +61,7 @@ public class GetMembersPerProjectPlugin implements AnalyzerPlugin {
         
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
-        	
+            wg.addListAuthor((ArrayList)membersList, "List of members");       
         }
         
     }

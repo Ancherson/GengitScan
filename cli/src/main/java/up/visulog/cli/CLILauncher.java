@@ -41,10 +41,15 @@ public class CLILauncher {
 			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 				Desktop.getDesktop().open(new File("../htmlResult/index.html"));
 			}
-        } else displayHelpAndExit();
+        } else displayHelpAndExit(args);
+
     }
 
+
     static Optional<Configuration> makeConfigFromCommandLineArgs(String[] args) {
+    	if(args.length==0){
+    		return Optional.empty();
+		}
         var gitPath = FileSystems.getDefault().getPath("../");
         var plugins = new HashMap<String, PluginConfig>();
         String pPrivateToken = "";
@@ -53,7 +58,12 @@ public class CLILauncher {
         for (var arg : args) {
             if (arg.startsWith("--")) {
                 String[] parts = arg.split("=");
-                if (parts.length != 2) return Optional.empty();
+                if (parts.length != 2) {
+                	if(parts.length == 1 && arg.equals("--help")) {
+                		displayHelpAndExit(args);
+                	}
+                	else return Optional.empty();
+                }
                 else {
                     String pName = parts[0];
                     String pValue = parts[1];
@@ -199,9 +209,27 @@ public class CLILauncher {
                             	case "countContribution":
                             		plugins.put("countContribution", new PluginConfig() {});
                             		break;
+                            		
+                            	case "countCommitsPerAuthorPerDays" :
+                            		plugins.put("countCommitsPerAuthorPerDays", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerAuthorPerDaysForAllBranches" :
+                            		plugins.put("countCommitsPerAuthorPerDaysForAllBranches", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerAuthorPerMonths" :
+                            		plugins.put("countCommitsPerAuthorPerMonths", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerAuthorPerMonthsForAllBranches" :
+                            		plugins.put("countCommitsPerAuthorPerMonthsForAllBranches", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerAuthorPerWeeks" :
+                            		plugins.put("countCommitsPerAuthorPerWeeks", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerAuthorPerWeeksForAllBranches" :
+                            		plugins.put("countCommitsPerAuthorPerWeeksForAllBranches", new PluginConfig() {});
+                            		break;
                         	}
                         	break;
-   
                         case "--load":
                         	//Format command: --load=name of the config
                         	//Example: ./gradlew run --args='--load=test'
@@ -226,14 +254,42 @@ public class CLILauncher {
                     }
                 }
             } else {
-                gitPath = FileSystems.getDefault().getPath(arg);
+            	String path = arg;
+            	if(!arg.startsWith("/")) path = "../" + path;
+            	if(!isGitDirectory(path)) displayHelpAndExit(args);
+                gitPath = FileSystems.getDefault().getPath(path);
             }
         }
         if(API && (pProjectId==-1 || pPrivateToken.equals(""))){
             return Optional.empty();
         }
-        return (API)?Optional.of(new Configuration(pPrivateToken,plugins,pProjectId)):Optional.of(new Configuration(gitPath, plugins));
+        return Optional.of(new Configuration(gitPath,pPrivateToken,plugins,pProjectId));
     }
+    
+    private static boolean isGitDirectory(String path) {
+    	File file = new File(path);
+    	if(!file.exists()) {
+    		if(!path.startsWith("/")) path = path.substring(3);
+    		System.out.println("Error to find the file " + path);
+    		return false;
+    	}
+    	
+    	if(!file.isDirectory()) {
+    		if(!path.startsWith("/")) path = path.substring(3);
+    		System.out.println("the file : " + path + " is not a directory !");
+    		return false;
+    	}
+    	
+    	File[] files = file.listFiles();
+    	for(File f : files) {
+    		if(f.getName().equals(".git")) {
+    			return true;
+    		}
+    	}
+    	if(!path.startsWith("/")) path = path.substring(3);
+		System.out.println("the file : " + path + " is not a git directory !");
+		return false;
+     }
     
     //this function save the command in the file whose path is "path"
     private static String saveConfig(String[] args, String name) {
@@ -295,13 +351,65 @@ public class CLILauncher {
     }
     
 
-    private static void displayHelpAndExit() {
-        System.out.println("Wrong command...");
-        //TODO: print the list of options and their syntax
-        System.out.println("Different options: ");
-        System.out.println("--addPlugin allows you to add new plugins");
-        System.out.println("--loadConfigFile allows you to load options from a file");
-        System.out.println("--justSaveConfigFile save command line options to a file instead of running the analysis");
-        System.exit(0);
+
+    private static void displayHelpAndExit(String[] args) {
+    	if(!args[0].contentEquals("--help")) System.out.println("Wrong command...");
+    	//TODO: print the list of options and their syntax
+	    System.out.println("Here is a list of what we can do : ");
+	    printAllPossiblePlugins();
+	    System.out.println("--loadConfigFile allows you to load options from a file\n");
+	    System.out.println("--justSaveConfigFile save command line options to a file instead of running the analysis\n");
+	    System.exit(0);
+    }
+    
+    private static void printAllPossiblePlugins() {
+    	String space = "          ";
+    	String prohibition = " (X) ";
+    	System.out.println("--addPlugin= (allows you to add new plugins)");
+    	System.out.println("If you want to see the results on all branches, just add \"ForAllBranches\" at the end of the command.\n");
+    	
+    	System.out.println("\"(X)\" means you can't have this command on all branches.\n");
+    	
+    	System.out.println("GENERAL STATISTICS :");
+    	System.out.println("getMembers" + space + "Get members" + prohibition);
+    	System.out.println();
+    	
+    	System.out.println("ACTIVITY :");
+    	System.out.println("countCommitsPerDays" + space + "Commits per days");
+    	System.out.println("countCommitsPerWeeks" + space + "Commit per weeks");
+    	System.out.println("countCommitsPerMonths" + space + "Commits per months");
+    	System.out.println("countLinesAddedPerDays"+ space + "Lines added per days");
+    	System.out.println("countLinesDeletedPerDays"+ space + "Lines deleted per days");
+    	System.out.println("countLinesAddedPerWeeks"+ space + "Lines added per weeks");
+    	System.out.println("countLinesDeletedPerWeeks"+ space + "Lines deleted per weeks");
+    	System.out.println("countLinesAddedPerMonths"+ space + "Lines added per months");
+    	System.out.println("countLinesDeletedPerMonths"+ space + "Lines deleted per months");
+    	System.out.println();
+    	
+    	System.out.println("AUTHOR :");
+    	System.out.println("countCommits" + space + "Commits by author");
+    	System.out.println("countMergeCommits" + space + "Merge Commits by author" + prohibition);
+    	System.out.println("countLinesAdded" + space + "Lines added by author");
+    	System.out.println("countLinesDeleted" + space + "Lines deleted by author");
+    	System.out.println("countContribution"+ space + "Authors' contribution" + prohibition);
+    	System.out.println("countComments" + space + "Comments by author" + prohibition);
+    	System.out.println("countIssues" + space + "Issues by author" + prohibition);
+    	System.out.println();
+    	
+    	System.out.println("ACTIVITY BY AUTHOR :");
+    	System.out.println("countLinesAddedPerAuthorPerDays"+ space + "Lines added by author and per days");
+    	System.out.println("countLinesDeletedPerAuthorPerDays" + space + "Lines deleted by author and per days");
+    	System.out.println("countLinesAddedPerAuthorPerWeeks" + space + "Lines added by author and per weeks");
+    	System.out.println("countLinesDeletedPerAuthorPerWeeks" + space + "Lines deleted by author and per weeks");
+    	System.out.println("countLinesAddedPerAuthorPerMonths" + space + "Lines added by author and per months");
+    	System.out.println("countLinesDeletedPerAuthorPerMonths" + space + "Lines deleted by author and per months");
+    	System.out.println("countCommitsPerAuthorPerDays"+ space + "Commits by author and per days");
+    	System.out.println("countCommitsPerAuthorPerWeeks" + space + "Commits by author and per weeks");
+    	System.out.println("countCommitsPerAuthorPerMonths" + space + "Commits by author and per months");
+    	System.out.println();
+    	
+    	System.out.println("FILES AND EXTENSION :");
+    	System.out.println("getExtensions" + space + "Get Extensions" + prohibition);
+    	System.out.println();       
     }
 }
