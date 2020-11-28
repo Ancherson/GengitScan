@@ -100,7 +100,7 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 					labels.add(name);
 					data.add(item.getValue());
 				}
-				wg.addChart("bar", sortLineAdded ? "Lines Added" : "Lines Deleted", labels, data);
+				wg.addChart("bar", "Number of lines "+(sortLineAdded ? "added" : "deleted")+" per member", sortLineAdded ? "Lines Added" : "Lines Deleted", labels, data);
 	        }
 	    }
 }
