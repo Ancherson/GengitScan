@@ -44,6 +44,7 @@ public class CLILauncher {
         } else displayHelpAndExit();
     }
 
+
     static Optional<Configuration> makeConfigFromCommandLineArgs(String[] args) {
     	if(args.length==0){
     		return Optional.empty();
@@ -201,6 +202,25 @@ public class CLILauncher {
                            	     	break;
                             	case "countContribution":
                             		plugins.put("countContribution", new PluginConfig() {});
+                            		break;
+                            		
+                            	case "countCommitsPerAuthorPerDays" :
+                            		plugins.put("countCommitsPerAuthorPerDays", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerAuthorPerDaysForAllBranches" :
+                            		plugins.put("countCommitsPerAuthorPerDaysForAllBranches", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerAuthorPerMonths" :
+                            		plugins.put("countCommitsPerAuthorPerMonths", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerAuthorPerMonthsForAllBranches" :
+                            		plugins.put("countCommitsPerAuthorPerMonthsForAllBranches", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerAuthorPerWeeks" :
+                            		plugins.put("countCommitsPerAuthorPerWeeks", new PluginConfig() {});
+                            		break;
+                            	case "countCommitsPerAuthorPerWeeksForAllBranches" :
+                            		plugins.put("countCommitsPerAuthorPerWeeksForAllBranches", new PluginConfig() {});
                             		break;
                         	}
                         	break;
