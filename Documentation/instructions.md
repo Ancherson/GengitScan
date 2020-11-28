@@ -1,4 +1,4 @@
-**Ce document a été créee pour les membres du groupe. Il sert à retrouver les commandes de Git rapidement.**
+**Ce document a été crée pour les membres du groupe. Il sert à retrouver les commandes de Git rapidement.**
 
 
 # Les commandes de Git
@@ -20,7 +20,7 @@ $ git config --global user.email *email*
 
 ### Première utilisation
 
-1. Vérifier l'état des fichiers : `git statut`
+1. Vérifier l'état des fichiers : `git status`
 
 2. Placer de nouveaux fichiers sous suivi de version : `git add *nomDuFichier*`
 
@@ -38,7 +38,7 @@ $ git config --global user.email *email*
 
 9. Pousser une branche dans un serveur : `git push origin (branche)`
 
-10. Changer de branche depuis le dépot local : `git checkout _nomdelabranche_`
+10. Changer de branche depuis le dépot local : `git checkout *nomdelabranche*`
 
 
 # Cloner et compiler le projet
