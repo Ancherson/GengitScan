@@ -1,4 +1,4 @@
-**Ce document a été créee pour les membres du gourpe. Il sert à retrouver les commandes de Git rapidement.**
+**Ce document a été créee pour les membres du groupe. Il sert à retrouver les commandes de Git rapidement.**
 
 
 # Les commandes de Git
