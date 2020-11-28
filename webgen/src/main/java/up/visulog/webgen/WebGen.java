@@ -20,6 +20,7 @@ public class WebGen {
 				.head()
 					.meta().attrCharset("utf-8").__()
 					.title().text("GenGit Scan").__()
+					.link().addAttr("rel", "stylesheet").addAttr("href", "style.css").__()
 					.script().attrSrc("chartsMin.js").__()
 					.script().attrSrc("chartGen.js").__()
 				.__()
