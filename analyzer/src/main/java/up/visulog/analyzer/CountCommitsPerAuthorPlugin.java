@@ -76,7 +76,12 @@ public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
             ArrayList<String> authorOfCommits = new ArrayList<String>();
             ArrayList<Integer> numberOfCommits= new ArrayList<Integer>();
             for(var data : getCommitsPerAuthor().entrySet()){
-                authorOfCommits.add(data.getKey());
+            	String[] nameTab = data.getKey().split(" ");
+            	String name = "";
+            	for(int i=0; i<nameTab.length-1; i++) {
+            		name += nameTab[i] + " ";
+            	}
+                authorOfCommits.add(name);
                 numberOfCommits.add(data.getValue());    
             }
 

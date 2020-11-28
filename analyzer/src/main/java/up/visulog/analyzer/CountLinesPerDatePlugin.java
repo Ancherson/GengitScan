@@ -228,7 +228,7 @@ public class CountLinesPerDatePlugin implements AnalyzerPlugin {
         		}
         	}
             
-            wg.addChart("line", "Number of Lines " + (lines ? "Added" : "Deleted") + " Per " + this.howToSort, labels, data);
+            wg.addChart("line", "Number of lines " + (lines ? "added" : "deleted") + " per " + this.howToSort, labels, data);
         }
 
     }

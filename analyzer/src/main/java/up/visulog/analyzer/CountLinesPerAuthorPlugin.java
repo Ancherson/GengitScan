@@ -92,7 +92,12 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 				ArrayList<String> labels = new ArrayList<String>();
 				ArrayList<Integer> data = new ArrayList<Integer>();
 				for (var item : linesPerAuthor.entrySet()) {
-					labels.add(item.getKey());
+					String[] nameTab = item.getKey().split(" ");
+	            	String name = "";
+	            	for(int i=0; i<nameTab.length-1; i++) {
+	            		name += nameTab[i] + " ";
+	            	}
+					labels.add(name);
 					data.add(item.getValue());
 				}
 				wg.addChart("bar", sortLineAdded ? "Lines Added" : "Lines Deleted", labels, data);
