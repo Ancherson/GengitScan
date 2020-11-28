@@ -159,8 +159,15 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
     		String[] a = commit.author.split(" ");
     		String email = a[a.length-1];
     		if(emailToName.containsKey(email)) {
-    			var name = emailToName.get(email);
+    			String author = emailToName.get(email);
+    			String[] nameTab = author.split(" ");
+    			String name = "";
+    			for(int i=0; i<nameTab.length-1; i++) {
+    				name += nameTab[i] + " ";
+    			}
     			Commit m = new Commit(commit.id, name, commit.date, commit.description, commit.mergedFrom);
+    			m.linesAdded = commit.linesAdded;
+    			m.linesDeleted = commit.linesDeleted;
     			gitLog2.add(m);
             }
     	}

@@ -176,7 +176,6 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     			gitLog2.add(m);
             }
     	}
-    	
     	return gitLog2;
     }
     
@@ -211,7 +210,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     public class Result implements AnalyzerPlugin.Result {
         private Map<LocalDate, Map<String, Integer>> linesPerAuthorPerDate = new TreeMap<>();
         private Map<String, Map<String, Integer>> linesPerAuthorPerWeeks = new TreeMap<>();
-        private String howToSort = "month";
+        private String howToSort = "months";
         private boolean lines;
         
         // function which set the variable howToSort
