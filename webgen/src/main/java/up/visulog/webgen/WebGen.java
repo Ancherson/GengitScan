@@ -19,6 +19,7 @@ public class WebGen {
 			.html()
 				.head()
 					.meta().attrCharset("utf-8").__()
+					.link().addAttr("rel", "icon").addAttr("href", "gengisKhan.png").__()
 					.title().text("GenGit Scan").__()
 					.script().attrSrc("chartsMin.js").__()
 					.script().attrSrc("chartGen.js").__()
