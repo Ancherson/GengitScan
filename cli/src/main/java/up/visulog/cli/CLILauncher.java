@@ -353,8 +353,9 @@ public class CLILauncher {
 
 
     private static void displayHelpAndExit(String[] args) {
-    	if(!args[0].contentEquals("--help")) System.out.println("Wrong command...");
-    	//TODO: print the list of options and their syntax
+    	if(args.length != 0) {
+    		if(args[0].equals("--help")) System.out.println("Wrong command...");
+    	}
 	    System.out.println("Here is a list of what we can do : ");
 	    printAllPossiblePlugins();
 	    System.out.println("--loadConfigFile allows you to load options from a file\n");
