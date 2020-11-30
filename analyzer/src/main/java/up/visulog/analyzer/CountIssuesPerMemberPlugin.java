@@ -74,7 +74,7 @@ public class CountIssuesPerMemberPlugin implements AnalyzerPlugin {
                 members.add(item.getKey());
                 numberOfIssues.add(item.getValue());
             }
-            wg.addChart("bar", "Number of issues", members, numberOfIssues);
+            wg.addChart("bar", "Number of issues per member", "Number of issues", members, numberOfIssues);
         }
     }
 }

@@ -15,10 +15,10 @@ import java.time.Month;
 
 public class CountLinesPerDatePlugin implements AnalyzerPlugin {
     private final Configuration configuration;
-    private static String howToSort = "months";
+    private String howToSort = "months";
     //the plugin sort commits per months, this is a default value
     //the value change if the user wants the number of commits par weeks or per days
-    private static boolean lines;
+    private boolean lines;
     //if the variable is true, the plugin count the lines added of commits
     //if the variable is false, the plugin count the lines deleted of commits
     private Result result;
@@ -36,7 +36,7 @@ public class CountLinesPerDatePlugin implements AnalyzerPlugin {
     }
 
     // sort commits per date
-    static Result processLog(List<Commit> gitLog) {
+    public Result processLog(List<Commit> gitLog) {
     	var result = new Result();
     	// change the values of the object Result
     	result.setHowToSort(howToSort);
@@ -75,7 +75,7 @@ public class CountLinesPerDatePlugin implements AnalyzerPlugin {
     }
     
     // function fills the result variable with the way of sorting  
-    static void countLinesAddedOrDeletedPerDays(List<Commit> gitLog, Result result) {
+    public void countLinesAddedOrDeletedPerDays(List<Commit> gitLog, Result result) {
     	// browse the list of commits and count them according to the date of the commit
     	for (var commit : gitLog) {
     		//The plugin don't count the line added/deleted from the merged commit
@@ -111,7 +111,7 @@ public class CountLinesPerDatePlugin implements AnalyzerPlugin {
     
     
     
-    static class Result implements AnalyzerPlugin.Result {
+    public class Result implements AnalyzerPlugin.Result {
         private Map<LocalDate, Integer> commitsPerDate = new TreeMap<>();
         private Map<String, Integer> commitsPerWeeks = new TreeMap<>();
         // I chose a TreeMap<>() because the objects are sorted with the keys naturally
@@ -228,7 +228,7 @@ public class CountLinesPerDatePlugin implements AnalyzerPlugin {
         		}
         	}
             
-            wg.addChart("line", "Number of commits", labels, data);
+            wg.addChart("line", "Number of Lines " + (lines ? "Added" : "Deleted") + " Per " + this.howToSort, "Lines " + (lines ? "added" : "deleted"), labels, data);
         }
 
     }

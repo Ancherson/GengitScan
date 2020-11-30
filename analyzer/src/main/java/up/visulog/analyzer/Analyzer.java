@@ -84,6 +84,7 @@ public class Analyzer {
             case "countLinesDeletedPerWeeksForAllBranches" : return Optional.of(new CountLinesPerDatePlugin(config, "weeks", false, true));
             
             case "getExtensions" : return Optional.of(new GetExtensionsPerProjectPlugin(config));
+
         
             case "countLinesAdded" : return Optional.of(new CountLinesPerAuthorPlugin(config, true, false));
             case "countLinesAddedForAllBranches" : return Optional.of(new CountLinesPerAuthorPlugin(config, true, true));
@@ -102,6 +103,15 @@ public class Analyzer {
             case "countLinesDeletedPerAuthorPerWeeksForAllBranches": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "weeks", false, true));
             case "countLinesDeletedPerAuthorPerMonths": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "months", false, false));
             case "countLinesDeletedPerAuthorPerMonthsForAllBranches": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "months", false, true));
+
+            
+            case "countCommitsPerAuthorPerDays" : return Optional.of(new CountCommitsPerAuthorPerDatePlugin(config, "days", false));
+            case "countCommitsPerAuthorPerDaysForAllBranches" : return Optional.of(new CountCommitsPerAuthorPerDatePlugin(config, "days", true));
+            case "countCommitsPerAuthorPerMonths" : return Optional.of(new CountCommitsPerAuthorPerDatePlugin(config, "months", false));
+            case "countCommitsPerAuthorPerMonthsForAllBranches" : return Optional.of(new CountCommitsPerAuthorPerDatePlugin(config, "months", true));
+            case "countCommitsPerAuthorPerWeeks" : return Optional.of(new CountCommitsPerAuthorPerDatePlugin(config, "weeks", false));
+            case "countCommitsPerAuthorPerWeeksForAllBranches" : return Optional.of(new CountCommitsPerAuthorPerDatePlugin(config, "weeks", true));
+
             
             case "countContribution" : return Optional.of(new CountContributionPlugin(config));
             default : return Optional.empty();

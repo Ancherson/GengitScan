@@ -19,6 +19,7 @@ public class WebGen {
 			.html()
 				.head()
 					.meta().attrCharset("utf-8").__()
+					.link().addAttr("rel", "icon").addAttr("href", "gengisKhan.png").__()
 					.title().text("GenGit Scan").__()
 					.script().attrSrc("chartsMin.js").__()
 					.script().attrSrc("chartGen.js").__()
@@ -31,10 +32,19 @@ public class WebGen {
 			String content = item.getKey() + ": " + item.getValue();
 			
 			body.li().text(content).__();
-		}		
+		}
+		body.__().__();		
 	}
 
-	public void addChart(String type, String title, ArrayList<String> labels, ArrayList<Integer> data){
+	public void addListAuthor(ArrayList<String>list, String title){
+		var body = view.div().ul().text(title);
+		for(String author : list){
+			body.li().text(author).__();
+		}
+		body.__().__();
+	}
+
+	public void addChart(String type, String title, String label, ArrayList<String> labels, ArrayList<Integer> data){
 		String labelsJs = "var labels = [";
 		for(String l : labels){
 			labelsJs += "'" + l + "',";
@@ -49,7 +59,7 @@ public class WebGen {
 		dataJs = dataJs.substring(0, dataJs.length()-1);
 		dataJs += "];";
 
-		String genChartJs = "genChart('"+type+"','"+title+"', labels, data);";
+		String genChartJs = "genChart('"+type+"','"+title+"','"+label+"', labels, data);";
 
 		String js = labelsJs+"\n"+dataJs+"\n"+genChartJs+"\n";
 
@@ -58,7 +68,7 @@ public class WebGen {
 			.__();
 	}
 
-	public void addChartDouble(String type, String title, ArrayList<String> labels, ArrayList<Double> data){
+	public void addChartDouble(String type, String title, String label, ArrayList<String> labels, ArrayList<Double> data){
 		String labelsJs="var labels = [";
 		for(String l : labels){
 			labelsJs += "'" + l + "',";
@@ -73,7 +83,7 @@ public class WebGen {
 		dataJs = dataJs.substring(0, dataJs.length()-1);
 		dataJs+="];";
 
-		String genChartJs = "genChart('"+type+"','"+title+"', labels, data);";
+		String genChartJs = "genChart('"+type+"','"+title+"','"+label+"', labels, data);";
 
 		String js = labelsJs+"\n"+dataJs+"\n"+genChartJs+"\n";
 

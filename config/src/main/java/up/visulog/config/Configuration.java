@@ -22,6 +22,12 @@ public class Configuration {
         this.plugins = Map.copyOf(plugins);
         this.idIssue = idIssue;
     }
+    public Configuration(Path gitPath,String privateToken,Map<String, PluginConfig> plugins,int idProject){
+        this.gitPath = gitPath;
+        this.plugins = Map.copyOf(plugins);
+        this.privateToken = privateToken;
+        this.idProject = idProject;
+    }
     public Configuration(String privateToken,Map<String, PluginConfig> plugins,int idProject){
         this(privateToken,plugins,idProject,-1);
     }

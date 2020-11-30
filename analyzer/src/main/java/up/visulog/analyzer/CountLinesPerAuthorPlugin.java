@@ -24,7 +24,7 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 	        this.allBranches = allBranches;
 	    }
 
-	    Result processLog(List<Commit> gitLog) {
+	    public Result processLog(List<Commit> gitLog) {
 	        var result = new Result();
 	        result.sortLineAdded = this.sortLineAdded;
 	        Map<String,String>emailToName = new HashMap<String,String>();
@@ -63,7 +63,7 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 	        return result;
 	    }
 
-	    static class Result implements AnalyzerPlugin.Result {
+	    public class Result implements AnalyzerPlugin.Result {
 	        private final Map<String, Integer> linesPerAuthor = new HashMap<>();
 	        private boolean sortLineAdded;
 	        
@@ -92,10 +92,15 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 				ArrayList<String> labels = new ArrayList<String>();
 				ArrayList<Integer> data = new ArrayList<Integer>();
 				for (var item : linesPerAuthor.entrySet()) {
-					labels.add(item.getKey());
+					String[] nameTab = item.getKey().split(" ");
+	            	String name = "";
+	            	for(int i=0; i<nameTab.length-1; i++) {
+	            		name += nameTab[i] + " ";
+	            	}
+					labels.add(name);
 					data.add(item.getValue());
 				}
-				wg.addChart("bar", sortLineAdded ? "Lines Added" : "Lines Deleted", labels, data);
+				wg.addChart("bar", "Number of lines "+(sortLineAdded ? "added" : "deleted")+" per member", sortLineAdded ? "Lines Added" : "Lines Deleted", labels, data);
 	        }
 	    }
 }

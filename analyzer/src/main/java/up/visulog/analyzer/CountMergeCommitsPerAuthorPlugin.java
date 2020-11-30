@@ -76,10 +76,15 @@ public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
             ArrayList<String> labels = new ArrayList<String>();
             ArrayList<Integer> data = new ArrayList<Integer>();
             for(var item : mergeCommitsPerAuthor.entrySet()){
-                labels.add(item.getKey());
+            	String[] nameTab = item.getKey().split(" ");
+            	String name = "";
+            	for(int i=0; i<nameTab.length-1; i++) {
+            		name += nameTab[i] + " ";
+            	}
+                labels.add(name);
                 data.add(item.getValue());
             }
-            wg.addChart("bar", "Number of merge commits", labels, data);
+            wg.addChart("bar", "Number of merge commits per member", "Number of merge commits", labels, data);
         }
     }
 }

@@ -14,12 +14,12 @@ public class TestCountLinesPerAuthorPerDatePlugin {
 	
 	@Test
 	public void checkCountLinesPerDate() {
-		Commit c1 = new Commit("1", "Author 1", LocalDateTime.of(2020, 1, 20, 11, 16, 50), null, null);
-		Commit c2 = new Commit("2", "Author 1", LocalDateTime.of(2023, 12, 26, 20, 16, 50), null, null);
-		Commit c3 = new Commit("3", "Author 2", LocalDateTime.of(2020, 1, 30, 20, 54, 50), null, null);
-		Commit c4 = new Commit("4", "Author 2", LocalDateTime.of(2020, 8, 20, 11, 16, 50), null, null);
-		Commit c5 = new Commit("2", "Author 1", LocalDateTime.of(1999, 8, 21, 11, 16, 50), null, null);
-		Commit c6 = new Commit("2", "Author 3", LocalDateTime.of(2020, 9, 20, 11, 16, 50), null, null);
+		Commit c1 = new Commit("1", "Author 1 <email>", LocalDateTime.of(2020, 1, 20, 11, 16, 50), null, null);
+		Commit c2 = new Commit("2", "Author 1 <email>", LocalDateTime.of(2023, 12, 26, 20, 16, 50), null, null);
+		Commit c3 = new Commit("3", "Author 2 <email>", LocalDateTime.of(2020, 1, 30, 20, 54, 50), null, null);
+		Commit c4 = new Commit("4", "Author 2 <email>", LocalDateTime.of(2020, 8, 20, 11, 16, 50), null, null);
+		Commit c5 = new Commit("2", "Author 1 <email>", LocalDateTime.of(1999, 8, 21, 11, 16, 50), null, null);
+		Commit c6 = new Commit("2", "Author 3 <email>", LocalDateTime.of(2020, 9, 20, 11, 16, 50), null, null);
 		
 		c1.linesAdded = 5;
 		c2.linesAdded = 10;
@@ -39,7 +39,7 @@ public class TestCountLinesPerAuthorPerDatePlugin {
 		var plugin = new CountLinesPerAuthorPerDatePlugin(null, "months", true, false);
 		Result result = plugin.processLog(L);
 		
-		String expected = "{1999-08-01={Author 1=2}, 2020-01-01={Author 2=2, Author 1=5}, 2020-08-01={Author 2=8}, 2020-09-01={Author 3=6}, 2023-12-01={Author 1=10}}";
+		String expected = "{1999-08-01={Author 1 =2}, 2020-01-01={Author 1 =7}, 2020-08-01={Author 1 =8}, 2020-09-01={Author 1 =6}, 2023-12-01={Author 1 =10}}";
 		assertEquals(expected, result.getResultAsString());	
 	}
 }

@@ -105,10 +105,15 @@ public class CountContributionPlugin implements AnalyzerPlugin{
 				ArrayList<String> authorOfCommit = new ArrayList<String>();
 				ArrayList<Double> percentageOfContribution = new ArrayList<Double>();
 				for(var data : getContributionPerAuthor().entrySet()){
-					authorOfCommit.add(data.getKey());
+					String[] nameTab = data.getKey().split(" ");
+	            	String name = "";
+	            	for(int i=0; i<nameTab.length-1; i++) {
+	            		name += nameTab[i] + " ";
+	            	}
+					authorOfCommit.add(name);
 					percentageOfContribution.add(data.getValue());
 				}
-				wg.addChartDouble("pie","Countribution",authorOfCommit,percentageOfContribution);
+				wg.addChartDouble("pie", "Contribution", "Contribution", authorOfCommit, percentageOfContribution);
 	        }
 	    }
 	    
