@@ -26,8 +26,8 @@ public class TestCountCommentsPerAuthorPlugin {
                 comments.add(new Comments(commentList,String.valueOf(i)));
         }
             var res = CountCommentsPerAuthorPlugin.processLog(comments);
-            assertEquals(authors.length, res.getCommitsPerAuthor().size());
-            var sum = res.getCommitsPerAuthor().values().stream().reduce(0, Integer::sum);
+            assertEquals(authors.length, res.getCommentsPerAuthor().size());
+            var sum = res.getCommentsPerAuthor().values().stream().reduce(0, Integer::sum);
             assertEquals(entries, sum.longValue());
     }
 

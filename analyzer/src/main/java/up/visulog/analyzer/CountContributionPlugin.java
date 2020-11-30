@@ -71,7 +71,7 @@ public class CountContributionPlugin implements AnalyzerPlugin{
 	    static class Result implements AnalyzerPlugin.Result {
 	        private final Map<String,Double> contributionPerAuthor = new HashMap<>();
 
-	        Map<String, Double> getCommitsPerAuthor() {
+	        Map<String, Double> getContributionPerAuthor() {
 	            return contributionPerAuthor;
 	        }
 
@@ -104,7 +104,7 @@ public class CountContributionPlugin implements AnalyzerPlugin{
 	        public void getResultAsHtmlDiv(WebGen wg) {
 				ArrayList<String> authorOfCommit = new ArrayList<String>();
 				ArrayList<Double> percentageOfContribution = new ArrayList<Double>();
-				for(var data : getCommitsPerAuthor().entrySet()){
+				for(var data : getContributionPerAuthor().entrySet()){
 					String[] nameTab = data.getKey().split(" ");
 	            	String name = "";
 	            	for(int i=0; i<nameTab.length-1; i++) {
