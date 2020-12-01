@@ -42,10 +42,20 @@ public class CliMenuParameter extends JFrame{
 			else if (PerWeeks.isSelected()) result[0] = result[0] + "PerWeeks";
 			else if(PerMonths.isSelected()) result[0] = result[0] + "PerMonths";
 			
-
 			
 			if(ForAllBranches.isSelected()) result[0] = result[0] +  "ForAllBranches";
 		}
+		
+		else if(version == 2) {
+			
+			if(PerDays.isSelected()) result[0] = result[0] + "PerDays";
+			else if (PerWeeks.isSelected()) result[0] = result[0] + "PerWeeks";
+			else if(PerMonths.isSelected()) result[0] = result[0] + "PerMonths";
+		
+			
+			if(ForAllBranches.isSelected()) result[0] = result[0] +  "ForAllBranches";
+		}
+		
 		else {
 			result[1] = "--privateToken=" + privateToken.getText();
 			result[2] = "--projectId=" + projectId.getText();
@@ -100,9 +110,40 @@ public class CliMenuParameter extends JFrame{
 			
 			panneauPara.add(menuBox);
 			panneauPara.add(menuRadio);
-			
-			
 		}
+			
+		else if(version == 2) {
+			result = new String [1];
+			result [0] = pluginName; 
+			panneauPara.setLayout(new GridLayout(2,2));
+			JPanel menuRadio = new JPanel();
+			menuRadio.setLayout(new GridLayout(3,1));
+				
+			PerDays = new JRadioButton("PerDays");
+			PerWeeks = new JRadioButton("PerWeeks");
+			PerMonths = new JRadioButton("PerMonths");
+			ButtonGroup Date = new ButtonGroup();
+			
+			Date.add(PerDays);
+			Date.add(PerWeeks);
+			Date.add(PerMonths);
+				
+			menuRadio.add(PerDays);
+			menuRadio.add(PerWeeks);
+			menuRadio.add(PerMonths);
+
+				
+			JPanel menuBox = new JPanel();
+			menuBox.setLayout(new GridLayout(2,1));
+				
+			ForAllBranches = new JCheckBox("ForAllBranches");	
+				
+			menuBox.add(ForAllBranches);
+				
+			panneauPara.add(menuBox);
+			panneauPara.add(menuRadio);
+		}
+			
 		else {
 			result = new String [3];
 			result [0] = pluginName; 
