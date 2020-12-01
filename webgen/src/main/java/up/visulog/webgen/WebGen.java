@@ -1,5 +1,8 @@
 package up.visulog.webgen;
 
+import up.visulog.gitrawdata.*;
+
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
@@ -42,6 +45,29 @@ public class WebGen {
 			body.li().text(author).__();
 		}
 		body.__().__();
+	}
+
+	public void addListMembers(Collection<Member> members, String title){
+		var body = view
+				.div()
+					.text(title)
+					.table()
+						.attrClass("members")
+						.tr()
+							.th().text("Avatar").__()
+							.th().text("Full Name").__()
+							.th().text("Username").__()
+						.__();
+		for(var member:members){
+			body.tr()
+					.td().img().attrSrc(member.getAvatar_url()).__().__()
+					.td().text(member.getName()).__()
+					.td().a().attrHref(member.getWeb_url()).text(member.getUsername()).__().__()
+					.__();
+		}
+
+		body.__() //table
+				.__(); //div
 	}
 
 	public void addChart(String type, String title, String label, ArrayList<String> labels, ArrayList<Integer> data){

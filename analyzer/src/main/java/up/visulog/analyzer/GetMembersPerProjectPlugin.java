@@ -16,10 +16,7 @@ public class GetMembersPerProjectPlugin implements AnalyzerPlugin {
 
     static Result processLog(Collection<Member> membersLog) {
         var result = new Result();
-        for (Member member : membersLog) {
-            //Get all the members
-                result.membersList.add(member.getName());
-            }
+        result.membersList = membersLog;
         return result;
     }
 
@@ -38,9 +35,9 @@ public class GetMembersPerProjectPlugin implements AnalyzerPlugin {
         return result;
     }
     static class Result implements AnalyzerPlugin.Result {
-        private final List<String> membersList = new ArrayList<>();
+        private Collection<Member> membersList = new ArrayList<>();
 
-        List<String> getMembers() {
+        Collection<Member> getMembers() {
             return membersList;
         }
 
@@ -51,17 +48,19 @@ public class GetMembersPerProjectPlugin implements AnalyzerPlugin {
 
         @Override
         public String getResultAsHtmlDiv() {
-            StringBuilder html = new StringBuilder("<div>Members: <ul>");
+            StringBuilder html = new StringBuilder("<div>Members:");
+            html.append("<table class=\"members\"");
+            html.append("<tr><th>Avatar</th><th>Full Name</th><th>Username</th></tr>");
             for (var item : membersList) {
-                html.append("<li>").append(item).append("</li>");
+                html.append("<tr><td><img src=\""+item.getAvatar_url()+"\"></td><td>"+item.getUsername()+"</td><td><a href=\""+item.getWeb_url()+"\">"+item.getUsername()+"</a></tr>");
             }
-            html.append("</ul></div>");
+            html.append("</table>");
             return html.toString();
         }
         
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
-            wg.addListAuthor((ArrayList)membersList, "List of members");       
+            wg.addListMembers(membersList, "List of members");
         }
         
     }
