@@ -31,10 +31,10 @@ import java.util.Scanner;
 public class CLILauncher {
 
 	private static boolean graphicOver = false;
-	private static String argument[] = new String[1];
+	private static String argument[];
 	
-	public static void setArgument(String A, int i) {
-		argument[i] = A;
+	public static void setArgument(String [] A) {
+		argument = A;
 	}
 	
 	public static void setGraphicOver(boolean B) {

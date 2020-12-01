@@ -49,27 +49,28 @@ public class CliMenuParameter extends JFrame{
 		else {
 			result[1] = "--privateToken=" + privateToken.getText();
 			result[2] = "--projectId=" + projectId.getText();
-			CLILauncher.setArgument(result[1],1);
-			CLILauncher.setArgument(result[2],2);
+
 		}
 		
 		CLILauncher.setGraphicOver(true);
-		CLILauncher.setArgument(result[0],0);
+		CLILauncher.setArgument(result);
 
 	}
 
 	
-	public CliMenuParameter(String plugin,int ver) {
+	public CliMenuParameter(String pluginName,int ver) {
 		version = ver;
-		result = new String [3];
+		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setSize(600,800);
 		
 		panneauPara = new JPanel();
 
 		
-		result [0] = plugin; 
+
 		if(version == 1) {
+			result = new String [1];
+			result [0] = pluginName; 
 			panneauPara.setLayout(new GridLayout(2,2));
 			JPanel menuRadio = new JPanel();
 			menuRadio.setLayout(new GridLayout(3,1));
@@ -103,6 +104,8 @@ public class CliMenuParameter extends JFrame{
 			
 		}
 		else {
+			result = new String [3];
+			result [0] = pluginName; 
 			panneauPara.setLayout(new GridLayout(2,2));
 			JPanel project = new JPanel();
 			project.setLayout(new GridLayout(1,2));

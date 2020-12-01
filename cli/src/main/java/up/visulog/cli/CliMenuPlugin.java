@@ -54,9 +54,9 @@ public class CliMenuPlugin extends JFrame{
 		
 		countLinesAdded.addActionListener((event) -> {result [0]=result[0]+ "countLinesAdded"; new CliMenuParameter(result[0],1);this.dispose();});
 		countLinesDeleted.addActionListener((event) -> {result [0]=result[0]+ "countLinesDeleted"; new CliMenuParameter(result[0],1);this.dispose();});
-		countMergeCommits.addActionListener((event) -> {result [0]=result[0]+ "countMergeCommits";this.dispose();CLILauncher.setGraphicOver(true);CLILauncher.setArgument(result[0],0);});
+		countMergeCommits.addActionListener((event) -> {result [0]=result[0]+ "countMergeCommits";this.dispose();CLILauncher.setGraphicOver(true);CLILauncher.setArgument(result);});
 		countCommits.addActionListener((event) -> {result [0]=result[0]+ "countCommits"; new CliMenuParameter(result[0],1);this.dispose();});
-		countContribution.addActionListener((event) -> {result [0]=result[0]+ "countContribution";this.dispose();CLILauncher.setGraphicOver(true);CLILauncher.setArgument(result[0],0);});
+		countContribution.addActionListener((event) -> {result [0]=result[0]+ "countContribution";this.dispose();CLILauncher.setGraphicOver(true);CLILauncher.setArgument(result);});
 		
 		
 		
