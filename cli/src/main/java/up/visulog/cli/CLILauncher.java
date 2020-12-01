@@ -47,7 +47,6 @@ public class CLILauncher {
     		while(!graphicOver){
     			try {
 					Thread.sleep(1000);
-					System.out.println("X");
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
