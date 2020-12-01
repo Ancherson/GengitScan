@@ -31,9 +31,16 @@ import java.util.Scanner;
 public class CLILauncher {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
-        var config = makeConfigFromCommandLineArgs(args);
-        if (config.isPresent()) {
-            var analyzer = new Analyzer(config.get());
+    	if(args.length == 0) {
+    		new CliMenuPlugin();
+    	}
+    	else launch(args);
+    }
+    
+    public static void launch(String [] args) throws IOException, URISyntaxException {
+	    var config = makeConfigFromCommandLineArgs(args);
+	    if (config.isPresent()) {
+	        var analyzer = new Analyzer(config.get());
 			var results = analyzer.computeResults();
 			var wg = new WebGen();
 			results.toHTML(wg);
@@ -41,9 +48,9 @@ public class CLILauncher {
 			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 				Desktop.getDesktop().open(new File("../htmlResult/index.html"));
 			}
-        } else displayHelpAndExit();
-    }
-
+	    } else displayHelpAndExit();
+	}
+    
     static Optional<Configuration> makeConfigFromCommandLineArgs(String[] args) {
         var gitPath = FileSystems.getDefault().getPath("../");
         var plugins = new HashMap<String, PluginConfig>();
@@ -158,8 +165,7 @@ public class CLILauncher {
                             	    break;
                             	case "countLinesDeletedPerMonthsForAllBranches":
                            	     	plugins.put("countLinesDeletedPerMonthsForAllBranches", new PluginConfig() {});
-                           	     	break;
-                           	                           	     	
+                           	     	break;            	     	
                             	case "countLinesAddedPerAuthorPerDays":
                            	     	plugins.put("countLinesAddedPerAuthorPerDays", new PluginConfig() {});
                            	     	break;
