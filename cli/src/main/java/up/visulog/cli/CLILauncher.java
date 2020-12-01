@@ -353,25 +353,38 @@ public class CLILauncher {
 
 
     private static void displayHelpAndExit(String[] args) {
-    	if(!args[0].contentEquals("--help")) System.out.println("Wrong command...");
-    	//TODO: print the list of options and their syntax
+    	if(args.length != 0) {
+    		if(args[0].equals("--help")) System.out.println("Wrong command...");
+    	}
 	    System.out.println("Here is a list of what we can do : ");
 	    printAllPossiblePlugins();
-	    System.out.println("--loadConfigFile allows you to load options from a file\n");
-	    System.out.println("--justSaveConfigFile save command line options to a file instead of running the analysis\n");
+	    System.out.println("--load= (Loads the selected commands (test in the example) into a file ../config.txt)");
+	    System.out.println("(Format command: --load=name of the config)");
+	    System.out.println("Example : ./gradlew run --args='--load=test'\n");
+	    
+	    System.out.println("--save= (Save the commande \"--addPlugin=(name of command)\" in ../config.txt)");
+	    System.out.println("(Format command: --save=name of the config)");
+	    System.out.println("Example : ./gradlew run --args='--addPlugin=countCommits --save=test'\n");
+	    
+	    System.out.println("--privateToken= (to use the API)");
+	    System.out.println("(For our project: 1m1pdKszBNnTtCHS9KtS)\n");
+	    System.out.println("--projectId= (this is a ID of the project)");
+	    System.out.println("(For our project: 1618)\n");
 	    System.exit(0);
     }
     
     private static void printAllPossiblePlugins() {
     	String space = "          ";
-    	String prohibition = " (X) ";
+    	String prohibition = " (X)";
+    	String api = " (API)";
     	System.out.println("--addPlugin= (allows you to add new plugins)");
     	System.out.println("If you want to see the results on all branches, just add \"ForAllBranches\" at the end of the command.\n");
     	
     	System.out.println("\"(X)\" means you can't have this command on all branches.\n");
+    	System.out.println("\"(API)\" means that the plugin in question uses an API. You will have to add as an option \"privateToken\" and projectId\".\n");
     	
     	System.out.println("GENERAL STATISTICS :");
-    	System.out.println("getMembers" + space + "Get members" + prohibition);
+    	System.out.println("getMembers" + space + "Get members" + prohibition + api);
     	System.out.println();
     	
     	System.out.println("ACTIVITY :");
@@ -392,8 +405,8 @@ public class CLILauncher {
     	System.out.println("countLinesAdded" + space + "Lines added by author");
     	System.out.println("countLinesDeleted" + space + "Lines deleted by author");
     	System.out.println("countContribution"+ space + "Authors' contribution" + prohibition);
-    	System.out.println("countComments" + space + "Comments by author" + prohibition);
-    	System.out.println("countIssues" + space + "Issues by author" + prohibition);
+    	System.out.println("countComments" + space + "Comments by author" + prohibition + api);
+    	System.out.println("countIssues" + space + "Issues by author" + prohibition + api);
     	System.out.println();
     	
     	System.out.println("ACTIVITY BY AUTHOR :");
@@ -409,7 +422,7 @@ public class CLILauncher {
     	System.out.println();
     	
     	System.out.println("FILES AND EXTENSION :");
-    	System.out.println("getExtensions" + space + "Get Extensions" + prohibition);
+    	System.out.println("getExtensions" + space + "Get Extensions" + prohibition + api);
     	System.out.println();       
     }
 }
