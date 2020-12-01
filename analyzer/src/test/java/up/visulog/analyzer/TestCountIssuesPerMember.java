@@ -19,8 +19,8 @@ public class TestCountIssuesPerMember {
             assignees.add(new Assignees(assignee));
         }
         var res = CountIssuesPerMemberPlugin.processLog(assignees);
-        assertEquals(authors.length, res.getCommitsPerAuthor().size());
-        var sum = res.getCommitsPerAuthor().values().stream().reduce(0, Integer::sum);
+        assertEquals(authors.length, res.getIssuesPerMember().size());
+        var sum = res.getIssuesPerMember().values().stream().reduce(0, Integer::sum);
         assertEquals(entries, sum.longValue());
     }
 

@@ -15,6 +15,6 @@ public class TestGetMembersPerProjectPlugin {
         members.add(new Member(1,"test2","test2",null,null));
         members.add(new Member(2,"test3","test3",null,null));
         var res = GetMembersPerProjectPlugin.processLog(members);
-        assertEquals(authors.length, res.getMembers().size());
+        assertEquals(authors.length, res.getMembersList().size());
     }
 }
