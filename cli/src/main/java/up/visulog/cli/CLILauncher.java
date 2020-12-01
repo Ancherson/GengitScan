@@ -30,9 +30,31 @@ import java.util.Scanner;
 
 public class CLILauncher {
 
+	private static boolean graphicOver = false;
+	private static String argument[] = new String[1];
+	
+	public static void setArgument(String A, int i) {
+		argument[i] = A;
+	}
+	
+	public static void setGraphicOver(boolean B) {
+		graphicOver = B;
+	}
+	
     public static void main(String[] args) throws IOException, URISyntaxException {
     	if(args.length == 0) {
     		new CliMenuPlugin();
+    		while(!graphicOver){
+    			try {
+					Thread.sleep(1000);
+					System.out.println("X");
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    		}
+    		System.out.println(argument[0]);
+   			launch(argument);
     	}
     	else launch(args);
     }

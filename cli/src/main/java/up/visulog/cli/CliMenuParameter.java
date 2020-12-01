@@ -4,9 +4,14 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class CliMenuParameter extends JFrame{
+
+	
 	private String [] result;
+	private int version;
 	
 	private JButton back;
 	private JButton submit;
@@ -14,22 +19,48 @@ public class CliMenuParameter extends JFrame{
 
 	//CheckBox and RadioButton that will appear when the selected plugin have more parameter
 	
-	private JRadioButton perDays;
-	private JRadioButton perWeeks;
-	private JRadioButton perMonths;
+	private JRadioButton PerDays;
+	private JRadioButton PerWeeks;
+	private JRadioButton PerMonths;
 	
-	private JCheckBox perAuthors;
+	private JCheckBox PerAuthor;
 	
-	private JCheckBox forAllBranches;
+	private JCheckBox ForAllBranches;
 	
-	//Texte Area needed to be fill for plugins using API
+	//Texte Area needed to be fill For plugins using API
 	
 	private JTextField projectId;
-	private JTextField projectToken;
-
+	private JTextField privateToken;
 
 	
-	public CliMenuParameter(String plugin,int version) {
+	public void submitMethode(){
+		
+		if(version == 1) {
+			if(PerAuthor.isSelected()) result[0] = result[0] + "PerAuthor";
+			
+			if(PerDays.isSelected()) result[0] = result[0] + "PerDays";
+			else if (PerWeeks.isSelected()) result[0] = result[0] + "PerWeeks";
+			else if(PerMonths.isSelected()) result[0] = result[0] + "PerMonths";
+			
+
+			
+			if(ForAllBranches.isSelected()) result[0] = result[0] +  "ForAllBranches";
+		}
+		else {
+			result[1] = "--privateToken=" + privateToken.getText();
+			result[2] = "--projectId=" + projectId.getText();
+			CLILauncher.setArgument(result[1],1);
+			CLILauncher.setArgument(result[2],2);
+		}
+		
+		CLILauncher.setGraphicOver(true);
+		CLILauncher.setArgument(result[0],0);
+
+	}
+
+	
+	public CliMenuParameter(String plugin,int ver) {
+		version = ver;
 		result = new String [3];
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setSize(600,800);
@@ -43,28 +74,28 @@ public class CliMenuParameter extends JFrame{
 			JPanel menuRadio = new JPanel();
 			menuRadio.setLayout(new GridLayout(3,1));
 			
-			perDays = new JRadioButton("perDays");
-			perWeeks = new JRadioButton("perWeeks");
-			perMonths = new JRadioButton("perMonths");
+			PerDays = new JRadioButton("PerDays");
+			PerWeeks = new JRadioButton("PerWeeks");
+			PerMonths = new JRadioButton("PerMonths");
 			ButtonGroup Date = new ButtonGroup();
 			
-			Date.add(perDays);
-			Date.add(perWeeks);
-			Date.add(perMonths);
+			Date.add(PerDays);
+			Date.add(PerWeeks);
+			Date.add(PerMonths);
 			
-			menuRadio.add(perDays);
-			menuRadio.add(perWeeks);
-			menuRadio.add(perMonths);
+			menuRadio.add(PerDays);
+			menuRadio.add(PerWeeks);
+			menuRadio.add(PerMonths);
 
 			
 			JPanel menuBox = new JPanel();
 			menuBox.setLayout(new GridLayout(2,1));
 			
-			perAuthors = new JCheckBox("perAuthors");
-			forAllBranches = new JCheckBox("forAllBranches");	
+			PerAuthor = new JCheckBox("PerAuthor");
+			ForAllBranches = new JCheckBox("ForAllBranches");	
 			
-			menuBox.add(perAuthors);
-			menuBox.add(forAllBranches);
+			menuBox.add(PerAuthor);
+			menuBox.add(ForAllBranches);
 			
 			panneauPara.add(menuBox);
 			panneauPara.add(menuRadio);
@@ -77,17 +108,17 @@ public class CliMenuParameter extends JFrame{
 			project.setLayout(new GridLayout(1,2));
 			
 			projectId = new JTextField("projectId");
-			projectToken = new JTextField("projectToken");
+			privateToken = new JTextField("projectToken");
 			
 			project.add(projectId);
-			project.add(projectToken);
+			project.add(privateToken);
 			
 			panneauPara.add(project);
 		}
 		back = new JButton("Back");
 		back.addActionListener((event) -> {this.dispose();new CliMenuPlugin();});
 		submit = new JButton("submit");
-		submit.addActionListener((event) -> {this.dispose();});
+		submit.addActionListener((event) -> {this.dispose(); submitMethode();});
 		panneauPara.add(back);
 		panneauPara.add(submit);
 		this.add(panneauPara);

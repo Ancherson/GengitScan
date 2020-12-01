@@ -9,12 +9,12 @@ public class CliMenuPlugin extends JFrame{
 	
 	private String [] result;
 	
-	
+
 	
 	//Buttons that represents the "main" plugins
 	
-	private JButton countLineAdd;
-	private JButton countLineDeleted;
+	private JButton countLinesAdded;
+	private JButton countLinesDeleted;
 	
 	private JButton countMergeCommits;
 	
@@ -46,14 +46,14 @@ public class CliMenuPlugin extends JFrame{
 		panneauPlugin.setLayout(new GridLayout(3,3));
 		
 		
-		countLineAdd = new JButton("countLineAdd");
-		countLineDeleted = new JButton("countLineDeleted");
+		countLinesAdded = new JButton("countLinesAdded");
+		countLinesDeleted = new JButton("countLinesDeleted");
 		countMergeCommits = new JButton("countMergeCommits");
 		countCommits = new JButton("countCommits");
 		countContribution = new JButton("countContribution");
 		
-		countLineAdd.addActionListener((event) -> {result [0]=result[0]+ "countLineAdd"; new CliMenuParameter(result[0],1);this.dispose();});
-		countLineDeleted.addActionListener((event) -> {result [0]=result[0]+ "countLineDeleted"; new CliMenuParameter(result[0],1);this.dispose();});
+		countLinesAdded.addActionListener((event) -> {result [0]=result[0]+ "countLinesAdded"; new CliMenuParameter(result[0],1);this.dispose();});
+		countLinesDeleted.addActionListener((event) -> {result [0]=result[0]+ "countLinesDeleted"; new CliMenuParameter(result[0],1);this.dispose();});
 		countMergeCommits.addActionListener((event) -> {result [0]=result[0]+ "countMergeCommits";this.dispose();});
 		countCommits.addActionListener((event) -> {result [0]=result[0]+ "countCommits"; new CliMenuParameter(result[0],1);this.dispose();});
 		countContribution.addActionListener((event) -> {result [0]=result[0]+ "countContribution";this.dispose();});
@@ -73,8 +73,8 @@ public class CliMenuPlugin extends JFrame{
 		
 
 		
-		panneauPlugin.add(countLineAdd);
-		panneauPlugin.add(countLineDeleted);
+		panneauPlugin.add(countLinesAdded);
+		panneauPlugin.add(countLinesDeleted);
 		panneauPlugin.add(countMergeCommits);
 		panneauPlugin.add(countCommits);
 		panneauPlugin.add(countContribution);
@@ -90,6 +90,7 @@ public class CliMenuPlugin extends JFrame{
 	
 	public void paraMenu(int version) {
 		new CliMenuParameter(result[0], version);
+		
 	}
 	
 }
