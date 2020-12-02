@@ -48,7 +48,7 @@ public class CliMenuParameter extends JFrame{
 		
 		else if(version == 2) {
 			//When countCommmitsPerAuthors exist
-			//if(PerAuthor.isSelected()) result[0] = result[0] + "PerAuthor";
+			if(PerAuthor.isSelected()) result[0] = result[0] + "PerAuthor";
 			
 			if(PerDays.isSelected()) result[0] = result[0] + "PerDays";
 			else if (PerWeeks.isSelected()) result[0] = result[0] + "PerWeeks";
@@ -140,9 +140,9 @@ public class CliMenuParameter extends JFrame{
 			ForAllBranches = new JCheckBox("ForAllBranches");	
 			
 			//When countCommmitsPerAuthors exist
-			/*PerAuthor = new JCheckBox("PerAuthor");
+			PerAuthor = new JCheckBox("PerAuthor");
 			
-			menuBox.add(PerAuthor);*/	
+			menuBox.add(PerAuthor);
 			menuBox.add(ForAllBranches);
 				
 			panneauPara.add(menuBox);
