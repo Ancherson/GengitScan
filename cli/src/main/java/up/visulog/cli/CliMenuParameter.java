@@ -33,7 +33,7 @@ public class CliMenuParameter extends JFrame{
 	private JTextField privateToken;
 
 	
-	public void submitMethode(){
+	public void submitMethode() throws IOException, URISyntaxException{
 		
 		if(version == 1) {
 			if(PerAuthor.isSelected()) result[0] = result[0] + "PerAuthor";
@@ -64,8 +64,7 @@ public class CliMenuParameter extends JFrame{
 
 		}
 		
-		CLILauncher.setGraphicOver(true);
-		CLILauncher.setArgument(result);
+		CLILauncher.launch(result);
 
 	}
 
@@ -168,7 +167,15 @@ public class CliMenuParameter extends JFrame{
 		back = new JButton("Back");
 		back.addActionListener((event) -> {this.dispose();new CliMenuPlugin();});
 		submit = new JButton("submit");
-		submit.addActionListener((event) -> {this.dispose(); submitMethode();});
+		submit.addActionListener((event) -> {this.dispose(); try {
+			submitMethode();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}});
 		panneauPara.add(back);
 		panneauPara.add(submit);
 		this.add(panneauPara);

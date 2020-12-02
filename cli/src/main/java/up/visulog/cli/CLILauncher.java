@@ -44,16 +44,6 @@ public class CLILauncher {
     public static void main(String[] args) throws IOException, URISyntaxException {
     	if(args.length == 0) {
     		new CliMenuPlugin();
-    		while(!graphicOver){
-    			try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-    		}
-    		System.out.println(argument[0]);
-   			launch(argument);
     	}
     	else launch(args);
     }
