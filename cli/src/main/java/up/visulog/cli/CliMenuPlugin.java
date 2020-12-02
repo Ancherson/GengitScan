@@ -66,10 +66,10 @@ public class CliMenuPlugin extends JFrame{
 		countComments = new JButton("countComments");
 		
 		
-		getMembers.addActionListener((event) -> {result [0]=result[0]+ "getMembers"; new CliMenuParameter(result[0],2);this.dispose();});
-		getExtensions.addActionListener((event) -> {result [0]=result[0]+ "getExtensions"; new CliMenuParameter(result[0],2);this.dispose();});
-		countIssues.addActionListener((event) -> {result [0]=result[0]+ "countIssues"; new CliMenuParameter(result[0],2);this.dispose();});
-		countComments.addActionListener((event) -> {result [0]=result[0]+ "countComments"; new CliMenuParameter(result[0],2);this.dispose();});
+		getMembers.addActionListener((event) -> {result [0]=result[0]+ "getMembers"; new CliMenuParameter(result[0],3);this.dispose();});
+		getExtensions.addActionListener((event) -> {result [0]=result[0]+ "getExtensions"; new CliMenuParameter(result[0],3);this.dispose();});
+		countIssues.addActionListener((event) -> {result [0]=result[0]+ "countIssues"; new CliMenuParameter(result[0],3);this.dispose();});
+		countComments.addActionListener((event) -> {result [0]=result[0]+ "countComments"; new CliMenuParameter(result[0],3);this.dispose();});
 		
 
 		
