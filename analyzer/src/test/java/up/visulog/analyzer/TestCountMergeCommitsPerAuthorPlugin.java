@@ -18,8 +18,8 @@ public class TestCountMergeCommitsPerAuthorPlugin {
             log.add(new Commit(String.valueOf(i%3),authors[i%3],null,"Test","Test"+(i)));
         }
         var res = CountMergeCommitsPerAuthorPlugin.processLog(log);
-        assertEquals(authors.length, res.getCommitsPerAuthor().size());
-        var sum = res.getCommitsPerAuthor().values().stream().reduce(0, Integer::sum);
+        assertEquals(authors.length, res.getMergeCommitsPerAuthor().size());
+        var sum = res.getMergeCommitsPerAuthor().values().stream().reduce(0, Integer::sum);
         assertEquals(entries, sum.longValue());
     }
 }
