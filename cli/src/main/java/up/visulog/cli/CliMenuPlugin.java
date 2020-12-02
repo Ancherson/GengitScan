@@ -3,6 +3,8 @@ package up.visulog.cli;
 import javax.swing.*;
 
 import java.awt.*;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class CliMenuPlugin extends JFrame{
 	private JPanel panneauPlugin;
@@ -54,9 +56,24 @@ public class CliMenuPlugin extends JFrame{
 		
 		countLinesAdded.addActionListener((event) -> {result [0]=result[0]+ "countLinesAdded"; new CliMenuParameter(result[0],1);this.dispose();});
 		countLinesDeleted.addActionListener((event) -> {result [0]=result[0]+ "countLinesDeleted"; new CliMenuParameter(result[0],1);this.dispose();});
-		countMergeCommits.addActionListener((event) -> {result [0]=result[0]+ "countMergeCommits";this.dispose();CLILauncher.setGraphicOver(true);CLILauncher.setArgument(result);});
+		countMergeCommits.addActionListener((event) -> {result [0]=result[0]+ "countMergeCommits";this.dispose();try {
+			CLILauncher.launch(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();}});
 		countCommits.addActionListener((event) -> {result [0]=result[0]+ "countCommits"; new CliMenuParameter(result[0],2);this.dispose();});
-		countContribution.addActionListener((event) -> {result [0]=result[0]+ "countContribution";this.dispose();CLILauncher.setGraphicOver(true);CLILauncher.setArgument(result);});
+		countContribution.addActionListener((event) -> {result [0]=result[0]+ "countContribution";this.dispose();try {
+			CLILauncher.launch(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}});
 		
 		
 		

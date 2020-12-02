@@ -30,16 +30,6 @@ import java.util.Scanner;
 
 public class CLILauncher {
 
-	private static boolean graphicOver = false;
-	private static String argument[];
-	
-	public static void setArgument(String [] A) {
-		argument = A;
-	}
-	
-	public static void setGraphicOver(boolean B) {
-		graphicOver = B;
-	}
 	
     public static void main(String[] args) throws IOException, URISyntaxException {
     	if(args.length == 0) {
