@@ -46,7 +46,7 @@ public class TestWebGen {
 		webG.addChart(title, labels, datasets);
 		
 		String result = webG.getHtml() + "\n";
-		var uri = getClass().getClassLoader().getResource("truc.html").toURI();
+		var uri = getClass().getClassLoader().getResource("expected.html").toURI();
 		var expected = new File(uri);
 		String expec = "";
 		BufferedReader reader = new BufferedReader(new FileReader(expected));
