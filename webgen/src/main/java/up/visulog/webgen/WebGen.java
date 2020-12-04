@@ -31,7 +31,7 @@ public class WebGen {
 				.body();
 	
 	public void addListAuthor(Map<String, Integer>list, String title) {
-		var body = view.ul().text(title);
+		var body = view.div().ul().text(title);
 		for(var item : list.entrySet()) {
 			String content = item.getKey() + ": " + item.getValue();
 			
@@ -148,6 +148,10 @@ public class WebGen {
 
 
 	public String getHtml() {
+		return view.__().__().render();
+	}
+	
+	public String getH() {
 		return view.__().__().render();
 	}
 	
