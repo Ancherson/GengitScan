@@ -71,7 +71,7 @@ public class Analyzer {
     }
 
     /**
-     * mekePlugin create the plugin which corresponds with the plugin name
+     * makePlugin create the plugin which corresponds with the plugin name
      * @param pluginName is the name of the plugin
      * @param pluginConfig is totally useless
      * @return

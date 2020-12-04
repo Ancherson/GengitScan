@@ -18,7 +18,9 @@ public interface AnalyzerPlugin extends Runnable{
     	 * @return the result of the plugin as a <b>String</b>
     	 */
         String getResultAsString();
+        
         /**
+         * This is the old function to generate the html
          * @return the result of the plugin as a <b>String</b> in html format
          * @deprecated
          */
