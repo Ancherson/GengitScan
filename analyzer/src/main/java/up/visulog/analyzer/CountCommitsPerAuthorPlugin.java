@@ -60,7 +60,7 @@ public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
     }
 
     /**
-     * Computes the result if it has not already been done, and returns it
+     * Computes the result if it has not already been done, and returns it.
      * @return the result
      */
     @Override
@@ -88,7 +88,7 @@ public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
         }
 
         /**
-         * Generates an HTML div containing a list of authors and their number of commits
+         * Generates an HTML div containing a list of authors and their number of commits.
          * @return the html div as a String
          */
         @Override

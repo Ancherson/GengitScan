@@ -9,14 +9,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Counts the number of merge commits (the commits that merge a branch into another) for each different author of the git project.
+ */
 public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
     private final Configuration configuration;
     private Result result;
 
+    /**
+     * Constructor
+     * @param generalConfiguration stores the path of the git project to analyze
+     */
     public CountMergeCommitsPerAuthorPlugin(Configuration generalConfiguration) {
         this.configuration = generalConfiguration;
     }
 
+    /**
+     * Goes through a list of commits in order to count the number of merge commits for each author.
+     * @param gitLog a list of commits
+     * @return a Result object which contains a HashMap which links authors to the number of merge commits they have done
+     */
     static Result processLog(List<Commit> gitLog) {
         var result = new Result();
         Map<String,String>emailToName = new HashMap<String,String>();
@@ -38,18 +50,31 @@ public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
         return result;
     }
 
+    /**
+     * Computes the result for the git project specified in configuration.
+     */
     @Override
     public void run() {
         result = processLog(Commit.parseLogFromCommand(configuration.getGitPath(), false));
     }
 
+    /**
+     * Computes the result if it has not already been done, and returns it.
+     * @return the result
+     */
     @Override
     public Result getResult() {
         if (result == null) run();
         return result;
     }
 
+    /**
+     * Stores the number of merge commits for each author, and manages how this data is outputted.
+     */
     static class Result implements AnalyzerPlugin.Result {
+        /**
+         * Links the authors to the number of merge commits they have done.
+         */
         private final Map<String, Integer> mergeCommitsPerAuthor = new HashMap<>();
 
         Map<String, Integer> getMergeCommitsPerAuthor() {
@@ -61,6 +86,10 @@ public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
             return mergeCommitsPerAuthor.toString();
         }
 
+        /**
+         * Generates an HTML div containing a list of authors and their number of merge commits.
+         * @return the html div as a String
+         */
         @Override
         public String getResultAsHtmlDiv() {
             StringBuilder html = new StringBuilder("<div>Number of merge commits per author: <ul>");
@@ -71,6 +100,11 @@ public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
             return html.toString();
         }
         
+        /**
+         * Formats the result into a list of labels (the authors) and a list of data (the number of merge commits)
+         * and passes them to a WebGen object so it generates a chart in an HTML div.
+         * @param wg the WebGen object which will generate the output HTML page
+         */
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
             ArrayList<String> labels = new ArrayList<String>();
