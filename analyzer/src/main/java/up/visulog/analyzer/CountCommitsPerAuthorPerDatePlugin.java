@@ -16,7 +16,7 @@ import up.visulog.webgen.WebGen;
  * This class represents a plugin : CountCommitsPerAuthorPerDatePlugin.
  * It counts <b>the commits per Date and by Author</b>.
  * The user can choose if he wants to sort them by <b>Days</b>, <b>Weeks</b> or <b>Months</b>.
- * The lines will be automatically sorted by Author.
+ * The commits will be automatically sorted by Author.
  * The plugin can also be used on all branches, but only on the current branch.
  * <p> If the user want to have the commits per Date without the author, he can use the CountCommitsPerDate plugin.</p>
  * <p> If The user want to have the commits by Author without the date, he can use the CountCommitsPerAuthor plugin.</p>
@@ -34,14 +34,14 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
 	
     /**
      * The value change if the user wants the number commits per days, per weeks and per months.
-     * The value sort the lines per months, this is a default value.
+     * The value sort the commits per months, this is a default value.
      */
     private String howToSort = "months";
     
     /**
-     * The plugin count the lines for all branches or the branch where the user is according to the content of the variable.
-     * If the boolean is "true", the plugin count the lines for all branches.
-     * If the boolean is "false", the plugin count the lines for the branch where the user is.
+     * The plugin count the commits for all branches or the branch where the user is according to the content of the variable.
+     * If the boolean is "true", the plugin count the commits for all branches.
+     * If the boolean is "false", the plugin count the commits for the branch where the user is.
      */
     private boolean allBranches;
     
@@ -147,7 +147,7 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
     }
     
     /**
-     * Return a Map with the author in Key and the number of lines the author made per Days
+     * Return a Map with the author in Key and the number of commits the author made per Days
      * @param gitLog
      * @return
      */
@@ -170,10 +170,10 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
     	if(howToSort.equals("months")) {
     		// first, we create a new Map
     		Map<LocalDate, Map<String, Integer>> res = new TreeMap<>();
-    		// we sort the number of added/deleted lines per months
+    		// we sort the number of commits per months
         	for(var date : result.commitsPerAuthorPerDate.entrySet()) {
         		LocalDate m = LocalDate.of(date.getKey().getYear(), date.getKey().getMonth(), 1);
-        		// we create a new Map which gives the right number of lines to the authors
+        		// we create a new Map which gives the right number of commits to the authors
         		Map<String, Integer> res2 = authorsAndMonths(m, result);
         		res.put(m, res2);
         	}
@@ -187,10 +187,10 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
     	else if(howToSort.equals("weeks")) {
     		// first, we create a new Map
     		Map<String, Map<String, Integer>> res = new TreeMap<>();
-    		// we sort the number of added/deleted lines per weeks
+    		// we sort the number of commits per weeks
         	for(var date : result.commitsPerAuthorPerDate.entrySet()) {
         		String m = Integer.toString(date.getKey().getYear()) + " Week " + Integer.toString(date.getKey().getDayOfYear()/7);
-        		// we create a new Map which gives the right number of lines to the authors
+        		// we create a new Map which gives the right number of commit to the authors
         		Map<String, Integer> res2 = authorAndWeeks(m, result);
         		res.put(m, res2);
         	}
@@ -255,19 +255,20 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
      * This class represents the result of the Plugin.
      */
 	public class Result implements AnalyzerPlugin.Result {
+		
     	/**
     	 * Result of the plugin per days or per months
     	 */
 		private Map<LocalDate, Map<String, Integer>> commitsPerAuthorPerDate = new TreeMap<>();
 		
-		 /*
+		 /**
          * Result of the plugin per weeks
          */
         private Map<String, Map<String, Integer>> commitsPerAuthorPerWeeks = new TreeMap<>();
         
         /**
-         * The value change if the user wants the number of lines per days, per weeks and per months.
-         * The value sort the lines per months, this is a default value.
+         * The value change if the user wants the number of commits per days, per weeks and per months.
+         * The value sort the commits per months, this is a default value.
          */
         private String howToSort = "months";
 
