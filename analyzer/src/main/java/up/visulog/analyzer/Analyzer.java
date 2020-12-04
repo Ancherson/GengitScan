@@ -8,15 +8,34 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * This class is the core of the analysis of the git data
+ * Create and execute all the plugins that are in the configuration
+ */
+
 public class Analyzer {
+	/**
+	 * <b>config</b> contains the list of plugin that we need to create and execute
+	 */
     private final Configuration config;
 
+    /**
+     * <b>result</b> will contains the results of the plugins at the end of the execution
+     */
     private AnalyzerResult result;
 
+    /**
+     * Construct the Analyzer
+     * @param config the configuration of the analysis which contains the list of plugins
+     */
     public Analyzer(Configuration config) {
         this.config = config;
     }
 
+    /**
+     * computeResults creates the plugins, execute them, and store the results in <b>result</b>
+     * @return the list of results of all the plugin
+     */
     public AnalyzerResult computeResults() {
         List<AnalyzerPlugin> plugins = new ArrayList<>();
         for (var pluginConfigEntry: config.getPluginConfigs().entrySet()) {
@@ -51,7 +70,12 @@ public class Analyzer {
         return new AnalyzerResult(plugins.stream().map(AnalyzerPlugin::getResult).collect(Collectors.toList()));
     }
 
-    // TODO: find a way so that the list of plugins is not hardcoded in this factory
+    /**
+     * mekePlugin create the plugin which corresponds with the plugin name
+     * @param pluginName is the name of the plugin
+     * @param pluginConfig is totally useless
+     * @return
+     */
     private Optional<AnalyzerPlugin> makePlugin(String pluginName, PluginConfig pluginConfig) {
         switch (pluginName) {
             case "countCommits" : return Optional.of(new CountCommitsPerAuthorPlugin(config, false));
