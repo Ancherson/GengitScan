@@ -13,27 +13,64 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.time.Month;
 
+/**
+ * This class represents a plugin : CountCommitsPerDatePlugin.
+ * It counts <b>the commits per Date</b>.
+ * The user can choose if he wants to sort them by <b>Days</b>, <b>Weeks</b> or <b>Months</b>.
+ * The plugin can also be used on all branches, but only on the current branch.
+ * <p> If the user want to have the commits by Author and per Date, he can use the CountCommitsPerAuthorPerDate plugin.</p>
+ * <p> If The user want to have the commits by Author without the date, he can use the CountCommitsPerAuthor plugin.</p>
+ * @see CountCommitsPerAuthorPerDate
+ * @see CountCommitsPerAuthor
+ */
 public class CommitsPerDatePlugin implements AnalyzerPlugin {
+	
+	// VARIABLES
+	/**
+	 * General configuration of the plugin
+	 */
     private final Configuration configuration;
+    
+    /**
+     * The value change if the user wants the number commits per days, per weeks and per months.
+     * The value sort the commits per months, this is a default value.
+     */
     private String howToSort = "months";
-    //the plugin sort commits per months, this is a default value 
-    private Result result;
+    
+    /**
+     * The plugin count the commits for all branches or the branch where the user is according to the content of the variable.
+     * If the boolean is "true", the plugin count the commits for all branches.
+     * If the boolean is "false", the plugin count the commits for the branch where the user is.
+     */
     private boolean allBranches;
-    // if allBranches is true, the plugin counts commits on all branches
-    // if allBranches is false, the plugin counts commits on the remote branch 
+    
+    /**
+     * Result of the plugin
+     */
+    private Result result;
 
-    // constructor
+    // CONSTRUCTOR
+    /**
+     * Constructs a CountCommitsPerDate object given the general Configuration, the way of sorting and a boolean that describes if the plugin should be used on all branches or not
+     * @param generalConfiguration the generalConfiguration
+     * @param howToSort the way of sorting
+     * @param allBranches
+     */
     public CommitsPerDatePlugin(Configuration generalConfiguration, String howToSort, boolean allBranches) {
         this.configuration = generalConfiguration;
         this.howToSort = howToSort;
         this.allBranches = allBranches;
     }
 
-    // sort commits per month and per date
+    /**
+     * Return the result of the plugin
+     * @param gitLog a list of the commits
+     * @return the result of the plugin
+     */
     public Result processLog(List<Commit> gitLog) {
     	var result = new Result();
     	// change the values of the object Result
-    	result.setHowToSort(howToSort);
+    	result.howToSort = this.howToSort;
     	sortPerDays(gitLog, result);
     	
     	// sort the commits per Months and per Weeks
@@ -68,7 +105,11 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
     	return result;
     }
     
-    // function fills the result variable with the way of sorting    
+    /**
+     * Sort the list of commits per days
+     * @param gitLog a list of the commits
+     * @param result the result
+     */
     public void sortPerDays(List<Commit> gitLog, Result result) {
     	// browse the list of commits and count them according to the date of the commit
     	for (var commit : gitLog) {
@@ -79,13 +120,11 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
         }
     }
     
-    // function which executes the plugin
     @Override
     public void run() {
         result = processLog(Commit.parseLogFromCommand(configuration.getGitPath(), allBranches));
     }
 
-    // function which returns the results of the analysis
     @Override
     public Result getResult() {
         if (result == null) run();
@@ -93,24 +132,37 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
     }    
     
     
+    /**
+     * This class represents the result of the Plugin.
+     */
     public class Result implements AnalyzerPlugin.Result {
+    	
+    	/**
+    	 * Result of the plugin per days or per months
+    	 */
         private Map<LocalDate, Integer> commitsPerDate = new TreeMap<>();
+        
+        /**
+         * Result of the plugin per weeks
+         */
         private Map<String, Integer> commitsPerWeeks = new TreeMap<>();
+        
         // I chose a TreeMap<>() because the objects are sorted with the keys naturally
         // String = a -> z
         // int = 0,1,2...
+        
+        /**
+         * The value change if the user wants the number of commits per days, per weeks and per months.
+         * The value sort the commits per months, this is a default value.
+         */
         private String howToSort = "month";
         
-        public void setHowToSort(String howToSort) {
-        	this.howToSort = howToSort;
-        }
-
+        
         // get the variable commitsPerDate
         Map<LocalDate, Integer> getCommitsPerDate() {
             return commitsPerDate;
         }
         
-        // return the results in String
         @Override
         public String getResultAsString() {
         	if(commitsPerWeeks.size() != 0) {
@@ -119,7 +171,6 @@ public class CommitsPerDatePlugin implements AnalyzerPlugin {
             return commitsPerDate.toString();
         }
 
-        // return the results with HTML tags
         @Override
         public String getResultAsHtmlDiv() {
         	StringBuilder html = new StringBuilder("<div>Number of Commits per " + this.howToSort + ": <ul>");
