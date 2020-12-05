@@ -6,14 +6,27 @@ import up.visulog.webgen.WebGen;
 
 import java.util.*;
 
+/**
+ * Counts the number of comments for each different member of a GitLab project.
+ * Comments include the comments under the issues but also other traces of activity such as a change of label on an issue
+ */
 public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
     private final Configuration configuration;
     private Result result;
 
+    /**
+     * Constructor
+     * @param generalConfiguration stores the id and private token of the GitLab project to analyze
+     */
     public CountCommentsPerAuthorPlugin(Configuration generalConfiguration) {
         this.configuration = generalConfiguration;
     }
 
+    /**
+     * Goes through a collection of comments in order to count the number of comments for each author.
+     * @param commentsLog a collection of comments
+     * @return a Result object which contains a HashMap which links authors to the number of comments they have done
+     */
     static Result processLog(Collection<Comments> commentsLog) {
         var result = new Result();
         for (var comments : commentsLog) {
@@ -27,6 +40,9 @@ public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
         return result;
     }
 
+    /**
+     * Computes the result for the GitLab project specified in configuration.
+     */
     @Override
     public void run() {
         //Create an api to get Issues
@@ -48,13 +64,23 @@ public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
         result = processLog(resultsAllComments);
     }
 
+    /**
+     * Computes the result if it has not already been done, and returns it.
+     * @return the result
+     */
     @Override
     public Result getResult() {
         if (result == null) run();
         return result;
     }
 
+    /**
+     * Stores the number of comments for each author, and manages how this data is outputted.
+     */
     static class Result implements AnalyzerPlugin.Result {
+        /**
+         * Links the authors to the number of comments they have done.
+         */
         private final Map<String, Integer> commentPerAuthor = new HashMap<>();
 
         Map<String, Integer> getCommentsPerAuthor() {
@@ -66,6 +92,10 @@ public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
             return commentPerAuthor.toString();
         }
 
+        /**
+         * Generates an HTML div containing a list of authors and their number of comments.
+         * @return the html div as a String
+         */
         @Override
         public String getResultAsHtmlDiv() {
             StringBuilder html = new StringBuilder("<div>Comments per author: <ul>");
@@ -76,6 +106,11 @@ public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
             return html.toString();
         }
         
+        /**
+         * Formats the result into a list of labels (the authors) and a list of data (the number of comments)
+         * and passes them to a WebGen object so it generates a chart in an HTML div.
+         * @param wg the WebGen object which will generate the output HTML page
+         */
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
         	ArrayList<String> authorOfComment = new ArrayList<String>();
