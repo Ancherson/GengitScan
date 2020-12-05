@@ -6,14 +6,33 @@ import up.visulog.webgen.WebGen;
 
 import java.util.*;
 
+/**
+ * This class represents the plugin that counts the number of assigned gitlab issue per member of the git project
+ *
+ */
 public class CountIssuesPerMemberPlugin implements AnalyzerPlugin {
+	/**
+	 * General configuration of the plugin
+	 */
     private final Configuration configuration;
+    
+    /**
+	 * This is where the result is stored
+	 */
     private Result result;
-
+    
+    /**
+     * CONSTRUCTOR
+     * @param generalConfiguration
+     */
     public CountIssuesPerMemberPlugin(Configuration generalConfiguration) {
         this.configuration = generalConfiguration;
     }
 
+    /**
+     * @param assigneesLog
+     * @return the result of the plugin
+     */
     static Result processLog(Collection<Assignees> assigneesLog) {
         var result = new Result();
         for (var assignees : assigneesLog) {
@@ -44,8 +63,14 @@ public class CountIssuesPerMemberPlugin implements AnalyzerPlugin {
     }
 
     static class Result implements AnalyzerPlugin.Result {
+    	/**
+    	 * This HashMap associate for each members of the project, the number of assigned gitlab issue
+    	 */
         private final Map<String, Integer> issuesPerMember = new HashMap<>();
 
+        /**
+         * @return the HashMap that associate for each members of the project, the number of assigned gitlab issue
+         */
         Map<String, Integer> getIssuesPerMember() {
             return issuesPerMember;
         }
