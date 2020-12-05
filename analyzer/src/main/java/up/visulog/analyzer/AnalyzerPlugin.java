@@ -24,6 +24,7 @@ public interface AnalyzerPlugin extends Runnable{
          * @return the result of the plugin as a <b>String</b> in html format
          * @deprecated
          */
+        @Deprecated
         String getResultAsHtmlDiv();
         
         /**

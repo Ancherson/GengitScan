@@ -38,6 +38,7 @@ public class AnalyzerResult {
      * @return all the results as a <b>String</b> in html format
      * @deprecated
      */
+    @Deprecated
     public String toHTML() {
         return "<html><body>"+subResults.stream().map(AnalyzerPlugin.Result::getResultAsHtmlDiv).reduce("", (acc,cur) -> acc + cur )+"</body></html>";
     }
