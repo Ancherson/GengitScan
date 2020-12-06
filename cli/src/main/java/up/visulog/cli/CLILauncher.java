@@ -28,6 +28,12 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.Scanner;
 
+/**
+ * Command Line Interface Launcher class, let the user build a configuration for the program, will diplay help if the command are not recognized or the user ask to.
+ * 
+ *
+ */
+
 public class CLILauncher {
 	/**
 	 * Build a configuration of the program if specified by the user and run it, display help otherwise
