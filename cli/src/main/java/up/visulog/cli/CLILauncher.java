@@ -29,7 +29,13 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class CLILauncher {
-
+	/**
+	 * Build a configuration of the program if specified by the user and run it, display help otherwise
+	 * 
+	 * @param args the configuration the user wants the program to build
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
     public static void main(String[] args) throws IOException, URISyntaxException {
         var config = makeConfigFromCommandLineArgs(args);
         if (config.isPresent()) {
@@ -45,7 +51,12 @@ public class CLILauncher {
 
     }
 
-
+    /**
+     * Builds the configuration with the plugins/commands that will be executed by the program from a list of arguments
+     * 
+     * @param args the list of the different plugins/commands
+     * @return Optional<Configuration> the configuration of the program
+     */
     static Optional<Configuration> makeConfigFromCommandLineArgs(String[] args) {
     	if(args.length==0){
     		return Optional.empty();
@@ -265,7 +276,12 @@ public class CLILauncher {
         }
         return Optional.of(new Configuration(gitPath,pPrivateToken,plugins,pProjectId));
     }
-    
+    /**
+     * Test if the path leads to a local git repository
+     * 
+     * @param path The String to check if the corresponding path is associated with a local git repository
+     * @return true if the given path is a local git repository, false if it's not.
+     */
     private static boolean isGitDirectory(String path) {
     	File file = new File(path);
     	if(!file.exists()) {
@@ -292,6 +308,14 @@ public class CLILauncher {
      }
     
     //this function save the command in the file whose path is "path"
+    
+    /**
+     * Save a configuration file config.txt with the name specified by the user and the configuration specified by the user
+     * 
+     * @param args the arguments that will help build the configuration
+     * @param name the specified name of the configuration
+     * @return
+     */
     private static String saveConfig(String[] args, String name) {
     	String content = "";
     	for(int i = 0; i < args.length; i++) {
@@ -323,7 +347,12 @@ public class CLILauncher {
     		throw new RuntimeException("Error SaveConfig", e);
     	}
     }
-    
+    /**
+     * Gather the needed plugins from a config.txt file
+     * 
+     * @param name
+     * @return String[] with all the plugins the program needs to execute
+     */
     private static String[] loadConfig(String name) {
     	try {
     		BufferedReader reader = new BufferedReader(new FileReader(Paths.get("../config.txt").toFile()));
@@ -351,7 +380,11 @@ public class CLILauncher {
     }
     
 
-
+    /**
+     * Display help to the user 
+     * 
+     * @param args the arguments the user tried to use to build a configuration
+     */
     private static void displayHelpAndExit(String[] args) {
     	if(args.length != 0) {
     		if(args[0].equals("--help")) System.out.println("Wrong command...");
@@ -372,7 +405,9 @@ public class CLILauncher {
 	    System.out.println("(For our project: 1618)\n");
 	    System.exit(0);
     }
-    
+    /**
+     * A function that reference all the different plugins and their options
+     */
     private static void printAllPossiblePlugins() {
     	String space = "          ";
     	String prohibition = " (X)";
