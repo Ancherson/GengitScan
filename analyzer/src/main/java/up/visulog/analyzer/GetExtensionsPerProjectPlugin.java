@@ -6,20 +6,35 @@ import up.visulog.webgen.WebGen;
 
 import java.util.*;
 
+/**
+ * Counts the percentage of each file extension of a GitLab project.
+ */
 public class GetExtensionsPerProjectPlugin implements AnalyzerPlugin {
     private final Configuration configuration;
     private Result result;
 
+    /**
+     * Constructor
+     * @param generalConfiguration stores the id and private token of the GitLab project to analyze
+     */
     public GetExtensionsPerProjectPlugin(Configuration generalConfiguration) {
         this.configuration = generalConfiguration;
     }
 
+    /**
+     * Generates a result object in order to store the percentages of the extensions.
+     * @param extensionsLog a HashMap which links the name of the extensions to their percentage
+     * @return  a Result object which contains a HashMap which links the name of the extensions to their percentage
+     */
     static Result processLog(HashMap<String,Double> extensionsLog) {
             Result result = new Result();
             result.extensionsResult = extensionsLog;
             return result;
     }
 
+    /**
+     * Computes the result for the GitLab project specified in configuration.
+     */
     @Override
     public void run() {
         //Create an api to get extensions
@@ -29,12 +44,19 @@ public class GetExtensionsPerProjectPlugin implements AnalyzerPlugin {
         result = processLog(resExtensions);
     }
 
+    /**
+     * Computes the result if it has not already been done, and returns it.
+     * @return the result
+     */
     @Override
     public Result getResult() {
         if (result == null) run();
         return result;
     }
 
+    /**
+     * Stores the percentage of each extension, and manages how this data is outputted.
+     */
     static class Result implements AnalyzerPlugin.Result {
         private HashMap<String, Double> extensionsResult  = new HashMap<>();
 
@@ -47,6 +69,10 @@ public class GetExtensionsPerProjectPlugin implements AnalyzerPlugin {
             return extensionsResult.toString();
         }
 
+        /**
+         * Generates an HTML div containing a list of extension names and their percentage.
+         * @return the html div as a String
+         */
         @Override
         public String getResultAsHtmlDiv() {
             StringBuilder html = new StringBuilder("<div>Extensions in project: <ul>");
@@ -57,6 +83,11 @@ public class GetExtensionsPerProjectPlugin implements AnalyzerPlugin {
             return html.toString();
         }
         
+        /**
+         * Formats the result into a list of labels (the extensions) and a list of data (the percentages)
+         * and passes them to a WebGen object so it generates a chart in an HTML div.
+         * @param wg the WebGen object which will generate the output HTML page
+         */
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
             ArrayList<String> extension = new ArrayList<String>();
