@@ -48,7 +48,7 @@ public class CliMenuParameter extends JFrame {
 		title.setFont(new Font("Monica", Font.PLAIN, 20));
 		panelMain.add(title);
 
-		if(version == 1 || version == 2) {
+		if(version == 1) {
 			result = new String[1];
 			result[0] = pluginName;
 			
@@ -153,28 +153,15 @@ public class CliMenuParameter extends JFrame {
 	
 	
 	public void submitMethode() throws IOException, URISyntaxException{
-		
 		if(version == 1) {
-			if(perAuthor.isSelected()) result[0] = result[0] + "PerAuthor";
+			if(perAuthor.isSelected()) result[0] += "PerAuthor";
 			
-			if(perDays.isSelected()) result[0] = result[0] + "PerDays";
-			else if (perWeeks.isSelected()) result[0] = result[0] + "PerWeeks";
-			else if(perMonths.isSelected()) result[0] = result[0] + "PerMonths";
+			if(perDays.isSelected()) result[0] += "PerDays";
+			else if (perWeeks.isSelected()) result[0] += "PerWeeks";
+			else if(perMonths.isSelected()) result[0] += "PerMonths";
 			
 			
-			if(forAllBranches.isSelected()) result[0] = result[0] +  "ForAllBranches";
-		}
-		
-		else if(version == 2) {
-			//When countCommmitsPerAuthors exist
-			if(perAuthor.isSelected()) result[0] = result[0] + "PerAuthor";
-			
-			if(perDays.isSelected()) result[0] = result[0] + "PerDays";
-			else if (perWeeks.isSelected()) result[0] = result[0] + "PerWeeks";
-			else if(perMonths.isSelected()) result[0] = result[0] + "PerMonths";
-		
-			
-			if(forAllBranches.isSelected()) result[0] = result[0] +  "ForAllBranches";
+			if(forAllBranches.isSelected()) result[0] += "ForAllBranches";
 		}
 		
 		else {

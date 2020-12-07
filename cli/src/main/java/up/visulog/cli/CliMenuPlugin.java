@@ -56,22 +56,6 @@ public class CliMenuPlugin extends JFrame {
 		buttonNoAPI.add(countCommits);
 		buttonNoAPI.add(countContribution);
 		
-		countLinesAdded.addActionListener((event) -> {
-			eventButton("countLinesAdded");
-		});
-		countLinesDeleted.addActionListener((event) -> {
-			eventButton("countLinesDeleted");
-		});
-		countMergeCommits.addActionListener((event) -> {
-			eventButton("countMergeCommits");
-		});
-		countCommits.addActionListener((event) -> {
-			eventButton("countCommits");
-		});
-		countContribution.addActionListener((event) -> {
-			eventButton("countContribution");
-		});
-		
 		JLabel title2 = new JLabel("Plugins with API");
 		title2.setFont(new Font("Monica", Font.PLAIN, 20));
 		panelMain.add(title2);
@@ -87,22 +71,6 @@ public class CliMenuPlugin extends JFrame {
 		buttonAPI.add(countIssues);
 		buttonAPI.add(countComments);
 		
-		getMembers.addActionListener((event) -> {
-			eventButton("getMembers");
-		});
-		
-		getExtensions.addActionListener((event) -> {
-			eventButton("getExtensions");
-		});
-		
-		countIssues.addActionListener((event) -> {
-			eventButton("countIssues");
-		});
-		
-		countComments.addActionListener((event) -> {
-			eventButton("countComments");
-		});
-		
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
@@ -110,16 +78,17 @@ public class CliMenuPlugin extends JFrame {
 	public JButton makeABeautifulButton(String name) {
 		JButton b = new JButton(name);
 		b.setBackground(new Color(180, 211, 212));
+		b.addActionListener((event) -> {
+			eventButton(name);
+		});
 		return b;
 	}
 	
 	public void eventButton(String name) {
 		result[0] += name;
 		
-		if(name.equals("countLinesAdded") || name.equals("countLinesDeleted")) {
+		if(name.equals("countLinesAdded") || name.equals("countLinesDeleted") || name.equals("countCommits")) {
 			new CliMenuParameter(result[0],1);
-		} else if(name.equals("countCommits")) {
-			new CliMenuParameter(result[0],2);
 		} else if(name.equals("getMembers") || name.equals("getExtensions") || name.equals("countIssues") || name.equals("countComments")) {
 			new CliMenuParameter(result[0],3);
 		} else {
