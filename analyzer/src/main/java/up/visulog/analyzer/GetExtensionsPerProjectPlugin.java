@@ -24,7 +24,7 @@ public class GetExtensionsPerProjectPlugin implements AnalyzerPlugin {
     /**
      * Generates a result object in order to store the percentages of the extensions.
      * @param extensionsLog a HashMap which links the name of the extensions to their percentage
-     * @return  a Result object which contains a HashMap which links the name of the extensions to their percentage
+     * @return a Result object which contains a HashMap which links the name of the extensions to their percentage
      */
     static Result processLog(HashMap<String,Double> extensionsLog) {
             Result result = new Result();
