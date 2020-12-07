@@ -44,7 +44,7 @@ public class CliMenuParameter extends JFrame {
 		panelMain.setBounds(50, 30, 700, 400);
 		this.getContentPane().add(panelMain);
 		
-		JLabel title = new JLabel("Parameters :");
+		JLabel title = new JLabel("Parameters :", 0);
 		title.setFont(new Font("Monica", Font.PLAIN, 20));
 		panelMain.add(title);
 
@@ -127,6 +127,7 @@ public class CliMenuParameter extends JFrame {
 	public JRadioButton makeBeautifulRadioButton(String s) {
 		JRadioButton res = new JRadioButton(s);
 		res.setFont(new Font("Monica", Font.PLAIN, 15));
+		res.setHorizontalAlignment(0);
 		res.setBackground(new Color(0,0,0,0));
 		perDate.add(res);
 		return res;
@@ -135,6 +136,7 @@ public class CliMenuParameter extends JFrame {
 	public JCheckBox makeBeautifulCheckBox(String s) {
 		JCheckBox res = new JCheckBox(s);
 		res.setFont(new Font("Monica", Font.PLAIN, 15));
+		res.setHorizontalAlignment(0);
 		res.setBackground(new Color(0,0,0,0));
 		return res;
 	}
@@ -146,7 +148,7 @@ public class CliMenuParameter extends JFrame {
 	}
 	
 	public JLabel makeBeautifulLabel(String s) {
-		JLabel res = new JLabel(s);
+		JLabel res = new JLabel(s, 0);
 		res.setFont(new Font("Monica", Font.PLAIN, 15));
 		return res;
 	}

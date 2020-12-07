@@ -40,7 +40,7 @@ public class CliMenuPlugin extends JFrame {
 		
 		this.getContentPane().add(panelMain);
 		
-		JLabel title = new JLabel("Plugins without API");
+		JLabel title = new JLabel("Plugins without API", 0);
 		title.setFont(new Font("Monica", Font.PLAIN, 20));
 		panelMain.add(title);
 		
@@ -56,7 +56,7 @@ public class CliMenuPlugin extends JFrame {
 		buttonNoAPI.add(countCommits);
 		buttonNoAPI.add(countContribution);
 		
-		JLabel title2 = new JLabel("Plugins with API");
+		JLabel title2 = new JLabel("Plugins with API", 0);
 		title2.setFont(new Font("Monica", Font.PLAIN, 20));
 		panelMain.add(title2);
 		
