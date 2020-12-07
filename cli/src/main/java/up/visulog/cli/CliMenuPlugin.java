@@ -87,7 +87,6 @@ public class CliMenuPlugin extends JFrame {
 		buttonAPI.add(countIssues);
 		buttonAPI.add(countComments);
 		
-		
 		getMembers.addActionListener((event) -> {
 			eventButton("getMembers");
 		});
