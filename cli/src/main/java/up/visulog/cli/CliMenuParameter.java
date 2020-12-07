@@ -7,55 +7,174 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-public class CliMenuParameter extends JFrame{
-
-	
+public class CliMenuParameter extends JFrame {
 	private String [] result;
 	private int version;
 	
-	private JButton back;
-	private JButton submit;
-	private JPanel panneauPara;
+	private JButton back = makeABeautifulButton("BACK");
+	private JButton submit = makeABeautifulButton("SUBMIT");
 
 	//CheckBox and RadioButton that will appear when the selected plugin have more parameter
+	private ButtonGroup perDate = new ButtonGroup();
+	private JRadioButton perDays = makeBeautifulRadioButton("PerDays");
+	private JRadioButton perWeeks = makeBeautifulRadioButton("PerWeeks");
+	private JRadioButton perMonths = makeBeautifulRadioButton("PerMonths");
 	
-	private JRadioButton PerDays;
-	private JRadioButton PerWeeks;
-	private JRadioButton PerMonths;
-	
-	private JCheckBox PerAuthor;
-	
-	private JCheckBox ForAllBranches;
+	private JCheckBox perAuthor = makeBeautifulCheckBox("PerAuthor");
+	private JCheckBox forAllBranches = makeBeautifulCheckBox("ForAllBranches");
 	
 	//Texte Area needed to be fill For plugins using API
-	
-	private JTextField projectId;
-	private JTextField privateToken;
+	private JTextField projectId = new JTextField();
+	private JTextField privateToken = new JTextField();
 
+	
+	public CliMenuParameter(String pluginName, int ver) {
+		version = ver;
+
+		this.setTitle("GenGit Scan");
+		this.setAlwaysOnTop(true);
+		this.setSize(800,500);
+		this.getContentPane().setLayout(null);
+		this.getContentPane().setBackground(new Color(180, 211, 212));
+		this.setResizable(false);
+		
+		JPanel panelMain = new JPanel(new GridLayout(4,1));
+		panelMain.setBackground(Color.white);
+		panelMain.setBorder(BorderFactory.createEmptyBorder(10, 50, 50, 50));
+		panelMain.setBounds(50, 30, 700, 400);
+		this.getContentPane().add(panelMain);
+		
+		JLabel title = new JLabel("Parameters :");
+		title.setFont(new Font("Monica", Font.PLAIN, 20));
+		panelMain.add(title);
+
+		if(version == 1 || version == 2) {
+			result = new String[1];
+			result[0] = pluginName;
+			
+			GridLayout g1 = new GridLayout(1,3);
+			g1.setHgap(20);
+			JPanel date = new JPanel(g1);
+			date.setBackground(Color.white);
+			panelMain.add(date);
+			
+			date.add(perDays);
+			date.add(perWeeks);
+			date.add(perMonths);
+			
+			GridLayout g2 = new GridLayout(1,2);
+			g1.setHgap(60);
+			JPanel options = new JPanel(g2);
+			options.setBackground(Color.white);
+			panelMain.add(options);
+			options.add(perAuthor);
+			options.add(forAllBranches);
+		} else {
+			result = new String[3];
+			result[0] = pluginName;
+			
+			GridLayout g = new GridLayout(4,1);
+			g.setVgap(30);
+			panelMain.setLayout(g);
+			
+			GridLayout g1 = new GridLayout(1,2);
+			g1.setHgap(60);
+			JPanel panelID = new JPanel(g1);
+			panelID.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+			panelID.setBackground(Color.white);
+			
+			JLabel subtitle1 = makeBeautifulLabel("Project ID :");
+			panelID.add(subtitle1);
+			panelID.add(projectId);
+			panelMain.add(panelID);
+			
+			JPanel panelToken = new JPanel(g1);
+			panelToken.setBackground(Color.white);
+			
+			JLabel subtitle2 = makeBeautifulLabel("Private Token :");
+			panelToken.add(subtitle2);
+			panelToken.add(privateToken);
+			panelMain.add(panelToken);
+		}
+		
+		GridLayout g3 = new GridLayout(1,2);
+		g3.setHgap(50);
+		JPanel button = new JPanel(g3);
+		button.setBackground(Color.white);
+		button.add(back);
+		button.add(submit);
+		panelMain.add(button);
+		
+		back.addActionListener((event) -> {
+			this.dispose();
+			new CliMenuPlugin();
+		});
+		
+		submit.addActionListener((event) -> {
+			this.dispose();
+			try {
+				submitMethode();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+		}});
+		
+		this.setVisible(true);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+	
+	public JRadioButton makeBeautifulRadioButton(String s) {
+		JRadioButton res = new JRadioButton(s);
+		res.setFont(new Font("Monica", Font.PLAIN, 15));
+		res.setBackground(new Color(0,0,0,0));
+		perDate.add(res);
+		return res;
+	}
+	
+	public JCheckBox makeBeautifulCheckBox(String s) {
+		JCheckBox res = new JCheckBox(s);
+		res.setFont(new Font("Monica", Font.PLAIN, 15));
+		res.setBackground(new Color(0,0,0,0));
+		return res;
+	}
+	
+	public JButton makeABeautifulButton(String name) {
+		JButton b = new JButton(name);
+		b.setBackground(new Color(180, 211, 212));
+		return b;
+	}
+	
+	public JLabel makeBeautifulLabel(String s) {
+		JLabel res = new JLabel(s);
+		res.setFont(new Font("Monica", Font.PLAIN, 15));
+		return res;
+	}
+	
 	
 	public void submitMethode() throws IOException, URISyntaxException{
 		
 		if(version == 1) {
-			if(PerAuthor.isSelected()) result[0] = result[0] + "PerAuthor";
+			if(perAuthor.isSelected()) result[0] = result[0] + "PerAuthor";
 			
-			if(PerDays.isSelected()) result[0] = result[0] + "PerDays";
-			else if (PerWeeks.isSelected()) result[0] = result[0] + "PerWeeks";
-			else if(PerMonths.isSelected()) result[0] = result[0] + "PerMonths";
+			if(perDays.isSelected()) result[0] = result[0] + "PerDays";
+			else if (perWeeks.isSelected()) result[0] = result[0] + "PerWeeks";
+			else if(perMonths.isSelected()) result[0] = result[0] + "PerMonths";
 			
 			
-			if(ForAllBranches.isSelected()) result[0] = result[0] +  "ForAllBranches";
+			if(forAllBranches.isSelected()) result[0] = result[0] +  "ForAllBranches";
 		}
 		
 		else if(version == 2) {
 			//When countCommmitsPerAuthors exist
-			if(PerAuthor.isSelected()) result[0] = result[0] + "PerAuthor";
+			if(perAuthor.isSelected()) result[0] = result[0] + "PerAuthor";
 			
-			if(PerDays.isSelected()) result[0] = result[0] + "PerDays";
-			else if (PerWeeks.isSelected()) result[0] = result[0] + "PerWeeks";
-			else if(PerMonths.isSelected()) result[0] = result[0] + "PerMonths";
+			if(perDays.isSelected()) result[0] = result[0] + "PerDays";
+			else if (perWeeks.isSelected()) result[0] = result[0] + "PerWeeks";
+			else if(perMonths.isSelected()) result[0] = result[0] + "PerMonths";
 		
 			
-			if(ForAllBranches.isSelected()) result[0] = result[0] +  "ForAllBranches";
+			if(forAllBranches.isSelected()) result[0] = result[0] +  "ForAllBranches";
 		}
 		
 		else {
@@ -66,120 +185,6 @@ public class CliMenuParameter extends JFrame{
 		
 		CLILauncher.launch(result);
 
-	}
-
-	
-	public CliMenuParameter(String pluginName,int ver) {
-		version = ver;
-		
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setSize(600,800);
-		
-		panneauPara = new JPanel();
-
-		
-
-		if(version == 1) {
-			result = new String [1];
-			result [0] = pluginName; 
-			panneauPara.setLayout(new GridLayout(2,2));
-			JPanel menuRadio = new JPanel();
-			menuRadio.setLayout(new GridLayout(3,1));
-			
-			PerDays = new JRadioButton("PerDays");
-			PerWeeks = new JRadioButton("PerWeeks");
-			PerMonths = new JRadioButton("PerMonths");
-			ButtonGroup Date = new ButtonGroup();
-			
-			Date.add(PerDays);
-			Date.add(PerWeeks);
-			Date.add(PerMonths);
-			
-			menuRadio.add(PerDays);
-			menuRadio.add(PerWeeks);
-			menuRadio.add(PerMonths);
-
-			
-			JPanel menuBox = new JPanel();
-			menuBox.setLayout(new GridLayout(2,1));
-			
-			PerAuthor = new JCheckBox("PerAuthor");
-			ForAllBranches = new JCheckBox("ForAllBranches");	
-			
-			menuBox.add(PerAuthor);
-			menuBox.add(ForAllBranches);
-			
-			panneauPara.add(menuBox);
-			panneauPara.add(menuRadio);
-		}
-			
-		else if(version == 2) {
-			result = new String [1];
-			result [0] = pluginName; 
-			panneauPara.setLayout(new GridLayout(2,2));
-			JPanel menuRadio = new JPanel();
-			menuRadio.setLayout(new GridLayout(3,1));
-				
-			PerDays = new JRadioButton("PerDays");
-			PerWeeks = new JRadioButton("PerWeeks");
-			PerMonths = new JRadioButton("PerMonths");
-			ButtonGroup Date = new ButtonGroup();
-			
-			Date.add(PerDays);
-			Date.add(PerWeeks);
-			Date.add(PerMonths);
-				
-			menuRadio.add(PerDays);
-			menuRadio.add(PerWeeks);
-			menuRadio.add(PerMonths);
-
-				
-			JPanel menuBox = new JPanel();
-			menuBox.setLayout(new GridLayout(2,1));
-				
-			ForAllBranches = new JCheckBox("ForAllBranches");	
-			
-			//When countCommmitsPerAuthors exist
-			PerAuthor = new JCheckBox("PerAuthor");
-			
-			menuBox.add(PerAuthor);
-			menuBox.add(ForAllBranches);
-				
-			panneauPara.add(menuBox);
-			panneauPara.add(menuRadio);
-		}
-			
-		else {
-			result = new String [3];
-			result [0] = pluginName; 
-			panneauPara.setLayout(new GridLayout(2,2));
-			JPanel project = new JPanel();
-			project.setLayout(new GridLayout(1,2));
-			
-			projectId = new JTextField("projectId");
-			privateToken = new JTextField("projectToken");
-			
-			project.add(projectId);
-			project.add(privateToken);
-			
-			panneauPara.add(project);
-		}
-		back = new JButton("Back");
-		back.addActionListener((event) -> {this.dispose();new CliMenuPlugin();});
-		submit = new JButton("submit");
-		submit.addActionListener((event) -> {this.dispose(); try {
-			submitMethode();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}});
-		panneauPara.add(back);
-		panneauPara.add(submit);
-		this.add(panneauPara);
-		this.setVisible(true);
 	}
 
 	
