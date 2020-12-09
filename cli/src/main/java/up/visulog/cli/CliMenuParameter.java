@@ -8,7 +8,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class CliMenuParameter extends JPanel {
-	private String [] result;
+	private CLIMenu CLIM;
+	private String result;
 	private int version;
 	
 	private JButton back = makeABeautifulButton("BACK");
@@ -28,10 +29,12 @@ public class CliMenuParameter extends JPanel {
 	private JTextField privateToken = new JTextField();
 
 	
-	public CliMenuParameter(String pluginName, int ver) {
+	public CliMenuParameter(CLIMenu CLIM, String pluginName, int ver) {
+		this.CLIM = CLIM;
 		version = ver;
 
 		this.setSize(800,500);
+		CLIM.setSize(800,500);
 		this.setLayout(null);
 		this.setBackground(new Color(180, 211, 212));
 		
@@ -46,8 +49,7 @@ public class CliMenuParameter extends JPanel {
 		panelMain.add(title);
 
 		if(version == 1) {
-			result = new String[1];
-			result[0] = pluginName;
+			result = pluginName;
 			
 			GridLayout g1 = new GridLayout(1,3);
 			g1.setHgap(20);
@@ -67,8 +69,7 @@ public class CliMenuParameter extends JPanel {
 			options.add(perAuthor);
 			options.add(forAllBranches);
 		} else {
-			result = new String[3];
-			result[0] = pluginName;
+			result = pluginName;
 			
 			GridLayout g = new GridLayout(4,1);
 			g.setVgap(30);
@@ -103,8 +104,7 @@ public class CliMenuParameter extends JPanel {
 		panelMain.add(button);
 		
 		back.addActionListener((event) -> {
-			//this.dispose();
-			new CliMenuPlugin();
+			CLIM.changeToCliPlugin();
 		});
 		
 		submit.addActionListener((event) -> {
@@ -150,23 +150,25 @@ public class CliMenuParameter extends JPanel {
 	
 	public void submitMethode() throws IOException, URISyntaxException{
 		if(version == 1) {
-			if(perAuthor.isSelected()) result[0] += "PerAuthor";
+			if(perAuthor.isSelected()) result += "PerAuthor";
 			
-			if(perDays.isSelected()) result[0] += "PerDays";
-			else if (perWeeks.isSelected()) result[0] += "PerWeeks";
-			else if(perMonths.isSelected()) result[0] += "PerMonths";
+			if(perDays.isSelected()) result += "PerDays";
+			else if (perWeeks.isSelected()) result += "PerWeeks";
+			else if(perMonths.isSelected()) result += "PerMonths";
 			
 			
-			if(forAllBranches.isSelected()) result[0] += "ForAllBranches";
+			if(forAllBranches.isSelected()) result += "ForAllBranches";
+			CLIM.addPlugin(result);
 		}
 		
 		else {
-			result[1] = "--privateToken=" + privateToken.getText();
-			result[2] = "--projectId=" + projectId.getText();
+			CLIM.addPlugin(result);
+			CLIM.addPrivateToken(privateToken.getText());
+			CLIM.addProjectID(projectId.getText());
 
 		}
 		
-		CLILauncher.launch(result);
+		CLIM.launch();
 
 	}
 

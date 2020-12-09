@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class CliMenuPlugin extends JPanel {
-	private String[] result = {"--addPlugin="};
+	private CLIMenu CLIM;
+	private String result;
 
 	//Buttons that represents the "main" plugins
 	private JButton countLinesAdded = makeABeautifulButton("countLinesAdded");
@@ -25,8 +26,10 @@ public class CliMenuPlugin extends JPanel {
 	//-------------------------------------------------------------------------------------------------------------
 	
 
-	public CliMenuPlugin() {
+	public CliMenuPlugin(CLIMenu CLIM) {
+		this.CLIM = CLIM;
 		this.setSize(1200,500);
+		CLIM.setSize(1200,500);
 		this.setLayout(null);
 		this.setBackground(new Color(180, 211, 212));
 		
@@ -79,26 +82,24 @@ public class CliMenuPlugin extends JPanel {
 	}
 	
 	public void eventButton(String name) {
-		result[0] += name;
+		result = name;
 		
 		if(name.equals("countLinesAdded") || name.equals("countLinesDeleted") || name.equals("countCommits")) {
-			new CliMenuParameter(result[0],1);
+			CLIM.changeToCliPara(result,1);
 		} else if(name.equals("getMembers") || name.equals("getExtensions") || name.equals("countIssues") || name.equals("countComments")) {
-			new CliMenuParameter(result[0],3);
+			CLIM.changeToCliPara(result,3);
 		} else {
+			CLIM.addPlugin(result);
 			try {
-				CLILauncher.launch(result);
+				CLIM.launch();
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (URISyntaxException e) {
 				e.printStackTrace();
 			}
 		}
+		
 	}
 	
-	
-	public void paraMenu(int version) {
-		new CliMenuParameter(result[0], version);
-	}
 	
 }
