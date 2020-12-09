@@ -32,9 +32,6 @@ public class GetExtensionsPerProjectPlugin implements AnalyzerPlugin {
             return result;
     }
 
-    /**
-     * Computes the result for the GitLab project specified in configuration.
-     */
     @Override
     public void run() {
         //Create an api to get extensions
@@ -44,10 +41,6 @@ public class GetExtensionsPerProjectPlugin implements AnalyzerPlugin {
         result = processLog(resExtensions);
     }
 
-    /**
-     * Computes the result if it has not already been done, and returns it.
-     * @return the result
-     */
     @Override
     public Result getResult() {
         if (result == null) run();
@@ -60,6 +53,10 @@ public class GetExtensionsPerProjectPlugin implements AnalyzerPlugin {
     static class Result implements AnalyzerPlugin.Result {
         private HashMap<String, Double> extensionsResult  = new HashMap<>();
 
+        /**
+         * Returns the result of the plugin
+         * @return the result of the plugin
+         */
         HashMap<String, Double> getExtensionsResult() {
             return extensionsResult;
         }
@@ -69,10 +66,6 @@ public class GetExtensionsPerProjectPlugin implements AnalyzerPlugin {
             return extensionsResult.toString();
         }
 
-        /**
-         * Generates an HTML div containing a list of extension names and their percentage.
-         * @return the html div as a String
-         */
         @Override
         public String getResultAsHtmlDiv() {
             StringBuilder html = new StringBuilder("<div>Extensions in project: <ul>");
@@ -83,11 +76,6 @@ public class GetExtensionsPerProjectPlugin implements AnalyzerPlugin {
             return html.toString();
         }
         
-        /**
-         * Formats the result into a list of labels (the extensions) and a list of data (the percentages)
-         * and passes them to a WebGen object so it generates a chart in an HTML div.
-         * @param wg the WebGen object which will generate the output HTML page
-         */
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
             ArrayList<String> extension = new ArrayList<String>();

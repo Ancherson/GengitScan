@@ -9,6 +9,7 @@ import up.visulog.webgen.WebGen;
  */
 public class AnalyzerResult {
 	/**
+	 * Return the list of results
 	 * @return the list of results
 	 */
     public List<AnalyzerPlugin.Result> getSubResults() {

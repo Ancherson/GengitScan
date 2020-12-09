@@ -33,9 +33,6 @@ public class GetMembersPerProjectPlugin implements AnalyzerPlugin {
         return result;
     }
 
-    /**
-     * Computes the result for the GitLab project specified in configuration.
-     */
     @Override
     public void run() {
         //Create an api to get Members
@@ -46,10 +43,6 @@ public class GetMembersPerProjectPlugin implements AnalyzerPlugin {
         result = processLog(resMembers);
     }
 
-    /**
-     * Computes the result if it has not already been done, and returns it.
-     * @return the result
-     */
     @Override
     public Result getResult() {
         if (result == null) run();
@@ -62,6 +55,10 @@ public class GetMembersPerProjectPlugin implements AnalyzerPlugin {
     static class Result implements AnalyzerPlugin.Result {
         private Collection<Member> membersList = new ArrayList<>();
 
+        /**
+         * Return the list of the members
+         * @return the list of the members
+         */
         Collection<Member> getMembers() {
             return membersList;
         }
@@ -71,10 +68,6 @@ public class GetMembersPerProjectPlugin implements AnalyzerPlugin {
             return membersList.toString();
         }
 
-        /**
-         * Generates an HTML div containing a table with information about the members of the project.
-         * @return the html div as a String
-         */
         @Override
         public String getResultAsHtmlDiv() {
             StringBuilder html = new StringBuilder("<div>Members:");
@@ -87,10 +80,6 @@ public class GetMembersPerProjectPlugin implements AnalyzerPlugin {
             return html.toString();
         }
         
-        /**
-         * Passes the list of members to a WebGen object so it generates a table with information about the members of the project in an HTML div.
-         * @param wg the WebGen object which will generate the output HTML page
-         */
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
             wg.addListMembers(membersList, "List of members");
