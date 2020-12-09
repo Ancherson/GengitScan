@@ -18,13 +18,14 @@ import htmlflow.HtmlView;
 import htmlflow.StaticHtml;
 
 /**
- * The module WebGen is converting result from Plugins in @see Analyzer into Html and Javascript part
+ * The module WebGen is converting result from Plugins in Analyzer into Html and Javascript part
+ * @see Analyzer
  */
 
 public class WebGen {
 	/**
-	 * Declared a variable view of Body<Html<HtmlView>> type where we stock the head of our page
-	 * We stock the first tag of the body
+	 * Declared a variable view of Body<Html<HtmlView>> type where is stocked the head of the page
+	 * it also stocks the first tag of the body
 	 */
 	private Body<Html<HtmlView>> view = StaticHtml.view()
 			.html()
@@ -38,7 +39,7 @@ public class WebGen {
 				.__()
 				.body();
 	/**
-	 * We add to the body the list of the authors linked with and Integer 
+	 * Adds to the body the list of the authors linked with and Integer 
 	 * @param list A map which contains the name of the authors linked with an Integer
 	 * @param title A String of the title of the graph
 	 */
@@ -53,8 +54,8 @@ public class WebGen {
 	}
 
 	/**
-	 * We add to the body the list of the authors
-	 * @param list An ArraList of String which contains the list of the authors
+	 * Adds to the body the list of the authors
+	 * @param list An ArrayList of String which contains the list of the authors
 	 * @param title A String of the title of the graph
 	 */
 	public void addListAuthor(ArrayList<String>list, String title){
@@ -66,7 +67,7 @@ public class WebGen {
 	}
 
 	/**
-	 * We add to the body the list of the members in the project with their avatar, their full name and their username
+	 * Adds to the body the list of the members in the project with their avatar, their full name and their username
 	 * @param members A collection of all members of the project
 	 * @param title A String of the title of the graph
 	 */
@@ -94,13 +95,13 @@ public class WebGen {
 	}
 
 	/**
-	 * We add a graph of a certain type with its title
-	 * This graph contains the data compared with the labels
+	 * Adds a graph of a certain type with its title
+	 * this graph contains the data compared with the labels
 	 * @param type A String of the type of the graph
 	 * @param title A String of the title of the graph
 	 * @param label A String of the title of the list labels 
 	 * @param labels An ArrayList of String of labels
-	 * @param data An ArrayList of Integer of data we measure
+	 * @param data An ArrayList of Integer of data measured
 	 */
 	public void addChart(String type, String title, String label, ArrayList<String> labels, ArrayList<Integer> data){
 		String labelsJs = "var labels = [";
@@ -127,13 +128,13 @@ public class WebGen {
 	}
 
 	/**
-	 * We add a graph of a certain type with its title
-	 * This graph contains the data compared with the labels
+	 * Adds a graph of a certain type with its title
+	 * this graph contains the data compared with the labels
 	 * @param type A String of the type of the graph
 	 * @param title A String of the title of the graph
 	 * @param label A String of the title of the list labels 
 	 * @param labels An ArrayList of String of labels
-	 * @param data An ArrayList of Double of data we measure
+	 * @param data An ArrayList of Double of data measured
 	 */
 	public void addChartDouble(String type, String title, String label, ArrayList<String> labels, ArrayList<Double> data){
 		String labelsJs="var labels = [";
@@ -160,8 +161,8 @@ public class WebGen {
 	}
 
 	/**
-	 * We add a barchart with its title
-	 * This graph contains the data compared with the labels
+	 * Adds a barchart with its title
+	 * this graph contains the data compared with the labels
 	 * @param title A String of the title of the graph
 	 * @param labels An ArrayList of String of labels
 	 * @param datasets An HashMap of a String linked with an ArrayList of Integer of data we measure
@@ -194,15 +195,15 @@ public class WebGen {
 	}
 
 	/**
-	 * It closes the tag of body and html
-	 * @return a String of the html code
+	 * Closes the tag of body and html
+	 * @return A String of the html code
 	 */
 	public String getHtml() {
 		return view.__().__().render();
 	}	
 
 	/**
-	 * Write in index.html located in the folder htmlResult the result from the differents plugins of Analyzer
+	 * Writes in index.html located in the folder htmlResult the result from the differents plugins of Analyzer
 	 */
 	public void write(){
 		try{
