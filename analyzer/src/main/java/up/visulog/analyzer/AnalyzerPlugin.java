@@ -11,7 +11,7 @@ import up.visulog.webgen.WebGen;
 public interface AnalyzerPlugin extends Runnable{
 	
 	/**
-	 * This is where the result of the plugin is store
+	 * This is where the plugin result is stored
 	 */
     interface Result {
     	/**

@@ -5,7 +5,7 @@ import java.util.List;
 import up.visulog.webgen.WebGen;
 
 /**
- * This class stores the results of the plugins
+ * This class stores all the results of the plugins in a List
  */
 public class AnalyzerResult {
 	/**

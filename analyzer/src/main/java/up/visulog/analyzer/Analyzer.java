@@ -71,10 +71,10 @@ public class Analyzer {
     }
 
     /**
-     * makePlugin create the plugin which corresponds with the plugin name
+     * makePlugin create the plugin which corresponds with <b>pluginName</b>
      * @param pluginName is the name of the plugin
      * @param pluginConfig is totally useless
-     * @return
+     * @return the <b>AnalyzerPlugin</b> which corresponds with <b>pluginName</b>
      */
     private Optional<AnalyzerPlugin> makePlugin(String pluginName, PluginConfig pluginConfig) {
         switch (pluginName) {
