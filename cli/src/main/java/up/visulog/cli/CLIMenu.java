@@ -85,7 +85,6 @@ public class CLIMenu extends JFrame {
 	
 	public void changeToMenuLast() {
 		cardLayout.show(mainPanel, "menuLast");
-		System.out.println("salut");
 	}
 	
 		public void launch() throws IOException, URISyntaxException {
