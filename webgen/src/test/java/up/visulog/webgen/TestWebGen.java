@@ -45,7 +45,7 @@ public class TestWebGen {
 		webG.addListAuthor(list, title);
 		webG.addChart(title, labels, datasets);
 		
-		String result = webG.getH() + "\n";
+		String result = webG.getHtml() + "\n";
 		var uri = getClass().getClassLoader().getResource("expected.html").toURI();
 		var expected = new File(uri);
 		String expec = "";
