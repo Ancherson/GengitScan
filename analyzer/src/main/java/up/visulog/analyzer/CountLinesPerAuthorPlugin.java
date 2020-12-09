@@ -24,7 +24,7 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 		/**
 		 * Constructor
 		 * @param generalConfiguration stores the path of the git project to analyze
-		 * @param sortLinesAdded if true, the plugin will count the lines added, if false, it will count the lines deleted
+		 * @param sortLineAdded if true, the plugin will count the lines added, if false, it will count the lines deleted
 		 * @param allBranches if true, the result will be computed on all the branches of the git project, if false, just on the current branch
 		 */
 	    public CountLinesPerAuthorPlugin(Configuration generalConfiguration, boolean sortLineAdded, boolean allBranches) {
@@ -66,18 +66,12 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 	        return result;
 	    }
 
-		/**
-		 * Computes the result for the git project specified in configuration.
-		 */
 	    @Override
 	    public void run() {
 	        result = processLog(Commit.parseLogFromCommand(configuration.getGitPath(), allBranches));
 	    }
 
-		/**
-		 * Computes the result if it has not already been done, and returns it.
-		 * @return the result
-		 */
+
 	    @Override
 	    public Result getResult() {
 	        if (result == null) run();
@@ -92,27 +86,12 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 			 * Links the authors to the number of lines they have added or deleted.
 			 */
 			private final Map<String, Integer> linesPerAuthor = new HashMap<>();
-			
-			/**
-			 * True for lines added, false for lines deleted.
-			 * Is used for choosing titles for the HTML output.
-			 */
-	        private boolean sortLineAdded;
-	        
-
-	        Map<String, Integer> getLinesPerAuthor () {
-	            return linesPerAuthor;
-	        }
 
 	        @Override
 	        public String getResultAsString() {
 	            return linesPerAuthor.toString();
 	        }
 
-			/**
-			 * Generates an HTML div containing a list of authors and their number of lines added or deleted.
-			 * @return the html div as a String
-			 */
 	        @Override
 	        public String getResultAsHtmlDiv() {
 	            StringBuilder html = new StringBuilder("<div>Commits per author: <ul>");
@@ -122,12 +101,7 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 	            html.append("</ul></div>");
 	            return html.toString();
 	        }
-			
-			/**
-			 * Formats the result into a list of labels (the authors) and a list of data (the number of lines added or deleted)
-			 * and passes them to a WebGen object so it generates a chart in an HTML div.
-			 * @param wg the WebGen object which will generate the output HTML page
-			 */
+
 	        @Override
 	        public void getResultAsHtmlDiv(WebGen wg) {
 				ArrayList<String> labels = new ArrayList<String>();

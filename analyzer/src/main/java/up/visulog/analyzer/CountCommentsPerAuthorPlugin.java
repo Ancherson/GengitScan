@@ -40,9 +40,6 @@ public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
         return result;
     }
 
-    /**
-     * Computes the result for the GitLab project specified in configuration.
-     */
     @Override
     public void run() {
         //Create an api to get Issues
@@ -64,10 +61,6 @@ public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
         result = processLog(resultsAllComments);
     }
 
-    /**
-     * Computes the result if it has not already been done, and returns it.
-     * @return the result
-     */
     @Override
     public Result getResult() {
         if (result == null) run();
@@ -83,6 +76,10 @@ public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
          */
         private final Map<String, Integer> commentPerAuthor = new HashMap<>();
 
+        /**
+         * Returns a Map with the authors in key and the number of comments in value
+         * @return a Map with the authors in key and the number of comments in value
+         */
         Map<String, Integer> getCommentsPerAuthor() {
             return commentPerAuthor;
         }
@@ -92,10 +89,6 @@ public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
             return commentPerAuthor.toString();
         }
 
-        /**
-         * Generates an HTML div containing a list of authors and their number of comments.
-         * @return the html div as a String
-         */
         @Override
         public String getResultAsHtmlDiv() {
             StringBuilder html = new StringBuilder("<div>Comments per author: <ul>");
@@ -106,11 +99,6 @@ public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
             return html.toString();
         }
         
-        /**
-         * Formats the result into a list of labels (the authors) and a list of data (the number of comments)
-         * and passes them to a WebGen object so it generates a chart in an HTML div.
-         * @param wg the WebGen object which will generate the output HTML page
-         */
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
         	ArrayList<String> authorOfComment = new ArrayList<String>();

@@ -50,18 +50,11 @@ public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
         return result;
     }
 
-    /**
-     * Computes the result for the git project specified in configuration.
-     */
     @Override
     public void run() {
         result = processLog(Commit.parseLogFromCommand(configuration.getGitPath(), false));
     }
 
-    /**
-     * Computes the result if it has not already been done, and returns it.
-     * @return the result
-     */
     @Override
     public Result getResult() {
         if (result == null) run();
@@ -77,6 +70,10 @@ public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
          */
         private final Map<String, Integer> mergeCommitsPerAuthor = new HashMap<>();
 
+        /**
+         * Get a Map with the authors in key and the number of merge commits in value
+         * @return a Map with the authors in key and the number of merge commits in value
+         */
         Map<String, Integer> getMergeCommitsPerAuthor() {
             return mergeCommitsPerAuthor;
         }
@@ -86,10 +83,6 @@ public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
             return mergeCommitsPerAuthor.toString();
         }
 
-        /**
-         * Generates an HTML div containing a list of authors and their number of merge commits.
-         * @return the html div as a String
-         */
         @Override
         public String getResultAsHtmlDiv() {
             StringBuilder html = new StringBuilder("<div>Number of merge commits per author: <ul>");
@@ -100,11 +93,6 @@ public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
             return html.toString();
         }
         
-        /**
-         * Formats the result into a list of labels (the authors) and a list of data (the number of merge commits)
-         * and passes them to a WebGen object so it generates a chart in an HTML div.
-         * @param wg the WebGen object which will generate the output HTML page
-         */
         @Override
         public void getResultAsHtmlDiv(WebGen wg) {
             ArrayList<String> labels = new ArrayList<String>();

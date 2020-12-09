@@ -33,15 +33,15 @@ public interface AnalyzerPlugin extends Runnable{
          */
         void getResultAsHtmlDiv(WebGen wg);
     }
-
+    
     /**
-     * run this analyzer plugin
+     * Computes the result for the git project specified in configuration.
      */
     void run();
-
+    
     /**
-     *
-     * @return the result of this analysis. Runs the analysis first if not already done.
+     * Computes the result if it has not already been done, and returns it.
+     * @return the result
      */
     Result getResult();
 }
