@@ -28,7 +28,7 @@ public class CountContributionPlugin implements AnalyzerPlugin{
 	private Result result;
 	
 	/**
-	 * CONSTRUCTOR
+	 * Constructor
 	 * @param generalConfiguration
 	 */
 	public CountContributionPlugin(Configuration generalConfiguration) {
@@ -36,6 +36,7 @@ public class CountContributionPlugin implements AnalyzerPlugin{
 	}
 	
 	/**
+	 * Returns a HashMap that links the email with the name of the member
 	 * @return a HashMap that links the email with the name of the member
 	 */
 	public HashMap<String, String> getName() {
@@ -54,7 +55,7 @@ public class CountContributionPlugin implements AnalyzerPlugin{
 	}
 	
 	/**
-	 * 
+	 * Return the result of the plugin
 	 * @param LinesPerEmail a HashMap that links for each member's email the number of lines that belong to him
 	 * @param emailToName a HashMap that links for each members, his email with his name
 	 * @return the result of the plugin

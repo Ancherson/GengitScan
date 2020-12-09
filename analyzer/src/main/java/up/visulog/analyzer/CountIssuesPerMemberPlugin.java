@@ -22,7 +22,7 @@ public class CountIssuesPerMemberPlugin implements AnalyzerPlugin {
     private Result result;
     
     /**
-     * CONSTRUCTOR
+     * Constructor
      * @param generalConfiguration
      */
     public CountIssuesPerMemberPlugin(Configuration generalConfiguration) {
@@ -30,7 +30,8 @@ public class CountIssuesPerMemberPlugin implements AnalyzerPlugin {
     }
 
     /**
-     * @param assigneesLog
+     * Return the result of the plugin
+     * @param assigneesLog the collection of the issues assignees
      * @return the result of the plugin
      */
     static Result processLog(Collection<Assignees> assigneesLog) {
@@ -62,6 +63,9 @@ public class CountIssuesPerMemberPlugin implements AnalyzerPlugin {
         return result;
     }
 
+    /**
+     * This class store the result of the plugin
+     */
     static class Result implements AnalyzerPlugin.Result {
     	/**
     	 * This HashMap associate for each members of the project, the number of assigned gitlab issue
@@ -69,6 +73,7 @@ public class CountIssuesPerMemberPlugin implements AnalyzerPlugin {
         private final Map<String, Integer> issuesPerMember = new HashMap<>();
 
         /**
+         * Returns the HashMap that associate for each members of the project, the number of assigned gitlab issue
          * @return the HashMap that associate for each members of the project, the number of assigned gitlab issue
          */
         Map<String, Integer> getIssuesPerMember() {
