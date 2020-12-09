@@ -30,7 +30,7 @@ public class CountIssuesPerMemberPlugin implements AnalyzerPlugin {
     }
 
     /**
-     * Return the result of the plugin
+     * Calculate the number of gitlab issues per member and return the result of the plugin
      * @param assigneesLog the collection of the issues assignees
      * @return the result of the plugin
      */

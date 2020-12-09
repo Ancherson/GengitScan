@@ -55,7 +55,7 @@ public class CountContributionPlugin implements AnalyzerPlugin{
 	}
 	
 	/**
-	 * Return the result of the plugin
+	 * Calculate the percentage of contribution for each member and return the result of the plugin
 	 * @param LinesPerEmail a HashMap that links for each member's email the number of lines that belong to him
 	 * @param emailToName a HashMap that links for each members, his email with his name
 	 * @return the result of the plugin
@@ -105,6 +105,7 @@ public class CountContributionPlugin implements AnalyzerPlugin{
 	    private final Map<String,Double> contributionPerAuthor = new HashMap<>();
 	
 	    /**
+	     * Return the HashMap which links the author's name with his contribution (in percentage)
 	     * @return the HashMap which links the author's name with his contribution (in percentage)
 	     */
 	    Map<String, Double> getContributionPerAuthor() {
