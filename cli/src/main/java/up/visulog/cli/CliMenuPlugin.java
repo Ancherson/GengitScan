@@ -6,7 +6,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-public class CliMenuPlugin extends JFrame {
+public class CliMenuPlugin extends JPanel {
 	private String[] result = {"--addPlugin="};
 
 	//Buttons that represents the "main" plugins
@@ -26,19 +26,16 @@ public class CliMenuPlugin extends JFrame {
 	
 
 	public CliMenuPlugin() {
-		this.setTitle("GenGit Scan");
-		this.setAlwaysOnTop(true);
 		this.setSize(1200,500);
-		this.getContentPane().setLayout(null);
-		this.getContentPane().setBackground(new Color(180, 211, 212));
-		this.setResizable(false);
+		this.setLayout(null);
+		this.setBackground(new Color(180, 211, 212));
 		
 		JPanel panelMain = new JPanel(new GridLayout(4,1));
 		panelMain.setBackground(Color.white);
 		panelMain.setBorder(BorderFactory.createEmptyBorder(10, 50, 50, 50));
 		panelMain.setBounds(50, 30, 1100, 400);
 		
-		this.getContentPane().add(panelMain);
+		this.add(panelMain);
 		
 		JLabel title = new JLabel("Plugins without API", 0);
 		title.setFont(new Font("Monica", Font.PLAIN, 20));
@@ -70,9 +67,6 @@ public class CliMenuPlugin extends JFrame {
 		buttonAPI.add(getExtensions);
 		buttonAPI.add(countIssues);
 		buttonAPI.add(countComments);
-		
-		this.setVisible(true);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
 	public JButton makeABeautifulButton(String name) {
@@ -100,7 +94,6 @@ public class CliMenuPlugin extends JFrame {
 				e.printStackTrace();
 			}
 		}
-		this.dispose();
 	}
 	
 	

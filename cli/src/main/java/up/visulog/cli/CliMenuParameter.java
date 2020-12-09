@@ -7,7 +7,7 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-public class CliMenuParameter extends JFrame {
+public class CliMenuParameter extends JPanel {
 	private String [] result;
 	private int version;
 	
@@ -31,18 +31,15 @@ public class CliMenuParameter extends JFrame {
 	public CliMenuParameter(String pluginName, int ver) {
 		version = ver;
 
-		this.setTitle("GenGit Scan");
-		this.setAlwaysOnTop(true);
 		this.setSize(800,500);
-		this.getContentPane().setLayout(null);
-		this.getContentPane().setBackground(new Color(180, 211, 212));
-		this.setResizable(false);
+		this.setLayout(null);
+		this.setBackground(new Color(180, 211, 212));
 		
 		JPanel panelMain = new JPanel(new GridLayout(4,1));
 		panelMain.setBackground(Color.white);
 		panelMain.setBorder(BorderFactory.createEmptyBorder(10, 50, 50, 50));
 		panelMain.setBounds(50, 30, 700, 400);
-		this.getContentPane().add(panelMain);
+		this.add(panelMain);
 		
 		JLabel title = new JLabel("Parameters :", 0);
 		title.setFont(new Font("Monica", Font.PLAIN, 20));
@@ -106,12 +103,12 @@ public class CliMenuParameter extends JFrame {
 		panelMain.add(button);
 		
 		back.addActionListener((event) -> {
-			this.dispose();
+			//this.dispose();
 			new CliMenuPlugin();
 		});
 		
 		submit.addActionListener((event) -> {
-			this.dispose();
+			//this.dispose();
 			try {
 				submitMethode();
 			} catch (IOException e) {
@@ -119,9 +116,6 @@ public class CliMenuParameter extends JFrame {
 			} catch (URISyntaxException e) {
 				e.printStackTrace();
 		}});
-		
-		this.setVisible(true);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
 	public JRadioButton makeBeautifulRadioButton(String s) {

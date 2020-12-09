@@ -32,7 +32,7 @@ public class CLILauncher {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
     	if(args.length == 0) {
-    		new CliMenuPlugin();
+    		new CLIMenu();
     	}
     	else launch(args);
     }
@@ -46,7 +46,7 @@ public class CLILauncher {
 			var wg = new WebGen();
 			results.toHTML(wg);
 			wg.write();
-			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+			if (Desktop.isDesktopSupported()) {
 				Desktop.getDesktop().open(new File("../htmlResult/index.html"));
 			}
 	    } else displayHelpAndExit(args);
