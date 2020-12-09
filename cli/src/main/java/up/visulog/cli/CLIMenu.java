@@ -88,8 +88,10 @@ public class CLIMenu extends JFrame {
 	}
 	
 		public void launch() throws IOException, URISyntaxException {
-		CLILauncher.launch(commande.split(" "));
 		this.dispose();
+		//TODO add a waiting screen (place dispose after "CLILauncher.launch(commande.split(" "));"
+		CLILauncher.launch(commande.split(" "));
+
 	}
 }
 
