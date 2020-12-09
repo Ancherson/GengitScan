@@ -40,7 +40,6 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 		 */
 	    public Result processLog(List<Commit> gitLog) {
 	        var result = new Result();
-	        result.sortLineAdded = this.sortLineAdded;
 	        Map<String,String>emailToName = new HashMap<String,String>();
 	        for (var commit : gitLog) {
 	        	// I decide to not count the line added/deleted from the merged commit
