@@ -11,9 +11,13 @@ public class CLIMenu extends JFrame {
 	private String projectID;
 	private String privateToken;
 	private String commande;
+	
 	private JPanel mainPanel;
+	
 	private CliMenuPlugin menuPlugin;
 	private CliMenuParameter menuParameter;
+	private CliMenuLast menuLast;
+
 	private CardLayout cardLayout;
 	
 	public CLIMenu() {
@@ -34,6 +38,9 @@ public class CLIMenu extends JFrame {
 		
 		this.getContentPane().add(mainPanel);
 		cardLayout.show(mainPanel, "menuPlugin");
+		
+		this.menuLast = new CliMenuLast(this);
+		mainPanel.add("menuLast",menuLast);
 		
 		this.setVisible(true);
 	}
@@ -58,15 +65,27 @@ public class CLIMenu extends JFrame {
 	
 	
 	public void changeToCliPara(String result, int version) {
-		//TODO verify if privateToken and projectID exist and version = 3 skip to menuLast
-		menuParameter = new CliMenuParameter(this,result,version);
-		mainPanel.add("menuParameter", menuParameter);
-		cardLayout.show(mainPanel, "menuParameter");
+		if(version == 3 && privateToken != null && projectID != null) {
+			changeToMenuLast();
+			addPlugin(result);
+			
+		}
+		else {
+			menuParameter = new CliMenuParameter(this,result,version);
+			mainPanel.add("menuParameter", menuParameter);
+			cardLayout.show(mainPanel, "menuParameter");
+		}
 		
 	}
 	
 	public void changeToCliPlugin() {
 		cardLayout.show(mainPanel, "menuPlugin");
+		this.setSize(1200,500);
+	}
+	
+	public void changeToMenuLast() {
+		cardLayout.show(mainPanel, "menuLast");
+		System.out.println("salut");
 	}
 	
 		public void launch() throws IOException, URISyntaxException {

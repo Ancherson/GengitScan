@@ -168,7 +168,7 @@ public class CliMenuParameter extends JPanel {
 
 		}
 		
-		CLIM.launch();
+		CLIM.changeToMenuLast();
 
 	}
 

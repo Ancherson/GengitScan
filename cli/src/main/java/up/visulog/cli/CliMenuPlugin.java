@@ -90,13 +90,7 @@ public class CliMenuPlugin extends JPanel {
 			CLIM.changeToCliPara(result,3);
 		} else {
 			CLIM.addPlugin(result);
-			try {
-				CLIM.launch();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (URISyntaxException e) {
-				e.printStackTrace();
-			}
+			CLIM.changeToMenuLast();
 		}
 		
 	}
