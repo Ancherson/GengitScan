@@ -20,8 +20,8 @@ import java.time.Month;
  * The plugin can also be used on all branches, but only on the current branch.
  * <p> If the user want to have the lines <b>added</b> or <b>deleted</b> by Author and per Date, he can use the CountLinesPerAuthorPerDate plugin.</p>
  * <p> If The user want to have the lines <b>added</b> or <b>deleted</b> by Author without the date, he can use the CountLinesPerAuthor plugin.</p>
- * @see CountLinesPerAuthorPerDate
- * @see CountLinesPerAuthor
+ * @see CountLinesPerAuthorPerDatePlugin
+ * @see CountLinesPerAuthorPlugin
  */
 public class CountLinesPerDatePlugin implements AnalyzerPlugin {
 	// VARIABLES
@@ -62,7 +62,7 @@ public class CountLinesPerDatePlugin implements AnalyzerPlugin {
      * @param generalConfiguration the generalConfiguration
      * @param howToSort the way of sorting
      * @param lines the lines added or deleted
-     * @param allBranches
+     * @param allBranches for all branches or not
      */
     public CountLinesPerDatePlugin(Configuration generalConfiguration, String howToSort, boolean lines, boolean allBranches) {
         this.configuration = generalConfiguration;
@@ -79,8 +79,6 @@ public class CountLinesPerDatePlugin implements AnalyzerPlugin {
     public Result processLog(List<Commit> gitLog) {
     	var result = new Result();
     	// change the values of the object Result
-    	result.setHowToSort(howToSort);
-    	result.setLines(lines);
     	countLinesAddedOrDeletedPerDays(gitLog, result);
     	
     	// sort the commits per Months and per Weeks
@@ -171,35 +169,6 @@ public class CountLinesPerDatePlugin implements AnalyzerPlugin {
         // int = 0,1,2...
         
         /**
-         * The value change if the user wants the number of lines per days, per weeks and per months.
-         * The value sort the lines per months, this is a default value.
-         */
-        private String howToSort = "months";
-        
-        /**
-         * The plugin count the added or deleted lines according to the content of the variable.
-         * If the boolean is "true", the plugin count the lines added.
-         * If the boolean is "false", the plugin count the lines deleted.
-         */
-        private boolean lines;
-        
-        /**
-         * Update the way of sorting
-         * @param the way of sorting
-         */
-        public void setHowToSort(String howToSort) {
-        	this.howToSort = howToSort;
-        }
-        
-        /**
-         * Updates the identity of the plugin's result lines
-         * @param lines
-         */
-        public void setLines(boolean lines) {
-        	this.lines = lines;
-        }
-
-        /**
          * Return the result of the plugin
          * @param lines
          */
@@ -223,17 +192,17 @@ public class CountLinesPerDatePlugin implements AnalyzerPlugin {
         	
         	//check if the user wants the number of the lines added/deleted or the number of commits
         	if(lines) {
-        		s += "<div>Number of lines added of commits per " + this.howToSort + ": <ul>";
+        		s += "<div>Number of lines added of commits per " + howToSort + ": <ul>";
         	} else {
-        		s += "<div>Number of lines deleted per " + this.howToSort + ": <ul>";
+        		s += "<div>Number of lines deleted per " + howToSort + ": <ul>";
         	}
         	
         	//display the commits (or lines added/deleted) by the way of sorting
-        	if(this.howToSort.equals("days")) {
+        	if(howToSort.equals("days")) {
         		for(var item : commitsPerDate.entrySet()) {
         			s += "<li>" + item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() +  " " + item.getKey().getYear() + ": " + item.getValue() + "</li>";
         		}
-        	} else if(this.howToSort.equals("weeks")) {
+        	} else if(howToSort.equals("weeks")) {
         		for(var item : commitsPerWeeks.entrySet()) {
         			// Example of a item || Key : "2020 1" | Value : 30
         			s += "<li> Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ") : " + item.getValue() + "</li>";
@@ -253,7 +222,7 @@ public class CountLinesPerDatePlugin implements AnalyzerPlugin {
             ArrayList<String> labels = new ArrayList<String>();
             ArrayList<Integer> data = new ArrayList<Integer>();
 
-            if(this.howToSort.equals("days") || this.howToSort.contentEquals("months")) {
+            if(howToSort.equals("days") || howToSort.contentEquals("months")) {
             	var labels0 = commitsPerDate.entrySet().iterator().next().getKey();
         		LocalDate cmp = labels0;
         		LocalDate expected = cmp;
@@ -261,7 +230,7 @@ public class CountLinesPerDatePlugin implements AnalyzerPlugin {
         			cmp = item.getKey();
         			if(!cmp.equals(expected)) {
         				while(!expected.equals(cmp)) {
-        					if(this.howToSort.equals("days")) {
+        					if(howToSort.equals("days")) {
         						labels.add(expected.getDayOfMonth() + " " + expected.getMonth().name() + " " + expected.getYear());
         						expected = expected.plusDays(1);
         					} else {
@@ -271,7 +240,7 @@ public class CountLinesPerDatePlugin implements AnalyzerPlugin {
         					data.add(0);
         				}
         			}
-        			if(this.howToSort.equals("days")) {
+        			if(howToSort.equals("days")) {
         				labels.add(item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() + " " + item.getKey().getYear());
         				expected = expected.plusDays(1);
 					} else {
@@ -299,7 +268,7 @@ public class CountLinesPerDatePlugin implements AnalyzerPlugin {
         		}
         	}
             
-            wg.addChart("line", "Number of Lines " + (lines ? "Added" : "Deleted") + " Per " + this.howToSort, "Lines " + (lines ? "added" : "deleted"), labels, data);
+            wg.addChart("line", "Number of Lines " + (lines ? "Added" : "Deleted") + " Per " + howToSort, "Lines " + (lines ? "added" : "deleted"), labels, data);
         }
 
     }

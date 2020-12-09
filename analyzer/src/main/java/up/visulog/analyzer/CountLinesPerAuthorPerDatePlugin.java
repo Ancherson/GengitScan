@@ -22,8 +22,8 @@ import java.time.Month;
  * The plugin can also be used on all branches, but only on the current branch.
  * <p> If the user want to have the lines <b>added</b> or <b>deleted</b> per Date without the author, he can use the CountLinesPerDate plugin.</p>
  * <p> If The user want to have the lines <b>added</b> or <b>deleted</b> by Author without the date, he can use the CountLinesPerAuthor plugin.</p>
- * @see CountLinesPerDate
- * @see CountLinesPerAuthor
+ * @see CountLinesPerDatePlugin
+ * @see CountLinesPerAuthorPlugin
  */
 
 public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
@@ -65,7 +65,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
      * @param generalConfiguration the generalConfiguration
      * @param howToSort the way of sorting
      * @param lines the lines added or deleted
-     * @param allBranches
+     * @param allBranches for all branches or not
      */
     public CountLinesPerAuthorPerDatePlugin(Configuration generalConfiguration, String howToSort, boolean lines, boolean allBranches) {
         this.configuration = generalConfiguration;
@@ -83,9 +83,6 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     	List<Commit> gitLog2 = sameAuthor(gitLog);
     	
     	var result = new Result();
-    	// change the values of the object Result
-    	result.setHowToSort(howToSort);
-    	result.setLines(lines);
     	
     	// first, we find the commits sorting per the days
     	Map<LocalDate, List<Commit>> commitsPerDate = sortCommitsPerDays(gitLog2);
@@ -107,7 +104,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     /**
      * Return a list of commits, but the authors do not appear twice
      * @param gitLog
-     * @return
+     * @return the list of commits, but the authors do not appear twice
      */
     public List<Commit> sameAuthor(List<Commit> gitLog) {
     	List<Commit> gitLog2 = new LinkedList<Commit>();
@@ -141,7 +138,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     /**
      * Return a Map with the day in key and the list of commits with the commits that have been made during the day in value
      * @param gitLog the list of commits
-     * @return
+     * @return a Map with the day in key and the list of commits with the commits that have been made during the day in value
      */
     public Map<LocalDate, List<Commit>> sortCommitsPerDays(List<Commit> gitLog) {
     	Map<LocalDate, List<Commit>> res = new TreeMap<>();
@@ -163,8 +160,8 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     
     /**
      * Return a Map with the author in Key and the number of lines the author made per Days
-     * @param gitLog
-     * @return
+     * @param gitLog the list of the commits
+     * @return a Map with the author in Key and the number of lines the author made per Days
      */
     public Map<String, Integer> linesPerAuthor(List<Commit> gitLog) {
     	Map<String, Integer> res = new HashMap<>();
@@ -187,7 +184,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     
     /**
      * Updates the results of the Plugin according to the way of sorting
-     * @param result
+     * @param result the reslt of the plugin
      */
     public void sortTheResultPerMonthsOfPerWeeks(Result result) {
     	// sort the commits per Months
@@ -226,8 +223,8 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
  
     /**
      * Returns plugin results for a special month
-     * @param r
-     * @param months
+     * @param r the result of the plugin
+     * @param months the special month
      */
     public Map<String, Integer> authorsAndMonths(LocalDate months, Result r) {
     	Map<String, Integer> res = new HashMap<>();
@@ -246,8 +243,8 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
     
     /**
      * Returns plugin results for a special week
-     * @param r
-     * @param week
+     * @param r the result of the plugin
+     * @param week a special week
      */
     public Map<String, Integer> authorAndWeeks(String week, Result r) {
     	Map<String, Integer> res = new HashMap<>();
@@ -290,36 +287,6 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         private Map<String, Map<String, Integer>> linesPerAuthorPerWeeks = new TreeMap<>();
         
         /**
-         * The value change if the user wants the number of lines per days, per weeks and per months.
-         * The value sort the lines per months, this is a default value.
-         */
-        private String howToSort = "months";
-        
-        /**
-         * The plugin count the added or deleted lines according to the content of the variable.
-         * If the boolean is "true", the plugin count the lines added.
-         * If the boolean is "false", the plugin count the lines deleted.
-         */
-        
-        private boolean lines;
-        
-        /**
-         * Updates the way of sorting
-         * @param the way of sorting
-         */
-        public void setHowToSort(String howToSort) {
-        	this.howToSort = howToSort;
-        }
-        
-        /**
-         * Updates the identity of the plugin's result lines
-         * @param lines
-         */
-        public void setLines(boolean lines) {
-        	this.lines = lines;
-        }
-        
-        /**
          * Return the lines per Author and per Months or per Days
          * @return
          */
@@ -352,13 +319,13 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         	
         	// check if the user wants the number of the lines added/deleted or the number of commits
         	if(lines) {
-        		s += "<div>Number of lines added of commits per " + this.howToSort + " and per author : <ul><br>";
+        		s += "<div>Number of lines added of commits per " + howToSort + " and per author : <ul><br>";
         	} else {
-        		s += "<div>Number of lines deleted per " + this.howToSort + " and per author : <ul><br>";
+        		s += "<div>Number of lines deleted per " + howToSort + " and per author : <ul><br>";
         	}
         	
         	// display the commits (or lines added/deleted) by the way of sorting
-        	if(this.howToSort.equals("days")) {
+        	if(howToSort.equals("days")) {
         		for(var item : linesPerAuthorPerDate.entrySet()) {
         			s += "<ul>" + item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() +  " " + item.getKey().getYear() + "<br>";
         			Map<String, Integer> lines = item.getValue();
@@ -367,7 +334,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
             		}
             		s+= "</ul><br>";
         		}
-        	} else if(this.howToSort.equals("weeks")) {
+        	} else if(howToSort.equals("weeks")) {
         		for(var item : linesPerAuthorPerWeeks.entrySet()) {
         			s += "<ul>Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")<br>";
         			Map<String, Integer> lines = item.getValue();
@@ -397,7 +364,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         	HashMap<String, ArrayList<Integer>> datasets = new HashMap<String, ArrayList<Integer>>();
         	int nbr = 0;
         	
-            if(this.howToSort.equals("days") || this.howToSort.equals("months")) {
+            if(howToSort.equals("days") || howToSort.equals("months")) {
             	var labels0 = linesPerAuthorPerDate.entrySet().iterator().next().getKey();
         		LocalDate cmp = labels0;
         		LocalDate expected = cmp;
@@ -463,7 +430,7 @@ public class CountLinesPerAuthorPerDatePlugin implements AnalyzerPlugin {
         		}
             }
             
-            wg.addChart("Number of lines " +(this.lines ? "added" : "deleted") + " per author and per " + this.howToSort, labels, datasets);
+            wg.addChart("Number of lines " +(lines ? "added" : "deleted") + " per author and per " + howToSort, labels, datasets);
         }
         
     }

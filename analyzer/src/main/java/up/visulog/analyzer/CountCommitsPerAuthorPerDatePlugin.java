@@ -20,8 +20,8 @@ import up.visulog.webgen.WebGen;
  * The plugin can also be used on all branches, but only on the current branch.
  * <p> If the user want to have the commits per Date without the author, he can use the CountCommitsPerDate plugin.</p>
  * <p> If The user want to have the commits by Author without the date, he can use the CountCommitsPerAuthor plugin.</p>
- * @see CountCommitsPerDate
- * @see CountCommitsPerAuthor
+ * @see CommitsPerDatePlugin
+ * @see CountCommitsPerAuthorPlugin
  */
 
 public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
@@ -56,7 +56,7 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
      * Constructs a CountCommitsPerAuthorPerDate object given the general Configuration, the way of sorting and a boolean that describes if the plugin should be used on all branches or not
      * @param generalConfiguration the generalConfiguration
      * @param howToSort the way of sorting
-     * @param allBranches
+     * @param allBranches for all branches or not
      */
     public CountCommitsPerAuthorPerDatePlugin(Configuration generalConfiguration, String howToSort, boolean allBranches) {
         this.configuration = generalConfiguration;
@@ -72,8 +72,6 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
     public Result processLog(List<Commit> gitLog) {
     	List<Commit> gitLog2 = sameAuthor(gitLog);
     	var result = new Result();
-    	// change the values of the object Result
-    	result.howToSort = this.howToSort;
     	
     	// first, we find the commits sorting per the days
     	Map<LocalDate, List<Commit>> commitsPerDate = sortCommitsPerDays(gitLog2);
@@ -92,7 +90,7 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
     /**
      * Return a list of commits, but the authors do not appear twice
      * @param gitLog
-     * @return
+     * @return a list of commits, but the authors do not appear twice
      */
     public List<Commit> sameAuthor(List<Commit> gitLog) {
     	List<Commit> gitLog2 = new LinkedList<Commit>();
@@ -126,7 +124,7 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
     /**
      * Return a Map with the day in key and the list of commits with the commits that have been made during the day in value
      * @param gitLog the list of commits
-     * @return
+     * @return a Map with the day in key and the list of commits with the commits that have been made during the day in value
      */
     public Map<LocalDate, List<Commit>> sortCommitsPerDays(List<Commit> gitLog) {
     	Map<LocalDate, List<Commit>> res = new TreeMap<>();
@@ -148,8 +146,8 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
     
     /**
      * Return a Map with the author in Key and the number of commits the author made per Days
-     * @param gitLog
-     * @return
+     * @param listCommits the list of commits
+     * @return a Map with the author in Key and the number of commits the author made per Days
      */
     public Map<String, Integer> commitsPerAuthor(List<Commit> listCommits) {
     	Map<String, Integer> res = new HashMap<>();
@@ -163,7 +161,7 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
 	
     /**
      * Updates the results of the Plugin according to the way of sorting
-     * @param result
+     * @param result the result of the plugin
      */
     public void sortTheResultPerMonthsOfPerWeeks(Result result) {
     	// sort the commits per Months
@@ -202,8 +200,8 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
     
     /**
      * Returns plugin results for a special month
-     * @param r
-     * @param months
+     * @param r the result of the plugin
+     * @param months a special month
      */
     public Map<String, Integer> authorsAndMonths(LocalDate months, Result r) {
     	Map<String, Integer> res = new HashMap<>();
@@ -222,8 +220,8 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
     
     /**
      * Returns plugin results for a special week
-     * @param r
-     * @param week
+     * @param r the result of the plugin
+     * @param week the special week
      */
     public Map<String, Integer> authorAndWeeks(String week, Result r) {
     	Map<String, Integer> res = new HashMap<>();
@@ -265,12 +263,6 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
          * Result of the plugin per weeks
          */
         private Map<String, Map<String, Integer>> commitsPerAuthorPerWeeks = new TreeMap<>();
-        
-        /**
-         * The value change if the user wants the number of commits per days, per weeks and per months.
-         * The value sort the commits per months, this is a default value.
-         */
-        private String howToSort = "months";
 
         @Override
 		public String getResultAsString() {
@@ -282,9 +274,9 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
 
         @Override
 		public String getResultAsHtmlDiv() {
-			String s = "<div>Number of Commits per " + this.howToSort + " and per author : <ul><br>";
+			String s = "<div>Number of Commits per " + howToSort + " and per author : <ul><br>";
         	// display the commits by the way of sorting
-        	if(this.howToSort.equals("days")) {
+        	if(howToSort.equals("days")) {
         		for(var item : commitsPerAuthorPerDate.entrySet()) {
         			s += "<ul>" + item.getKey().getDayOfMonth() + " " + item.getKey().getMonth().name() +  " " + item.getKey().getYear() + "<br>";
         			Map<String, Integer> commits = item.getValue();
@@ -293,7 +285,7 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
             		}
             		s+= "</ul><br>";
         		}
-        	} else if(this.howToSort.equals("weeks")) {
+        	} else if(howToSort.equals("weeks")) {
         		for(var item : commitsPerAuthorPerWeeks.entrySet()) {
         			s += "<ul>Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")<br>";
         			Map<String, Integer> commits = item.getValue();
@@ -322,7 +314,7 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
         	HashMap<String, ArrayList<Integer>> datasets = new HashMap<String, ArrayList<Integer>>();
         	int nbr = 0;
         	
-            if(this.howToSort.equals("days") || this.howToSort.equals("months")) {
+            if(howToSort.equals("days") || howToSort.equals("months")) {
             	var labels0 = commitsPerAuthorPerDate.entrySet().iterator().next().getKey();
         		LocalDate cmp = labels0;
         		LocalDate expected = cmp;
@@ -388,7 +380,7 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
         		}
             }
             
-            wg.addChart("Number of commits per author and per " + this.howToSort, labels, datasets);
+            wg.addChart("Number of commits per author and per " + howToSort, labels, datasets);
 			
 		}
 
