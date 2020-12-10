@@ -97,7 +97,7 @@ public class CLIMenu extends JFrame {
 		this.setLocationRelativeTo(null);
 	}
 	
-		public void launch() throws IOException, URISyntaxException {
+	public void launch() throws IOException, URISyntaxException {
 		this.dispose();
 		//TODO add a waiting screen (place dispose after "CLILauncher.launch(commande.split(" "));"
 		CLILauncher.launch(commande.split(" "));

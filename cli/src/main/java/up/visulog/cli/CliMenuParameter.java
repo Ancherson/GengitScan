@@ -34,6 +34,7 @@ public class CliMenuParameter extends JPanel {
 		version = ver;
 
 		this.setSize(800,500);
+		this.CLIM.setSize(800,500);
 		this.setLayout(null);
 		this.setBackground(new Color(180, 211, 212));
 		
