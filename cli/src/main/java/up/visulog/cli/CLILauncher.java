@@ -31,20 +31,26 @@ import java.util.Scanner;
 public class CLILauncher {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
-        var config = makeConfigFromCommandLineArgs(args);
-        if (config.isPresent()) {
-            var analyzer = new Analyzer(config.get());
+    	if(args.length == 0) {
+    		new CLIMenu();
+    	}
+    	else launch(args);
+    }
+    
+    
+    public static void launch(String [] args) throws IOException, URISyntaxException {
+	    var config = makeConfigFromCommandLineArgs(args);
+	    if (config.isPresent()) {
+	        var analyzer = new Analyzer(config.get());
 			var results = analyzer.computeResults();
 			var wg = new WebGen();
 			results.toHTML(wg);
 			wg.write();
-			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+			if (Desktop.isDesktopSupported()) {
 				Desktop.getDesktop().open(new File("../htmlResult/index.html"));
 			}
-        } else displayHelpAndExit(args);
-
-    }
-
+	    } else displayHelpAndExit(args);
+	}
 
     static Optional<Configuration> makeConfigFromCommandLineArgs(String[] args) {
     	if(args.length==0){
