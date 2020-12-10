@@ -31,6 +31,7 @@ public class CliMenuPath extends JPanel{
 		GridLayout g = new GridLayout(3,1);
 		g.setVgap(80);
 		JPanel panelMain = new JPanel(g);
+		panelMain.setBackground(Color.white);
 		panelMain.setBorder(BorderFactory.createEmptyBorder(10, 50, 50, 50));
 		panelMain.setBounds(50, 30, 600, 400);
 		
@@ -46,18 +47,21 @@ public class CliMenuPath extends JPanel{
 			CLIM.changeToCliPlugin();
 		});
 		
-		
+		title.setBackground(Color.white);
+		title.setOpaque(true);
 		panelMain.add(title);
 		
 		GridLayout g1 = new GridLayout(1,2);
 		g1.setHgap(60);
 		JPanel panel2 = new JPanel(g1);
+		panel2.setBackground(Color.white);
 		panel2.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 		panel2.add(info);
 		panel2.add(path);
 		panelMain.add(panel2);
 		
 		JPanel panel3 = new JPanel();
+		panel3.setBackground(Color.white);
 		next.setPreferredSize(new Dimension(100,50));
 		panel3.add(next);
 		panelMain.add(panel3);
