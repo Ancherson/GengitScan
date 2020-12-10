@@ -86,8 +86,8 @@ public class CLIMenu extends JFrame {
 	}
 	
 	public void changeToCliPlugin() {
-		cardLayout.show(mainPanel, "menuPlugin");
 		this.setSize(1200,500);
+		cardLayout.show(mainPanel, "menuPlugin");
 		this.setLocationRelativeTo(null);
 	}
 	
