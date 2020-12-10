@@ -70,14 +70,15 @@ public class CLIMenu extends JFrame {
 
 	
 	
-	public void changeToCliPara(String result, int version) {
-		if(version == 3 && privateToken != null && projectID != null) {
+	public void changeToCliPara(String result) {
+		boolean version = (result.equals("countLinesAdded") || result.equals("countLinesDeleted") || result.equals("countCommits"));
+		if( version && privateToken != null && projectID != null) {
 			changeToMenuLast();
 			addPlugin(result);
 			
 		}
 		else {
-			menuParameter = new CliMenuParameter(this,result,version);
+			menuParameter = new CliMenuParameter(this,result);
 			mainPanel.add("menuParameter", menuParameter);
 			cardLayout.show(mainPanel, "menuParameter");
 		}

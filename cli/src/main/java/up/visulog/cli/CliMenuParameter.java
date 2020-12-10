@@ -10,7 +10,7 @@ import java.net.URISyntaxException;
 public class CliMenuParameter extends JPanel {
 	private CLIMenu CLIM;
 	private String result;
-	private int version;
+	private boolean version;
 	
 	private JButton back = makeABeautifulButton("BACK");
 	private JButton submit = makeABeautifulButton("SUBMIT");
@@ -29,9 +29,9 @@ public class CliMenuParameter extends JPanel {
 	private JTextField privateToken = new JTextField();
 
 	
-	public CliMenuParameter(CLIMenu CLIM, String pluginName, int ver) {
+	public CliMenuParameter(CLIMenu CLIM, String pluginName) {
+		version = (pluginName.equals("countLinesAdded") || pluginName.equals("countLinesDeleted") || pluginName.equals("countCommits"));
 		this.CLIM = CLIM;
-		version = ver;
 
 		this.setSize(800,500);
 		this.CLIM.setSize(800,500);
@@ -48,7 +48,7 @@ public class CliMenuParameter extends JPanel {
 		title.setFont(new Font("Monica", Font.PLAIN, 20));
 		panelMain.add(title);
 
-		if(version == 1) {
+		if(version) {
 			result = pluginName;
 			
 			GridLayout g1 = new GridLayout(1,3);
@@ -149,7 +149,7 @@ public class CliMenuParameter extends JPanel {
 	
 	
 	public void submitMethode() throws IOException, URISyntaxException{
-		if(version == 1) {
+		if(version) {
 			if(perAuthor.isSelected()) result += "PerAuthor";
 			
 			if(perDays.isSelected()) result += "PerDays";
