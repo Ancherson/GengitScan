@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -18,7 +19,7 @@ public class CliMenuPath extends JPanel{
 	private JLabel title;
 	private JLabel info;
 	private JButton next = new JButton("Next");
-	//Maybe change this by a browse button
+	private JButton open = new JButton("Open");
 	private JTextField path = new JTextField();
 	
 	public CliMenuPath(CLIMenu CLIM) {
@@ -41,6 +42,17 @@ public class CliMenuPath extends JPanel{
 		info = new JLabel("The path to your git project : ", 0);
 		info.setFont(new Font("Monica", Font.PLAIN, 15));
 		
+		open.setBackground(new Color(180, 211, 212));
+		open.addActionListener((event) -> {
+			JFileChooser c = new JFileChooser();
+			c.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			int rval = c.showOpenDialog(this);
+			if(rval == JFileChooser.APPROVE_OPTION) {
+				path.setText(c.getSelectedFile().getAbsolutePath());
+			}
+			
+		});
+		
 		next.setBackground(new Color(180, 211, 212));
 		next.addActionListener((event) -> {
 			CLIM.addPath(path.getText());
@@ -60,9 +72,11 @@ public class CliMenuPath extends JPanel{
 		panel2.add(path);
 		panelMain.add(panel2);
 		
-		JPanel panel3 = new JPanel();
+		JPanel panel3 = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
 		panel3.setBackground(Color.white);
 		next.setPreferredSize(new Dimension(100,50));
+		open.setPreferredSize(new Dimension(100,50));
+		panel3.add(open);
 		panel3.add(next);
 		panelMain.add(panel3);
 		
