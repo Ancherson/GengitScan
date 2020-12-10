@@ -81,20 +81,17 @@ public class CLIMenu extends JFrame {
 			mainPanel.add("menuParameter", menuParameter);
 			cardLayout.show(mainPanel, "menuParameter");
 		}
-		this.setLocationRelativeTo(null);
 		
 	}
 	
 	public void changeToCliPlugin() {
 		this.setSize(1200,500);
 		cardLayout.show(mainPanel, "menuPlugin");
-		this.setLocationRelativeTo(null);
 	}
 	
 	public void changeToMenuLast() {
 		this.setSize(700,500);
 		cardLayout.show(mainPanel, "menuLast");
-		this.setLocationRelativeTo(null);
 	}
 	
 	public void launch() throws IOException, URISyntaxException {
