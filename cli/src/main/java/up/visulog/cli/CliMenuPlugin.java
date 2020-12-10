@@ -29,7 +29,6 @@ public class CliMenuPlugin extends JPanel {
 	public CliMenuPlugin(CLIMenu CLIM) {
 		this.CLIM = CLIM;
 		this.setSize(1200,500);
-		CLIM.setSize(1200,500);
 		this.setLayout(null);
 		this.setBackground(new Color(180, 211, 212));
 		

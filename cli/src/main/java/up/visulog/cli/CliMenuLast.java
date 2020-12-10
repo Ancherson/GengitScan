@@ -1,5 +1,6 @@
 package up.visulog.cli;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -11,6 +12,10 @@ public class CliMenuLast extends JPanel{
 	
 	public CliMenuLast(CLIMenu CLIM) {
 		this.CLIM = CLIM;
+		
+		this.setBackground(new Color(180, 211, 212));
+		
+		
 		JButton execute = new JButton("execute");
 		JButton addNewPlugin = new JButton("addNewPlugin");
 		execute.addActionListener((event) -> {
