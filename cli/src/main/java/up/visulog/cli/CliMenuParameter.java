@@ -122,7 +122,7 @@ public class CliMenuParameter extends JPanel {
 		JRadioButton res = new JRadioButton(s);
 		res.setFont(new Font("Monica", Font.PLAIN, 15));
 		res.setHorizontalAlignment(0);
-		res.setBackground(new Color(0,0,0,0));
+		res.setOpaque(false);
 		perDate.add(res);
 		return res;
 	}
@@ -131,7 +131,7 @@ public class CliMenuParameter extends JPanel {
 		JCheckBox res = new JCheckBox(s);
 		res.setFont(new Font("Monica", Font.PLAIN, 15));
 		res.setHorizontalAlignment(0);
-		res.setBackground(new Color(0,0,0,0));
+		res.setOpaque(false);
 		return res;
 	}
 	
