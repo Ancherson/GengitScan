@@ -22,7 +22,7 @@ public class CLIMenu extends JFrame {
 	private CardLayout cardLayout;
 	
 	
-	public String getCommande() {
+	public String getCommand() {
 		return commande;
 	}
 	
@@ -75,17 +75,21 @@ public class CLIMenu extends JFrame {
 
 	
 	
-	public void changeToCliPara(String result) {
-		boolean version = (result.equals("countLinesAdded") || result.equals("countLinesDeleted") || result.equals("countCommits"));
-		if( version && privateToken != null && projectID != null) {
-			changeToMenuLast();
-			addPlugin(result);
-			
-		}
-		else {
-			menuParameter = new CliMenuParameter(this,result);
+	public void changeToCliPara(String result,  boolean version) {
+		if( !version && privateToken == null && projectID == null) {		
+			menuParameter = new CliMenuParameter(this, result, version);
 			mainPanel.add("menuParameter", menuParameter);
 			cardLayout.show(mainPanel, "menuParameter");
+
+		}
+		else if(version) {
+			menuParameter = new CliMenuParameter(this, result, version);
+			mainPanel.add("menuParameter", menuParameter);
+			cardLayout.show(mainPanel, "menuParameter");
+		}
+		else {
+			changeToMenuLast();
+			addPlugin(result);
 		}
 		
 	}
@@ -101,6 +105,7 @@ public class CLIMenu extends JFrame {
 	}
 	
 	public void launch() throws IOException, URISyntaxException {
+		System.out.println(commande);
 		this.dispose();
 		//TODO add a waiting screen (place dispose after "CLILauncher.launch(commande.split(" "));"
 		CLILauncher.launch(commande.split(" "));

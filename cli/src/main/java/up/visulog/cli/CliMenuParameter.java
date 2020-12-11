@@ -30,8 +30,8 @@ public class CliMenuParameter extends JPanel {
 	private JTextField privateToken = new JTextField();
 
 	
-	public CliMenuParameter(CLIMenu CLIM, String pluginName) {
-		version = (pluginName.equals("countLinesAdded") || pluginName.equals("countLinesDeleted") || pluginName.equals("countCommits"));
+	public CliMenuParameter(CLIMenu CLIM, String pluginName,boolean version) {
+		this.version = version;
 		this.CLIM = CLIM;
 		
 		none.setFont(new Font("Monica", Font.PLAIN, 15));
@@ -65,7 +65,7 @@ public class CliMenuParameter extends JPanel {
 		panelMain.setBounds(50, 30, 700, 400);
 		this.add(panelMain);
 		
-		JLabel title = new JLabel("Parameters :", 0);
+		JLabel title = new JLabel("Parameters of "+pluginName+ ":", 0);
 		title.setFont(new Font("Monica", Font.PLAIN, 20));
 		panelMain.add(title);
 
