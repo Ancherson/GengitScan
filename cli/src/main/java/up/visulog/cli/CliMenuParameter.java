@@ -38,6 +38,7 @@ public class CliMenuParameter extends JPanel {
 		none.setHorizontalAlignment(0);
 		none.setOpaque(false);
 		none.addActionListener((event) -> NoDate());
+		none.setSelected(true);
 		perDate.add(none);
 		
 		perAuthor.setFont(new Font("Monica", Font.ITALIC, 15));
