@@ -42,8 +42,8 @@ public class CliMenuParameter extends JPanel {
 		perDate.add(none);
 		
 		perAuthor.setFont(new Font("Monica", Font.ITALIC, 15));
-		perAuthor.setBackground(new Color(169,169,169));
 		perAuthor.setEnabled(false);
+		perAuthor.setSelected(true);
 		perAuthor.setHorizontalAlignment(0);
 		perAuthor.setOpaque(false);
 		
@@ -147,7 +147,7 @@ public class CliMenuParameter extends JPanel {
 	}
 	
 	public void NoDate() {
-		perAuthor.setSelected(false);
+		perAuthor.setSelected(true);
 		perAuthor.setEnabled(false);
 		perAuthor.setFont(new Font("Monica", Font.ITALIC, 15));
 	}
@@ -178,7 +178,7 @@ public class CliMenuParameter extends JPanel {
 	
 	public void submitMethode() throws IOException, URISyntaxException{
 		if(version) {
-			if(perAuthor.isSelected()) result += "PerAuthor";
+			if(perAuthor.isEnabled() && perAuthor.isSelected()) result += "PerAuthor";
 			
 			if(perDays.isSelected()) result += "PerDays";
 			else if (perWeeks.isSelected()) result += "PerWeeks";
