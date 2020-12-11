@@ -21,6 +21,11 @@ public class CLIMenu extends JFrame {
 
 	private CardLayout cardLayout;
 	
+	
+	public String getCommande() {
+		return commande;
+	}
+	
 	public CLIMenu() {
 		this.setSize(700, 500);
 		this.setLocationRelativeTo(null);
