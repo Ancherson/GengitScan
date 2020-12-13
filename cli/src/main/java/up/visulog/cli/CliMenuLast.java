@@ -72,7 +72,7 @@ public class CliMenuLast extends JPanel{
 		addNewPlugin.setFont(new Font("Monica", Font.PLAIN, 20));
 		panel2.add(addNewPlugin);
 		
-		JLabel subTitle = new JLabel("you command :");
+		JLabel subTitle = new JLabel("your command :");
 		JPanel panelTitle = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
 		panelTitle.setSize(30, 10);
 		panelTitle.setBackground(Color.white);
