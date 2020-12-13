@@ -21,10 +21,7 @@ public class CLIMenu extends JFrame {
 
 	private CardLayout cardLayout;
 	
-	
-	public String getCommand() {
-		return commande;
-	}
+
 	
 	public CLIMenu() {
 		this.setSize(700, 500);
@@ -101,6 +98,7 @@ public class CLIMenu extends JFrame {
 	
 	public void changeToMenuLast() {
 		this.setSize(700,500);
+		menuLast.setCommande(commande);
 		cardLayout.show(mainPanel, "menuLast");
 	}
 	
