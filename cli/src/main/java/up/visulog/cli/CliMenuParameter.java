@@ -20,18 +20,39 @@ public class CliMenuParameter extends JPanel {
 	private JRadioButton perDays = makeBeautifulRadioButton("PerDays");
 	private JRadioButton perWeeks = makeBeautifulRadioButton("PerWeeks");
 	private JRadioButton perMonths = makeBeautifulRadioButton("PerMonths");
+	private JRadioButton none = new JRadioButton("None");
 	
-	private JCheckBox perAuthor = makeBeautifulCheckBox("PerAuthor");
-	private JCheckBox forAllBranches = makeBeautifulCheckBox("ForAllBranches");
+	private JCheckBox perAuthor = new JCheckBox("perAuthor");
+	private JCheckBox forAllBranches = new JCheckBox("forAllBranches");
 	
 	//Texte Area needed to be fill For plugins using API
 	private JTextField projectId = new JTextField();
 	private JTextField privateToken = new JTextField();
 
 	
-	public CliMenuParameter(CLIMenu CLIM, String pluginName) {
-		version = (pluginName.equals("countLinesAdded") || pluginName.equals("countLinesDeleted") || pluginName.equals("countCommits"));
+	public CliMenuParameter(CLIMenu CLIM, String pluginName,boolean version) {
+		this.version = version;
 		this.CLIM = CLIM;
+		
+		none.setFont(new Font("Monica", Font.PLAIN, 15));
+		none.setHorizontalAlignment(0);
+		none.setOpaque(false);
+		none.addActionListener((event) -> NoDate());
+		none.setSelected(true);
+		perDate.add(none);
+		
+		perAuthor.setFont(new Font("Monica", Font.ITALIC, 15));
+		perAuthor.setEnabled(false);
+		perAuthor.setSelected(true);
+		perAuthor.setHorizontalAlignment(0);
+		perAuthor.setOpaque(false);
+		
+		
+		
+		
+		forAllBranches.setFont(new Font("Monica", Font.PLAIN, 15));
+		forAllBranches.setHorizontalAlignment(0);
+		forAllBranches.setOpaque(false);
 
 		this.setSize(800,500);
 		this.CLIM.setSize(800,500);
@@ -44,19 +65,20 @@ public class CliMenuParameter extends JPanel {
 		panelMain.setBounds(50, 30, 700, 400);
 		this.add(panelMain);
 		
-		JLabel title = new JLabel("Parameters :", 0);
+		JLabel title = new JLabel("Parameters of "+pluginName+ ":", 0);
 		title.setFont(new Font("Monica", Font.PLAIN, 20));
 		panelMain.add(title);
 
 		if(version) {
 			result = pluginName;
 			
-			GridLayout g1 = new GridLayout(1,3);
+			GridLayout g1 = new GridLayout(1,4);
 			g1.setHgap(20);
 			JPanel date = new JPanel(g1);
 			date.setBackground(Color.white);
 			panelMain.add(date);
 			
+			date.add(none);
 			date.add(perDays);
 			date.add(perWeeks);
 			date.add(perMonths);
@@ -118,22 +140,28 @@ public class CliMenuParameter extends JPanel {
 		}});
 	}
 	
+	
+	public void DateIsSelected() {
+		perAuthor.setEnabled(true);
+		perAuthor.setFont(new Font("Monica", Font.PLAIN, 15));
+	}
+	
+	public void NoDate() {
+		perAuthor.setSelected(true);
+		perAuthor.setEnabled(false);
+		perAuthor.setFont(new Font("Monica", Font.ITALIC, 15));
+	}
+	
 	public JRadioButton makeBeautifulRadioButton(String s) {
 		JRadioButton res = new JRadioButton(s);
 		res.setFont(new Font("Monica", Font.PLAIN, 15));
 		res.setHorizontalAlignment(0);
 		res.setOpaque(false);
+		res.addActionListener((event) -> DateIsSelected());
 		perDate.add(res);
 		return res;
 	}
 	
-	public JCheckBox makeBeautifulCheckBox(String s) {
-		JCheckBox res = new JCheckBox(s);
-		res.setFont(new Font("Monica", Font.PLAIN, 15));
-		res.setHorizontalAlignment(0);
-		res.setOpaque(false);
-		return res;
-	}
 	
 	public JButton makeABeautifulButton(String name) {
 		JButton b = new JButton(name);
@@ -150,7 +178,7 @@ public class CliMenuParameter extends JPanel {
 	
 	public void submitMethode() throws IOException, URISyntaxException{
 		if(version) {
-			if(perAuthor.isSelected()) result += "PerAuthor";
+			if(perAuthor.isEnabled() && perAuthor.isSelected()) result += "PerAuthor";
 			
 			if(perDays.isSelected()) result += "PerDays";
 			else if (perWeeks.isSelected()) result += "PerWeeks";

@@ -84,9 +84,9 @@ public class CliMenuPlugin extends JPanel {
 		result = name;
 		
 		if(name.equals("countLinesAdded") || name.equals("countLinesDeleted") || name.equals("countCommits")) {
-			CLIM.changeToCliPara(result);
+			CLIM.changeToCliPara(result,true);
 		} else if(name.equals("getMembers") || name.equals("getExtensions") || name.equals("countIssues") || name.equals("countComments")) {
-			CLIM.changeToCliPara(result);
+			CLIM.changeToCliPara(result,false);
 		} else {
 			CLIM.addPlugin(result);
 			CLIM.changeToMenuLast();
