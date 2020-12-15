@@ -12,16 +12,47 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+/**
+ * This class represents one Commit
+ */
 public class Commit {
-    // FIXME: (some of) these fields could have more specialized types than String
+    /**
+     * <b>id</b> the id of the commit
+     */
     public final String id;
+    /**
+     * <b>date</b> the date of the commit
+     */
     public final LocalDateTime date;
+    /**
+     * <b>author</b> the author of the commit
+     */
     public final String author;
+    /**
+     * <b>description</b> the description of the commit
+     */
     public final String description;
+    /**
+     * <b>mergedFrom</b> where was the commit merged from
+     */
     public final String mergedFrom;
+    /**
+     * <b>linesAdded</b> number of lines added in the commit
+     */
     public int linesAdded = 0;
+    /**
+     * <b>linesDeleted</b> number of lines deleted in the commit
+     */
     public int linesDeleted = 0;
 
+    /**
+     * <b>Commit</b> Constructor
+     * @param id the id of the commit
+     * @param author the author of the commit
+     * @param date the date of the commit
+     * @param description the description of the commit
+     * @param mergedFrom where was the commit merged from
+     */
     public Commit(String id, String author, LocalDateTime date, String description, String mergedFrom) {
         this.id = id;
         this.author = author;
@@ -29,8 +60,12 @@ public class Commit {
         this.description = description;
         this.mergedFrom = mergedFrom;
     }
-    
-    //This function counts the number of lines per Author
+
+    /**
+     * This function counts the number of lines per Author
+     * @param path the path of the git repository in the local machine
+     * @return a HashMap that contains the <b>author</b> and the number of lines changed by him/her
+     */
     public static HashMap<String, Integer> countLinesContribution(Path path) {
     	HashMap<String, Integer> tot = new HashMap<String, Integer>();
     	BufferedReader b = command(path, "git", "ls-files", "--exclude-standard");
@@ -52,8 +87,12 @@ public class Commit {
 		}
     	return tot;
     }
-    
-    //This function parses the results of the command git blame
+
+    /**
+     * This function parses the results of the command git blame
+     * @param b a <b>BufferedReader</b> representing the results from the git command
+     * @return a <b>HashMap</b> containing the email and the number of times seen
+     */
     public static HashMap<String, Integer> parseLinesContribution(BufferedReader b) {
     	HashMap<String, Integer> hm = new HashMap<String, Integer>();
     	String line;
@@ -77,8 +116,13 @@ public class Commit {
 		}
     	return hm;
     }
-    
-    //this function execute the command args from directory whose path is "path"
+
+    /**
+     * this function execute the command args from directory whose path is "path"
+     * @param path the path of the git repository in the local machine
+     * @param args the command that are going to be executed
+     * @return a <b>BufferedReader</b> representing the results from the git command
+     */
     public static BufferedReader command(Path path, String... args) {
     	ProcessBuilder builder = new ProcessBuilder();
     	builder.directory(path.toFile());
@@ -97,8 +141,13 @@ public class Commit {
     	InputStream is = process.getInputStream();
     	return new BufferedReader(new InputStreamReader(is));
     }
-    
-    //This function collects the number of line added and deleted for each commits
+
+    /**
+     * This function collects the number of line added and deleted for each commits
+     * @param path the path of the git repository in the local machine
+     * @param commits a list containing multiple <b>Commit</b>
+     * @return the <b>List</b> of <b>Commit</b> after collecting the number of lines added and deleted
+     */
     public static List<Commit> getNumberLines(Path path, List<Commit> commits) {
     	for(Commit commit : commits) {
     		int[] lines = parseLine(command(path, "git", "show", "--format=oneline",commit.id,"--numstat"));
@@ -116,8 +165,12 @@ public class Commit {
     	return commits;
     	
     }
-    
-    //This function parses the output of the command 'git show', to collect the number of line added and deleted
+
+    /**
+     * This function parses the output of the command 'git show', to collect the number of line added and deleted
+     * @param reader representing the results from the git command
+     * @return an <b>int</b> array containing the number of lines added and deleted
+     */
     public static int[] parseLine(BufferedReader reader) {
     	try {
     		String line;
@@ -141,7 +194,13 @@ public class Commit {
     		throw new RuntimeException("Error parseLine", e);
     	}
     }
-    
+
+    /**
+     * This function collects the commits in the branches of the git repository
+     * @param gitPath the path of the git repository in the local machine
+     * @param allBranches it's a boolean to check for all branches or just a specific branch
+     * @return <b>List</b> of <b>Commit</b> repesenting every commit in a specific branch or all the branches
+     */
     public static List<Commit> parseLogFromCommand(Path gitPath, boolean allBranches) {
     	BufferedReader reader;
     	if(allBranches) {
@@ -152,6 +211,11 @@ public class Commit {
         return getNumberLines(gitPath,parseLog(reader));
     }
 
+    /**
+     * This function parses the output of the command 'git log' and collect the commits in the branches
+     * @param reader representing the results from the git command
+     * @return a <b>List</b> of <b>Commit</b> repesenting every commit in a specific branch or all the branches
+     */
     public static List<Commit> parseLog(BufferedReader reader) {
         var result = new ArrayList<Commit>();
         Optional<Commit> commit = parseCommit(reader);
@@ -164,7 +228,8 @@ public class Commit {
 
     /**
      * Parses a log item and outputs a commit object. Exceptions will be thrown in case the input does not have the proper format.
-     * Returns an empty optional if there is nothing to parse anymore.
+     * @param input representing the results from the git command
+     * @return a commit object or an empty optional if there is nothing to parse anymore.
      */
     public static Optional<Commit> parseCommit(BufferedReader input) {
         try {
@@ -211,11 +276,17 @@ public class Commit {
         return Optional.empty(); // this is supposed to be unreachable, as parseError should never return
     }
 
-    // Helper function for generating parsing exceptions. This function *always* quits on an exception. It *never* returns.
+    /**
+     * Helper function for generating parsing exceptions. This function *always* quits on an exception. It *never* returns.
+     */
     private static void parseError() {
         throw new RuntimeException("Wrong commit format.");
     }
 
+    /**
+     * Change the <b>Commit</b> to a JSON formatted String
+     * @return  a string that contains the <b>Commit</b> with its parameters
+     */
     @Override
     public String toString() {
         return "Commit{" +
