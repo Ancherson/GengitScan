@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Counts the number of lines added or deleted for each different author of the git project.
+ */
 public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 	 private final Configuration configuration;
 	    private Result result;
@@ -18,15 +21,25 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 	    private boolean sortLineAdded;
 	    private boolean allBranches;
 
+		/**
+		 * Constructor
+		 * @param generalConfiguration stores the path of the git project to analyze
+		 * @param sortLineAdded if true, the plugin will count the lines added, if false, it will count the lines deleted
+		 * @param allBranches if true, the result will be computed on all the branches of the git project, if false, just on the current branch
+		 */
 	    public CountLinesPerAuthorPlugin(Configuration generalConfiguration, boolean sortLineAdded, boolean allBranches) {
 	        this.configuration = generalConfiguration;
 	        this.sortLineAdded = sortLineAdded;
 	        this.allBranches = allBranches;
 	    }
 
+		/**
+		 * Goes through a list of commits in order to count the number of the lines added or deleted per author.
+		 * @param gitLog a list of commits
+		 * @return a Result object which contains a HashMap which links authors to the number of lines they have added/deleted in total
+		 */
 	    public Result processLog(List<Commit> gitLog) {
 	        var result = new Result();
-	        result.sortLineAdded = this.sortLineAdded;
 	        Map<String,String>emailToName = new HashMap<String,String>();
 	        for (var commit : gitLog) {
 	        	// I decide to not count the line added/deleted from the merged commit
@@ -57,20 +70,21 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 	        result = processLog(Commit.parseLogFromCommand(configuration.getGitPath(), allBranches));
 	    }
 
+
 	    @Override
 	    public Result getResult() {
 	        if (result == null) run();
 	        return result;
-	    }
-
+		}
+		
+		/**
+		 * Stores the number of lines added or deleted for each author, and manages how this data is outputted.
+		 */
 	    public class Result implements AnalyzerPlugin.Result {
-	        private final Map<String, Integer> linesPerAuthor = new HashMap<>();
-	        private boolean sortLineAdded;
-	        
-
-	        Map<String, Integer> getLinesPerAuthor () {
-	            return linesPerAuthor;
-	        }
+			/**
+			 * Links the authors to the number of lines they have added or deleted.
+			 */
+			private final Map<String, Integer> linesPerAuthor = new HashMap<>();
 
 	        @Override
 	        public String getResultAsString() {
@@ -86,16 +100,21 @@ public class CountLinesPerAuthorPlugin implements AnalyzerPlugin{
 	            html.append("</ul></div>");
 	            return html.toString();
 	        }
-	        
+
 	        @Override
 	        public void getResultAsHtmlDiv(WebGen wg) {
 				ArrayList<String> labels = new ArrayList<String>();
 				ArrayList<Integer> data = new ArrayList<Integer>();
 				for (var item : linesPerAuthor.entrySet()) {
-					labels.add(item.getKey());
+					String[] nameTab = item.getKey().split(" ");
+	            	String name = "";
+	            	for(int i=0; i<nameTab.length-1; i++) {
+	            		name += nameTab[i] + " ";
+	            	}
+					labels.add(name);
 					data.add(item.getValue());
 				}
-				wg.addChart("bar", sortLineAdded ? "Lines Added" : "Lines Deleted", labels, data);
+				wg.addChart("bar", "Number of lines "+(sortLineAdded ? "added" : "deleted")+" per member", sortLineAdded ? "Lines Added" : "Lines Deleted", labels, data);
 	        }
 	    }
 }

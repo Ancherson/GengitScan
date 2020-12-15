@@ -6,14 +6,27 @@ import up.visulog.webgen.WebGen;
 
 import java.util.*;
 
+/**
+ * Counts the number of comments for each different member of a GitLab project.
+ * Comments include the comments under the issues but also other traces of activity such as a change of label on an issue
+ */
 public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
     private final Configuration configuration;
     private Result result;
 
+    /**
+     * Constructor
+     * @param generalConfiguration stores the id and private token of the GitLab project to analyze
+     */
     public CountCommentsPerAuthorPlugin(Configuration generalConfiguration) {
         this.configuration = generalConfiguration;
     }
 
+    /**
+     * Goes through a collection of comments in order to count the number of comments for each author.
+     * @param commentsLog a collection of comments
+     * @return a Result object which contains a HashMap which links authors to the number of comments they have done
+     */
     static Result processLog(Collection<Comments> commentsLog) {
         var result = new Result();
         for (var comments : commentsLog) {
@@ -54,10 +67,20 @@ public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
         return result;
     }
 
+    /**
+     * Stores the number of comments for each author, and manages how this data is outputted.
+     */
     static class Result implements AnalyzerPlugin.Result {
+        /**
+         * Links the authors to the number of comments they have done.
+         */
         private final Map<String, Integer> commentPerAuthor = new HashMap<>();
 
-        Map<String, Integer> getCommitsPerAuthor() {
+        /**
+         * Returns a Map with the authors in key and the number of comments in value
+         * @return a Map with the authors in key and the number of comments in value
+         */
+        Map<String, Integer> getCommentsPerAuthor() {
             return commentPerAuthor;
         }
 
@@ -86,7 +109,7 @@ public class CountCommentsPerAuthorPlugin implements AnalyzerPlugin {
                 numberOfComments.add(item.getValue());
         	}
 
-            wg.addChart("bar", "Number of comments", authorOfComment, numberOfComments);
+            wg.addChart("bar", "Number of comments per member", "Number of comments", authorOfComment, numberOfComments);
         }
     }
 }

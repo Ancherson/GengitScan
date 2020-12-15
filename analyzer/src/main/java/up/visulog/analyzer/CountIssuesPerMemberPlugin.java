@@ -6,14 +6,34 @@ import up.visulog.webgen.WebGen;
 
 import java.util.*;
 
+/**
+ * This class represents the plugin that counts the number of assigned gitlab issue per member of the git project
+ *
+ */
 public class CountIssuesPerMemberPlugin implements AnalyzerPlugin {
+	/**
+	 * General configuration of the plugin
+	 */
     private final Configuration configuration;
+    
+    /**
+	 * This is where the result is stored
+	 */
     private Result result;
-
+    
+    /**
+     * Constructor
+     * @param generalConfiguration
+     */
     public CountIssuesPerMemberPlugin(Configuration generalConfiguration) {
         this.configuration = generalConfiguration;
     }
 
+    /**
+     * Calculate the number of gitlab issues per member and return the result of the plugin
+     * @param assigneesLog the collection of the issues assignees
+     * @return the result of the plugin
+     */
     static Result processLog(Collection<Assignees> assigneesLog) {
         var result = new Result();
         for (var assignees : assigneesLog) {
@@ -43,10 +63,20 @@ public class CountIssuesPerMemberPlugin implements AnalyzerPlugin {
         return result;
     }
 
+    /**
+     * This class store the result of the plugin
+     */
     static class Result implements AnalyzerPlugin.Result {
+    	/**
+    	 * This HashMap associate for each members of the project, the number of assigned gitlab issue
+    	 */
         private final Map<String, Integer> issuesPerMember = new HashMap<>();
 
-        Map<String, Integer> getCommitsPerAuthor() {
+        /**
+         * Returns the HashMap that associate for each members of the project, the number of assigned gitlab issue
+         * @return the HashMap that associate for each members of the project, the number of assigned gitlab issue
+         */
+        Map<String, Integer> getIssuesPerMember() {
             return issuesPerMember;
         }
 
@@ -74,7 +104,7 @@ public class CountIssuesPerMemberPlugin implements AnalyzerPlugin {
                 members.add(item.getKey());
                 numberOfIssues.add(item.getValue());
             }
-            wg.addChart("bar", "Number of issues", members, numberOfIssues);
+            wg.addChart("bar", "Number of issues per member", "Number of issues", members, numberOfIssues);
         }
     }
 }

@@ -21,3 +21,4 @@ public class TestCLILauncher {
         assertFalse(config2.isPresent());
     }
 }
+

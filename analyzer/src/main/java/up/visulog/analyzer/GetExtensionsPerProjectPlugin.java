@@ -6,14 +6,26 @@ import up.visulog.webgen.WebGen;
 
 import java.util.*;
 
+/**
+ * Counts the percentage of each file extension of a GitLab project.
+ */
 public class GetExtensionsPerProjectPlugin implements AnalyzerPlugin {
     private final Configuration configuration;
     private Result result;
 
+    /**
+     * Constructor
+     * @param generalConfiguration stores the id and private token of the GitLab project to analyze
+     */
     public GetExtensionsPerProjectPlugin(Configuration generalConfiguration) {
         this.configuration = generalConfiguration;
     }
 
+    /**
+     * Generates a result object in order to store the percentages of the extensions.
+     * @param extensionsLog a HashMap which links the name of the extensions to their percentage
+     * @return a Result object which contains a HashMap which links the name of the extensions to their percentage
+     */
     static Result processLog(HashMap<String,Double> extensionsLog) {
             Result result = new Result();
             result.extensionsResult = extensionsLog;
@@ -35,9 +47,16 @@ public class GetExtensionsPerProjectPlugin implements AnalyzerPlugin {
         return result;
     }
 
+    /**
+     * Stores the percentage of each extension, and manages how this data is outputted.
+     */
     static class Result implements AnalyzerPlugin.Result {
         private HashMap<String, Double> extensionsResult  = new HashMap<>();
 
+        /**
+         * Returns the result of the plugin
+         * @return the result of the plugin
+         */
         HashMap<String, Double> getExtensionsResult() {
             return extensionsResult;
         }
@@ -67,7 +86,7 @@ public class GetExtensionsPerProjectPlugin implements AnalyzerPlugin {
                 percentage.add(item.getValue());
             }
 
-            wg.addChartDouble("pie", "Number of comments", extension, percentage);
+            wg.addChartDouble("pie", "Percentage of each extension", "Percentage of each extension", extension, percentage);
         }
     }
 }

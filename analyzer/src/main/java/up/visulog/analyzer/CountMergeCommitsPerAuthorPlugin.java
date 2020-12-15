@@ -9,14 +9,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Counts the number of merge commits (the commits that merge a branch into another) for each different author of the git project.
+ */
 public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
     private final Configuration configuration;
     private Result result;
 
+    /**
+     * Constructor
+     * @param generalConfiguration stores the path of the git project to analyze
+     */
     public CountMergeCommitsPerAuthorPlugin(Configuration generalConfiguration) {
         this.configuration = generalConfiguration;
     }
 
+    /**
+     * Goes through a list of commits in order to count the number of merge commits for each author.
+     * @param gitLog a list of commits
+     * @return a Result object which contains a HashMap which links authors to the number of merge commits they have done
+     */
     static Result processLog(List<Commit> gitLog) {
         var result = new Result();
         Map<String,String>emailToName = new HashMap<String,String>();
@@ -49,10 +61,20 @@ public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
         return result;
     }
 
+    /**
+     * Stores the number of merge commits for each author, and manages how this data is outputted.
+     */
     static class Result implements AnalyzerPlugin.Result {
+        /**
+         * Links the authors to the number of merge commits they have done.
+         */
         private final Map<String, Integer> mergeCommitsPerAuthor = new HashMap<>();
 
-        Map<String, Integer> getCommitsPerAuthor() {
+        /**
+         * Get a Map with the authors in key and the number of merge commits in value
+         * @return a Map with the authors in key and the number of merge commits in value
+         */
+        Map<String, Integer> getMergeCommitsPerAuthor() {
             return mergeCommitsPerAuthor;
         }
 
@@ -76,10 +98,15 @@ public class CountMergeCommitsPerAuthorPlugin implements AnalyzerPlugin {
             ArrayList<String> labels = new ArrayList<String>();
             ArrayList<Integer> data = new ArrayList<Integer>();
             for(var item : mergeCommitsPerAuthor.entrySet()){
-                labels.add(item.getKey());
+            	String[] nameTab = item.getKey().split(" ");
+            	String name = "";
+            	for(int i=0; i<nameTab.length-1; i++) {
+            		name += nameTab[i] + " ";
+            	}
+                labels.add(name);
                 data.add(item.getValue());
             }
-            wg.addChart("bar", "Number of merge commits", labels, data);
+            wg.addChart("bar", "Number of merge commits per member", "Number of merge commits", labels, data);
         }
     }
 }

@@ -8,15 +8,34 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * This class is the core of the analysis of the git data
+ * Create and execute all the plugins that are in the configuration
+ */
+
 public class Analyzer {
+	/**
+	 * <b>config</b> contains the list of plugin that we need to create and execute
+	 */
     private final Configuration config;
 
+    /**
+     * <b>result</b> will contains the results of the plugins at the end of the execution
+     */
     private AnalyzerResult result;
 
+    /**
+     * Construct the Analyzer
+     * @param config the configuration of the analysis which contains the list of plugins
+     */
     public Analyzer(Configuration config) {
         this.config = config;
     }
 
+    /**
+     * computeResults creates the plugins, execute them, and store the results in <b>result</b>
+     * @return the list of results of all the plugin
+     */
     public AnalyzerResult computeResults() {
         List<AnalyzerPlugin> plugins = new ArrayList<>();
         for (var pluginConfigEntry: config.getPluginConfigs().entrySet()) {
@@ -51,7 +70,12 @@ public class Analyzer {
         return new AnalyzerResult(plugins.stream().map(AnalyzerPlugin::getResult).collect(Collectors.toList()));
     }
 
-    // TODO: find a way so that the list of plugins is not hardcoded in this factory
+    /**
+     * makePlugin create the plugin which corresponds with <b>pluginName</b>
+     * @param pluginName is the name of the plugin
+     * @param pluginConfig is totally useless
+     * @return the <b>AnalyzerPlugin</b> which corresponds with <b>pluginName</b>
+     */
     private Optional<AnalyzerPlugin> makePlugin(String pluginName, PluginConfig pluginConfig) {
         switch (pluginName) {
             case "countCommits" : return Optional.of(new CountCommitsPerAuthorPlugin(config, false));
@@ -84,6 +108,7 @@ public class Analyzer {
             case "countLinesDeletedPerWeeksForAllBranches" : return Optional.of(new CountLinesPerDatePlugin(config, "weeks", false, true));
             
             case "getExtensions" : return Optional.of(new GetExtensionsPerProjectPlugin(config));
+
         
             case "countLinesAdded" : return Optional.of(new CountLinesPerAuthorPlugin(config, true, false));
             case "countLinesAddedForAllBranches" : return Optional.of(new CountLinesPerAuthorPlugin(config, true, true));
@@ -102,6 +127,15 @@ public class Analyzer {
             case "countLinesDeletedPerAuthorPerWeeksForAllBranches": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "weeks", false, true));
             case "countLinesDeletedPerAuthorPerMonths": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "months", false, false));
             case "countLinesDeletedPerAuthorPerMonthsForAllBranches": return Optional.of(new CountLinesPerAuthorPerDatePlugin(config, "months", false, true));
+
+            
+            case "countCommitsPerAuthorPerDays" : return Optional.of(new CountCommitsPerAuthorPerDatePlugin(config, "days", false));
+            case "countCommitsPerAuthorPerDaysForAllBranches" : return Optional.of(new CountCommitsPerAuthorPerDatePlugin(config, "days", true));
+            case "countCommitsPerAuthorPerMonths" : return Optional.of(new CountCommitsPerAuthorPerDatePlugin(config, "months", false));
+            case "countCommitsPerAuthorPerMonthsForAllBranches" : return Optional.of(new CountCommitsPerAuthorPerDatePlugin(config, "months", true));
+            case "countCommitsPerAuthorPerWeeks" : return Optional.of(new CountCommitsPerAuthorPerDatePlugin(config, "weeks", false));
+            case "countCommitsPerAuthorPerWeeksForAllBranches" : return Optional.of(new CountCommitsPerAuthorPerDatePlugin(config, "weeks", true));
+
             
             case "countContribution" : return Optional.of(new CountContributionPlugin(config));
             default : return Optional.empty();
