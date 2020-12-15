@@ -17,10 +17,9 @@ public class Configuration {
     private int idIssue;
 
     /**
-     *
+     * This constructor was made for plugins that use git command to get Result
      * @param gitPath The path of the git repository in local
      * @param plugins plugins that are going to be executed
-     * this constructor was made for plugins that use git command to get Result
      */
     public Configuration(Path gitPath, Map<String, PluginConfig> plugins) {
         this.gitPath = gitPath;
@@ -28,12 +27,11 @@ public class Configuration {
     }
 
     /**
-     *
+     * this constructor was made for plugins that use API
      * @param privateToken privateToken in order to auth to the git repository that you want to analyse
      * @param plugins plugins that are going to be executed
      * @param idProject id of the project that you want to analyse
      * @param idIssue id of issue that you want to analyse (it was made if you wanted to get comments in only one issue)
-     * this constructor was made for plugins that use API
      */
     public Configuration(String privateToken,Map<String, PluginConfig> plugins,int idProject,int idIssue){
         this.privateToken = privateToken;
@@ -43,12 +41,11 @@ public class Configuration {
     }
 
     /**
-     *
+     * This is the main constructor because we can use both plugins that use API and others with command
      * @param gitPath The path of the git repository in local
      * @param privateToken privateToken in order to auth to the git repository that you want to analyse
      * @param plugins plugins that are going to be executed
      * @param idProject id of the project that you want to analyse
-     * this is the main constructor because we can use both plugins that use API and others with command
      */
     public Configuration(Path gitPath,String privateToken,Map<String, PluginConfig> plugins,int idProject){
         this.gitPath = gitPath;
@@ -58,18 +55,17 @@ public class Configuration {
     }
 
     /**
-     *
+     * This constructor was made for plugins that use API
      * @param privateToken privateToken in order to auth to the git repository that you want to analyse
      * @param plugins plugins that are going to be executed
      * @param idProject id of the project that you want to analyse
-     * tthis constructor was made for plugins that use API
      */
     public Configuration(String privateToken,Map<String, PluginConfig> plugins,int idProject){
         this(privateToken,plugins,idProject,-1);
     }
 
     /**
-     *
+     * return the id of the issue that we want to analyse
      * @return the id of the issue that we want to analyse
      */
     public int getIdIssue() {
@@ -77,7 +73,7 @@ public class Configuration {
     }
 
     /**
-     *
+     * return the id of the project that we want to analyse
      * @return the id of the project that we want to analyse
      */
     public int getIdProject() {
@@ -85,7 +81,7 @@ public class Configuration {
     }
 
     /**
-     *
+     * return a map of plugins that we re going to execute
      * @return a map of plugins that we re going to execute
      */
     public Map<String, PluginConfig> getPlugins() {
@@ -93,7 +89,7 @@ public class Configuration {
     }
 
     /**
-     *
+     * return your private token as String that you use to auth in a project
      * @return your private token as String that you use to auth in a project
      */
     public String getPrivateToken() {
@@ -101,7 +97,7 @@ public class Configuration {
     }
 
     /**
-     *
+     * return the path of the git repository in your local pc
      * @return the path of the git repository in your local pc
      */
     public Path getGitPath() {
@@ -109,7 +105,7 @@ public class Configuration {
     }
 
     /**
-     *
+     * return a map of plugins that we re going to execute
      * @return a map of plugins that we re going to execute
      */
     public Map<String, PluginConfig> getPluginConfigs() {
