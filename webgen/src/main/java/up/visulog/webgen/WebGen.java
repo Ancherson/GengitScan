@@ -39,7 +39,7 @@ public class WebGen {
 				.__()
 				.body();
 	/**
-	 * Adds to the body the list of the authors linked with and Integer 
+	 * Adds to the body the list of the authors linked with an Integer 
 	 * @param list A map which contains the name of the authors linked with an Integer
 	 * @param title A String of the title of the graph
 	 */
