@@ -161,7 +161,7 @@ public class WebGen {
 	}
 
 	/**
-	 * Adds a barchart with its title
+	 * Adds a stacked bar chart with its title
 	 * this graph contains the data compared with the labels
 	 * @param title A String of the title of the graph
 	 * @param labels An ArrayList of String of labels
