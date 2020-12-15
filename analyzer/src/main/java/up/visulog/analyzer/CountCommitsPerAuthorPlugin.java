@@ -9,16 +9,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Counts the number of commits for each different author of the git project.
+ */
 public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
     private final Configuration configuration;
     private Result result;
     private boolean allBranches;
 
+    /**
+     * Constructor
+     * @param generalConfiguration stores the path of the git project to analyze
+     * @param allBranches if true, the result will be computed on all the branches of the git project, if false, just on the current branch
+     */
     public CountCommitsPerAuthorPlugin(Configuration generalConfiguration, boolean allBranches) {
         this.configuration = generalConfiguration;
         this.allBranches = allBranches;
     }
 
+    /**
+     * Goes through a list of commits in order to count the number of commits for each author whose commits appear in the list.
+     * @param gitLog a list of commits
+     * @return a Result object which contains a HashMap which links authors to the number of commits they have done
+     */
     static Result processLog(List<Commit> gitLog) {
         var result = new Result();
         Map<String,String>emailToName = new HashMap<String,String>();
@@ -49,9 +62,19 @@ public class CountCommitsPerAuthorPlugin implements AnalyzerPlugin {
         return result;
     }
 
+    /**
+     * Stores the number of commits for each author, and manages how this data is outputted.
+     */
     static class Result implements AnalyzerPlugin.Result {
+        /**
+         * Links the authors to the number of commits they have done.
+         */
         private final Map<String, Integer> commitsPerAuthor = new HashMap<>();
 
+        /**
+         * Returns a Map with the authors in key and the number of commits in value
+         * @return a Map with the authors in key and the number of commits in value
+         */
         Map<String, Integer> getCommitsPerAuthor() {
             return commitsPerAuthor;
         }
