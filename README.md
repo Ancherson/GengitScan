@@ -51,12 +51,7 @@ GenGit Scan contains the following modules:
     ```
     cd visulog
     ```
-3. Only if you are on a SCRIPT computer (in one of the TP rooms):
-    ```
-    source SCRIPT/envsetup
-    ```
-    This will setup the GRADLE_OPTS environment variable so that gradle uses the SCRIPT proxy for downloading its dependencies. It will also use a custom trust store (the one installed in the system is apparently broken... ).
-4. run gradle wrapper (it will download all dependencies, including gradle itself)
+3. run gradle wrapper (it will download all dependencies, including gradle itself)
     ```
     ./gradlew build
     ```
@@ -67,6 +62,7 @@ The easiest way to run the project is by using the GUI. You'll only have to run 
 ./gradlew run
 ```
 The program will then proceed to show a graphical interface, asking for the path of the project you want to examine, and then the plugins you want to use.
+If you are using a plugin that necessitate the use of the GitLab API, you'll have to provide the Project ID as well as the Private Token, that can be found on the GitLab project.
 
 The program can also be executed by giving the arguments without using the GUI, to do so you need to pass them behind `--args`:
 ```
