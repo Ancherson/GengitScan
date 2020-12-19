@@ -19,17 +19,29 @@ import javax.swing.LayoutStyle;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
-
+/**
+ * A JPanel that will be the last window:
+ * -show the actual <b>command line</b>, it can be selected and copied
+ * -ask if the user want to execute the program or add other plugins
+  */
 public class CliMenuLast extends JPanel{
-	private JTextPane JCommande = new JTextPane();
+	private JTextPane JCommande = new JTextPane(); //contains the actual command line
 	private CLIMenu CLIM;
 	private JPanel panelMain;
 	private JPanel panelCommande;
 	
+	/**
+	 * Method to set the text inside the JTextPane
+	 */
 	public void setCommande(String line) {
 		this.JCommande.setText(line);
 	}
 	
+	/**
+	 * Function that create your MenuPlugin window
+	 * @param CLIM is the GUI that contains <b>CliMenuPath</b> and the <b>Command line</b>
+	 */
+
 	public CliMenuLast(CLIMenu CLIM) {
 		this.CLIM = CLIM;
 		
@@ -39,7 +51,7 @@ public class CliMenuLast extends JPanel{
 		
 		GridLayout g = new GridLayout(4,1);
 		g.setHgap(10);
-		panelMain = new JPanel(g);
+		panelMain = new JPanel(g);// Panel that will be the window showed
 		panelMain.setBackground(Color.white);
 		//panelMain.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		panelMain.setBounds(50, 30, 600, 400);
@@ -49,7 +61,7 @@ public class CliMenuLast extends JPanel{
 		execute.setBackground(new Color(180, 211, 212));
 		JButton addNewPlugin = new JButton("Add Other Plugin");
 		addNewPlugin.setBackground(new Color(180, 211, 212));
-		execute.addActionListener((event) -> {
+		execute.addActionListener((event) -> { // when the button execute is pressed launch the program
 			try {
 				CLIM.launch();
 			} catch (IOException e) {
@@ -58,22 +70,22 @@ public class CliMenuLast extends JPanel{
 				e.printStackTrace();
 			}
 		});
-		addNewPlugin.addActionListener((event) -> CLIM.changeToCliPlugin());
+		addNewPlugin.addActionListener((event) -> CLIM.changeToCliPlugin()); //when button addNewPlugin pressed go to Menu plugin
 		
-		JPanel panel1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20));
+		JPanel panel1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20));//Panel containing execute button
 		panel1.setBackground(Color.white);
 		execute.setPreferredSize(new Dimension(240,50));
 		execute.setFont(new Font("Monica", Font.PLAIN, 20));
 		panel1.add(execute);
 		
-		JPanel panel2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20));
+		JPanel panel2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20));//Panel containing addNewPlugin button
 		panel2.setBackground(Color.white);
 		addNewPlugin.setPreferredSize(new Dimension(240,50));
 		addNewPlugin.setFont(new Font("Monica", Font.PLAIN, 20));
 		panel2.add(addNewPlugin);
 		
 		JLabel subTitle = new JLabel("your command :");
-		JPanel panelTitle = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
+		JPanel panelTitle = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));//Panel containing the Label
 		panelTitle.setSize(30, 10);
 		panelTitle.setBackground(Color.white);
 		panelTitle.add(subTitle);
@@ -85,7 +97,7 @@ public class CliMenuLast extends JPanel{
 
 		
 		
-		panelCommande = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		panelCommande = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0)); //Panel containing the command line
 		panelCommande.setLayout(new BorderLayout());
 		panelCommande.setBackground(Color.white);
 		panelCommande.add(JCommande, BorderLayout.NORTH);

@@ -7,14 +7,20 @@ import java.net.URISyntaxException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/**
+ * This Class is the core of the GUI, it's the JFrame where all the other JPanel will be showed
+ * */
+
 public class CLIMenu extends JFrame {
 	private String projectID;
 	private String privateToken;
-	private String commande = "";
+
+	private String commande = ""; 	//the commande line that is written by the GUI
 	
 	private JPanel mainPanel;
 	
-	private CliMenuPath menuPath;
+
+	private CliMenuPath menuPath; 	//All the Jpanel that can be showed when using the GUI
 	private CliMenuPlugin menuPlugin;
 	private CliMenuParameter menuParameter;
 	private CliMenuLast menuLast;
@@ -33,7 +39,9 @@ public class CLIMenu extends JFrame {
 		
 		cardLayout = new CardLayout();
 		mainPanel = new JPanel(cardLayout);
+		//The mainPanel will contain all the other JPanel defined in the Class
 		
+		//We add all the JPanel that might be of use
 		menuPath = new CliMenuPath(this);
 		mainPanel.add("menuPath", menuPath);
 		menuPlugin = new CliMenuPlugin(this);
@@ -48,6 +56,13 @@ public class CLIMenu extends JFrame {
 		
 		this.setVisible(true);
 	}
+	
+	
+	
+	/**
+	 * All the method which names start by "add" literally add a String properly in the command line
+	 * It's the way we build the command line when the GUI is being used
+	 * */
 	
 	public void addPath(String path) {
 		commande += path;
@@ -69,9 +84,23 @@ public class CLIMenu extends JFrame {
 	}
 	
 	
-
+	/**
+	 * All the method that start with "changeTo" will swap the JPanel showed to the designed JPanel
+	 * By doing so they will resize the window and so on to have a nice and tidy GUI
+	 * */
 	
 	
+	public void changeToCliPlugin() {
+		this.setSize(1200,500);
+		cardLayout.show(mainPanel, "menuPlugin");
+	}
+	
+	
+	/**
+	 * This method change to the panel CliMenuParameter
+	 * @param result is the name of the plugin
+	 * @param version define what page should be showed (there are 2 versions)
+	  */
 	public void changeToCliPara(String result,  boolean version) {
 		if( !version && privateToken == null && projectID == null) {		
 			menuParameter = new CliMenuParameter(this, result, version);
@@ -91,10 +120,6 @@ public class CLIMenu extends JFrame {
 		
 	}
 	
-	public void changeToCliPlugin() {
-		this.setSize(1200,500);
-		cardLayout.show(mainPanel, "menuPlugin");
-	}
 	
 	public void changeToMenuLast() {
 		this.setSize(700,500);
@@ -102,10 +127,13 @@ public class CLIMenu extends JFrame {
 		cardLayout.show(mainPanel, "menuLast");
 	}
 	
+	
+	/**
+	 * A simple method that run the program when the use of the GUI is over
+	 */
+	
 	public void launch() throws IOException, URISyntaxException {
-		System.out.println(commande);
 		this.dispose();
-		//TODO add a waiting screen (place dispose after "CLILauncher.launch(commande.split(" "));"
 		CLILauncher.launch(commande.split(" "));
 
 	}

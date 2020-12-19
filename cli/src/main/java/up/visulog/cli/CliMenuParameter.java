@@ -7,6 +7,9 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+/**
+ * A JPanel that will present a convenient way to select the plugin you want to launch
+  */
 public class CliMenuParameter extends JPanel {
 	private CLIMenu CLIM;
 	private String result;
@@ -29,10 +32,20 @@ public class CliMenuParameter extends JPanel {
 	private JTextField projectId = new JTextField();
 	private JTextField privateToken = new JTextField();
 
-	
+	/**
+	 * 	 * Function that create your MenuPlarameter window
+	 * @param CLIM is the GUI that contains <b>CliMenuPath</b> and the <b>Command line</b>
+	 * @param pluginName is the name of the plugin selected in the <b>MenuPlugin</b>
+	 * @param version :
+	 * -True means the non-API with parameters plugin (Lines added/deleted + count commits)
+	 * -False means the API plugins
+	 */
+
+
 	public CliMenuParameter(CLIMenu CLIM, String pluginName,boolean version) {
 		this.version = version;
 		this.CLIM = CLIM;
+		result = pluginName;
 		
 		none.setFont(new Font("Monica", Font.PLAIN, 15));
 		none.setHorizontalAlignment(0);
@@ -69,12 +82,11 @@ public class CliMenuParameter extends JPanel {
 		title.setFont(new Font("Monica", Font.PLAIN, 20));
 		panelMain.add(title);
 
-		if(version) {
-			result = pluginName;
+		if(version) {// The first version (true one) of the window, the version for the non-API plugins
 			
 			GridLayout g1 = new GridLayout(1,4);
 			g1.setHgap(20);
-			JPanel date = new JPanel(g1);
+			JPanel date = new JPanel(g1); //Panel with all the date related Radio button
 			date.setBackground(Color.white);
 			panelMain.add(date);
 			
@@ -85,13 +97,12 @@ public class CliMenuParameter extends JPanel {
 			
 			GridLayout g2 = new GridLayout(1,2);
 			g1.setHgap(60);
-			JPanel options = new JPanel(g2);
+			JPanel options = new JPanel(g2); //Panel with the two check box button
 			options.setBackground(Color.white);
 			panelMain.add(options);
 			options.add(perAuthor);
 			options.add(forAllBranches);
-		} else {
-			result = pluginName;
+		} else {// Second version (false one) of the window, the version for the API plugins
 			
 			GridLayout g = new GridLayout(4,1);
 			g.setVgap(30);
@@ -99,7 +110,8 @@ public class CliMenuParameter extends JPanel {
 			
 			GridLayout g1 = new GridLayout(1,2);
 			g1.setHgap(60);
-			JPanel panelID = new JPanel(g1);
+			JPanel panelID = new JPanel(g1);//Panel containing the text filed for the project ID
+			
 			panelID.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 			panelID.setBackground(Color.white);
 			
@@ -108,7 +120,7 @@ public class CliMenuParameter extends JPanel {
 			panelID.add(projectId);
 			panelMain.add(panelID);
 			
-			JPanel panelToken = new JPanel(g1);
+			JPanel panelToken = new JPanel(g1);//Panel containing the text field for the private token
 			panelToken.setBackground(Color.white);
 			
 			JLabel subtitle2 = makeBeautifulLabel("Private Token :");
@@ -117,7 +129,7 @@ public class CliMenuParameter extends JPanel {
 			panelMain.add(panelToken);
 		}
 		
-		GridLayout g3 = new GridLayout(1,2);
+		GridLayout g3 = new GridLayout(1,2); //Panel containing the submit and back button
 		g3.setHgap(50);
 		JPanel button = new JPanel(g3);
 		button.setBackground(Color.white);
@@ -125,12 +137,11 @@ public class CliMenuParameter extends JPanel {
 		button.add(submit);
 		panelMain.add(button);
 		
-		back.addActionListener((event) -> {
+		back.addActionListener((event) -> { //Button that allows you to go back to the Menu plugin
 			CLIM.changeToCliPlugin();
 		});
 		
 		submit.addActionListener((event) -> {
-			//this.dispose();
 			try {
 				submitMethode();
 			} catch (IOException e) {
@@ -140,18 +151,27 @@ public class CliMenuParameter extends JPanel {
 		}});
 	}
 	
-	
+	/**Our plugins names were a bit awkward, by default Lines added/deleted and countCommits are perAuthors. 
+   	 * So plugins like LinesAddedAerAuthor without date doesn't exist by default.
+	 * perAuthor button can be used when a date button is selected
+	 */
 	public void DateIsSelected() {
 		perAuthor.setEnabled(true);
 		perAuthor.setFont(new Font("Monica", Font.PLAIN, 15));
 	}
-	
+	/**
+	 * If the non date button is selected you can't use the perAuthor button
+	 */
 	public void NoDate() {
 		perAuthor.setSelected(true);
 		perAuthor.setEnabled(false);
 		perAuthor.setFont(new Font("Monica", Font.ITALIC, 15));
 	}
 	
+	/**
+	 * Create Radio buttons with the same properties
+	 * @param name is the name of the Radio button
+	 */
 	public JRadioButton makeBeautifulRadioButton(String s) {
 		JRadioButton res = new JRadioButton(s);
 		res.setFont(new Font("Monica", Font.PLAIN, 15));
@@ -162,19 +182,32 @@ public class CliMenuParameter extends JPanel {
 		return res;
 	}
 	
-	
+	/**
+	 * Create buttons with the same properties
+	 * @param name is the name of the button
+	 */
 	public JButton makeABeautifulButton(String name) {
 		JButton b = new JButton(name);
 		b.setBackground(new Color(180, 211, 212));
 		return b;
 	}
 	
+	/**
+	 * Create Label with the same properties
+	 * @param name is the name of the Label
+	 */
 	public JLabel makeBeautifulLabel(String s) {
 		JLabel res = new JLabel(s, 0);
 		res.setFont(new Font("Monica", Font.PLAIN, 15));
 		return res;
 	}
 	
+	/**
+	 * Method executed when <b>Submit</b> button is pressed
+	 * given the version of the window it will get the value of the buttons
+	 * and add it to the <b>command</b> of <b>CLIM</b>.
+	 * It will then swap the window to the Last menu
+	 */
 	
 	public void submitMethode() throws IOException, URISyntaxException{
 		if(version) {
