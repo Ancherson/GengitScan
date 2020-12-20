@@ -36,9 +36,9 @@ public class CliMenuParameter extends JPanel {
 	 * 	 * Function that create your MenuPlarameter window
 	 * @param CLIM is the GUI that contains <b>CliMenuPath</b> and the <b>Command line</b>
 	 * @param pluginName is the name of the plugin selected in the <b>MenuPlugin</b>
-	 * @param version :
-	 * -True means the non-API with parameters plugin (Lines added/deleted + count commits)
-	 * -False means the API plugins
+	 * @param version <p> two possibilities :<br/>
+	 * -True means the non-API with parameters plugin (Lines added/deleted + count commits)<br/>
+	 * -False means the API plugins</p>
 	 */
 
 
@@ -171,9 +171,10 @@ public class CliMenuParameter extends JPanel {
 	/**
 	 * Create Radio buttons with the same properties
 	 * @param name is the name of the Radio button
+	 * @return A JRadioButton
 	 */
-	public JRadioButton makeBeautifulRadioButton(String s) {
-		JRadioButton res = new JRadioButton(s);
+	public JRadioButton makeBeautifulRadioButton(String name) {
+		JRadioButton res = new JRadioButton(name);
 		res.setFont(new Font("Monica", Font.PLAIN, 15));
 		res.setHorizontalAlignment(0);
 		res.setOpaque(false);
@@ -185,6 +186,7 @@ public class CliMenuParameter extends JPanel {
 	/**
 	 * Create buttons with the same properties
 	 * @param name is the name of the button
+	 * @return a JButton
 	 */
 	public JButton makeABeautifulButton(String name) {
 		JButton b = new JButton(name);
@@ -194,10 +196,11 @@ public class CliMenuParameter extends JPanel {
 	
 	/**
 	 * Create Label with the same properties
-	 * @param name is the name of the Label
+	 * @param name is the Text of the Label
+	 * @return a JLabel
 	 */
-	public JLabel makeBeautifulLabel(String s) {
-		JLabel res = new JLabel(s, 0);
+	public JLabel makeBeautifulLabel(String name) {
+		JLabel res = new JLabel(name, 0);
 		res.setFont(new Font("Monica", Font.PLAIN, 15));
 		return res;
 	}

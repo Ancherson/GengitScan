@@ -59,25 +59,36 @@ public class CLIMenu extends JFrame {
 	
 	
 	
+	/*
+	 All the method which names start by "add" literally add a String properly in the command line
+	 It's the way we build the command line when the GUI is being used */
 	/**
-	 * All the method which names start by "add" literally add a String properly in the command line
-	 * It's the way we build the command line when the GUI is being used
-	 * */
-	
+	 * add the path parameter to the <b>Command line</b>
+	 * @param path of the project
+	 */
 	public void addPath(String path) {
 		commande += path;
 	}
-	
+	/**
+	 * add the plugin with parameters to the <b>Command line</b>
+	 * @param R the String of the plugin
+	 */
 	public void addPlugin(String R) {
 		if(commande.length() == 0) commande = "--addPlugin="+R;
 		else commande = commande + " --addPlugin=" + R;
 	}
-	
+	/**
+	 * add the private Token parameter to the <b>Command line</b>
+	 * @param token String of the token
+	 */
 	public void addPrivateToken(String token) {
 		this.privateToken = token;
 		commande = commande + " --privateToken=" + token;
 	}
-	
+	/**
+	 * add the project ID parameter to the <b>Command line</b>
+	 * @param ID String of the project ID
+	 */
 	public void addProjectID(String ID) {
 		this.projectID = ID;
 		commande = commande + " --projectId=" + ID;
@@ -88,8 +99,6 @@ public class CLIMenu extends JFrame {
 	 * All the method that start with "changeTo" will swap the JPanel showed to the designed JPanel
 	 * By doing so they will resize the window and so on to have a nice and tidy GUI
 	 * */
-	
-	
 	public void changeToCliPlugin() {
 		this.setSize(1200,500);
 		cardLayout.show(mainPanel, "menuPlugin");
@@ -120,7 +129,9 @@ public class CLIMenu extends JFrame {
 		
 	}
 	
-	
+	/**
+	 * Change the window to menu last
+	 */
 	public void changeToMenuLast() {
 		this.setSize(700,500);
 		menuLast.setCommande(commande);

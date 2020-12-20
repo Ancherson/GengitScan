@@ -82,6 +82,7 @@ public class CliMenuPlugin extends JPanel {
 	/**
 	 * Create buttons with the same properties
 	 * @param name is the name of the button
+	 * @return a JButton
 	 */
 	public JButton makeABeautifulButton(String name) {
 		JButton b = new JButton(name);
@@ -95,9 +96,10 @@ public class CliMenuPlugin extends JPanel {
 	
 	/**What happen when a button is pressed
 	 * you have three possibilities:
-	   -an non-API plugin with parameter
-	   -an API plugin (it always has parameter
-	   -an non-API plugin without parameter)
+	 *  -an non-API plugin with parameter
+	 *  -an API plugin (it always has parameter
+	 *  -an non-API plugin without parameter)
+	 * @param name Of the Button
 	   */
 	public void eventButton(String name) {
 		result = name;
