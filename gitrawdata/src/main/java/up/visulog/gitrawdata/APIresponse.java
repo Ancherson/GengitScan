@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * this class is the core for all the API responses
+ * This class is the core for all the API responses
  * Create JSON files that contains information that we got from the website
  */
 public class APIresponse {
