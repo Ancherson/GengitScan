@@ -59,6 +59,24 @@ Visulog contains the following modules:
     ```
     ./gradlew build
     ```
+    
+###  PrivateToken and Project ID
+
+1. **How to have the project ID ?**
+
+![Project ID](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/ID.png)
+
+2. **How to generate the private Token ?**
+
+![Private Token 1](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken1.png)
+
+![Private Token 2](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken2.png)
+
+![Private Token 3](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken3.png)
+
+![Private Token 4](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken4.png)
+
+
 ### Running the software
 
 Currently, it can be run through gradle too. In order to pass program arguments, you need to pass them behind `--args`:
@@ -88,7 +106,7 @@ You can now compile and execute the following commands.
 1. List of members (API) (X) :
 
 ```
-./gradlew run --args="--addPlugin=getMembers --privateToken=YourPrivateToken --projectId=YourProjectId"
+./gradlew run --args="--addPlugin=getMembers --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
 ```
 
 #### ACTIVITIES PER DATE :
@@ -143,13 +161,13 @@ You can now compile and execute the following commands.
 8. Number of comments (API) (X):
 
 ```
-./gradlew run --args="--addPlugin=countComments --privateToken=YourPrivateToken --projectId=YourProjectId"
+./gradlew run --args="--addPlugin=countComments --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
 ```
 
 9. Number of assigned issues (API) (X) :
 
 ```
-./gradlew run --args="--addPlugin=countIssues --privateToken=YourPrivateToken --projectId=YourProjectId"
+./gradlew run --args="--addPlugin=countIssues --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
 ```
 
 ### ACTIVITIES PER DATE AND BY AUTHOR :
@@ -179,5 +197,5 @@ You can now compile and execute the following commands.
 12. Percentage of each extensions (API) (X):
 
 ```
-./gradlew run --args="--addPlugin=getExtensions --privateToken=YourPrivateToken --projectId=YourProjectId"
+./gradlew run --args="--addPlugin=getExtensions --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
 ```
