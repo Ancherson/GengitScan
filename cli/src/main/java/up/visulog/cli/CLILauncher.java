@@ -74,6 +74,7 @@ public class CLILauncher {
      * -it cut the arguments to find the plugins that will be launched
      * -transform the Strings into configuration, used in analyzer
      * @param args Should be the <b>Command line</b>
+     * @return The configuration build from the <b>Command line</b>
      */
     static Optional<Configuration> makeConfigFromCommandLineArgs(String[] args) {
     	if(args.length==0){
