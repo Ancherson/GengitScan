@@ -66,13 +66,21 @@ Currently, it can be run through gradle too. In order to pass program arguments,
 ./gradlew run --args='here are my args'
 ```
 
-For instance
+Some commands need to work with an API and special commands. The latter will be specified with an icon like this (API).
+Some commands can be used on the current branch but also on all branches. Just add "ForAllBranches" to the commands. Those that cannot be used on all branches will be marked with an icon (X).
+Before testing the plugins, you need to do the following commands:
 
+- Linux :
 ```
-./gradlew run --args='. --addPlugin=countCommits'
+sudo apt install curl
 ```
 
-Will count the commits of each author in the current branch of the git repository present in the current folder (".").
+- MacOS
+```
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
+brew install curl
+```
+You can now compile and execute the following commands.
 
 
 #### GENERAL STATISTICS
