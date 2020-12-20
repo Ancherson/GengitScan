@@ -28,7 +28,9 @@ public class CLIMenu extends JFrame {
 	private CardLayout cardLayout;
 	
 
-	
+	/**
+	 * The Master Frame that will contains all the windows
+	 */
 	public CLIMenu() {
 		this.setSize(700, 500);
 		this.setLocationRelativeTo(null);
