@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Collection;
 /**
   * This class is the core of the configuration
   * in order to analyze the data we get from git
@@ -11,7 +12,7 @@ import java.util.Map;
 public class Configuration {
 
     private Path gitPath;
-    private final Map<String, PluginConfig> plugins;
+    private final List<String> plugins;
     private String privateToken;
     private int idProject;
     private int idIssue;
@@ -21,9 +22,9 @@ public class Configuration {
      * @param gitPath The path of the git repository in local
      * @param plugins plugins that are going to be executed
      */
-    public Configuration(Path gitPath, Map<String, PluginConfig> plugins) {
+    public Configuration(Path gitPath, List<String> plugins) {
         this.gitPath = gitPath;
-        this.plugins = Map.copyOf(plugins);
+        this.plugins = List.copyOf(plugins);
     }
 
     /**
@@ -33,10 +34,10 @@ public class Configuration {
      * @param idProject id of the project that you want to analyse
      * @param idIssue id of issue that you want to analyse (it was made if you wanted to get comments in only one issue)
      */
-    public Configuration(String privateToken,Map<String, PluginConfig> plugins,int idProject,int idIssue){
+    public Configuration(String privateToken,List<String> plugins,int idProject,int idIssue){
         this.privateToken = privateToken;
         this.idProject = idProject;
-        this.plugins = Map.copyOf(plugins);
+        this.plugins = List.copyOf(plugins);
         this.idIssue = idIssue;
     }
 
@@ -47,9 +48,9 @@ public class Configuration {
      * @param plugins plugins that are going to be executed
      * @param idProject id of the project that you want to analyse
      */
-    public Configuration(Path gitPath,String privateToken,Map<String, PluginConfig> plugins,int idProject){
+    public Configuration(Path gitPath,String privateToken,List<String> plugins,int idProject){
         this.gitPath = gitPath;
-        this.plugins = Map.copyOf(plugins);
+        this.plugins = List.copyOf(plugins);
         this.privateToken = privateToken;
         this.idProject = idProject;
     }
@@ -60,7 +61,7 @@ public class Configuration {
      * @param plugins plugins that are going to be executed
      * @param idProject id of the project that you want to analyse
      */
-    public Configuration(String privateToken,Map<String, PluginConfig> plugins,int idProject){
+    public Configuration(String privateToken,List<String> plugins,int idProject){
         this(privateToken,plugins,idProject,-1);
     }
 
@@ -84,7 +85,7 @@ public class Configuration {
      * return a map of plugins that we re going to execute
      * @return a map of plugins that we re going to execute
      */
-    public Map<String, PluginConfig> getPlugins() {
+    public List<String> getPlugins() {
         return plugins;
     }
 
@@ -108,7 +109,7 @@ public class Configuration {
      * return a map of plugins that we re going to execute
      * @return a map of plugins that we re going to execute
      */
-    public Map<String, PluginConfig> getPluginConfigs() {
+    public List<String> getPluginConfigs() {
         return plugins;
     }
 }

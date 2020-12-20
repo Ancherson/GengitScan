@@ -60,7 +60,6 @@ public class TestCommit {
 			var reader = Files.newBufferedReader(Paths.get(uri));
 			assertEquals(expected, Commit.parseLinesContribution(reader).toString());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
