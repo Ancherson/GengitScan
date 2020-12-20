@@ -59,6 +59,24 @@ Visulog contains the following modules:
     ```
     ./gradlew build
     ```
+    
+###  PrivateToken and Project ID
+
+1. **How to have the project ID ?**
+
+![Project ID](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/ID.png)
+
+2. **How to generate the private Token ?**
+
+![Private Token 1](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken1.png)
+
+![Private Token 2](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken2.png)
+
+![Private Token 3](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken3.png)
+
+![Private Token 4](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken4.png)
+
+
 ### Running the software
 
 Currently, it can be run through gradle too. In order to pass program arguments, you need to pass them behind `--args`:
@@ -66,10 +84,118 @@ Currently, it can be run through gradle too. In order to pass program arguments,
 ./gradlew run --args='here are my args'
 ```
 
-For instance
+Some commands need to work with an API and special commands. The latter will be specified with an icon like this (API).
+Some commands can be used on the current branch but also on all branches. Just add "ForAllBranches" to the commands. Those that cannot be used on all branches will be marked with an icon (X).
+Before testing the plugins, you need to do the following commands:
+
+- Linux :
+```
+sudo apt install curl
+```
+
+- MacOS
+```
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
+brew install curl
+```
+You can now compile and execute the following commands.
+
+
+#### GENERAL STATISTICS
+
+1. List of members (API) (X) :
 
 ```
-./gradlew run --args='. --addPlugin=countCommits'
+./gradlew run --args="--addPlugin=getMembers --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
 ```
 
-Will count the commits of each author in the current branch of the git repository present in the current folder (".").
+#### ACTIVITIES PER DATE :
+
+2. Number of commits per Days, Weeks and Months :
+
+```
+./gradlew run --args="--addPlugin=countCommitsPerDays"
+./gradlew run --args="--addPlugin=countCommitsPerWeeks"
+./gradlew run --args="--addPlugin=countCommitsPerMonths"
+```
+
+3. Number of lines added/deleted per Days, Weeks and Months :
+
+```
+./gradlew run --args="--addPlugin=countLinesAddedPerDays"
+./gradlew run --args="--addPlugin=countLinesAddedPerWeeks"
+./gradlew run --args="--addPlugin=countLinesAddedPerMonths"
+
+./gradlew run --args="--addPlugin=countLinesDeletedPerDays"
+./gradlew run --args="--addPlugin=countLinesDeletedPerWeeks"
+./gradlew run --args="--addPlugin=countLinesDeletedPerMonths"
+```
+
+### ACTIVITIES BY AUTHOR :
+
+4. Number of commits :
+
+```
+./gradlew run --args="--addPlugin=countCommits"
+```
+
+5. Number of merge commits (X) :
+
+```
+./gradlew run --args="--addPlugin=countMergeCommits"
+```
+
+6. Number of lines added/deleted :
+
+```
+./gradlew run --args="--addPlugin=countLinesAdded"
+./gradlew run --args="--addPlugin=countLinesDeleted"
+```
+
+7. Contribution percentages (X) :
+
+```
+./gradlew run --args="--addPlugin=countContribution"
+```
+
+8. Number of comments (API) (X):
+
+```
+./gradlew run --args="--addPlugin=countComments --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
+```
+
+9. Number of assigned issues (API) (X) :
+
+```
+./gradlew run --args="--addPlugin=countIssues --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
+```
+
+### ACTIVITIES PER DATE AND BY AUTHOR :
+
+10. Number of lines added/deleted per Days, Weeks, Months and by Author :
+
+```
+./gradlew run --args="--addPlugin=countLinesAddedPerAuthorPerDays"
+./gradlew run --args="--addPlugin=countLinesAddedPerAuthorPerWeeks"
+./gradlew run --args="--addPlugin=countLinesAddedPerAuthorPerMonths"
+
+./gradlew run --args="--addPlugin=countLinesDeletedPerAuthorPerDays"
+./gradlew run --args="--addPlugin=countLinesDeletedPerAuthorPerWeeks"
+./gradlew run --args="--addPlugin=countLinesDeletedPerAuthorPerMonths"
+```
+
+11. Number of commits per Days, Weeks, Months and by Author :
+
+```
+./gradlew run --args="--addPlugin=countCommitsPerAuthorPerDays"
+./gradlew run --args="--addPlugin=countCommitsPerAuthorPerWeeks"
+./gradlew run --args="--addPlugin=countCommitsPerAuthorPerMonths"
+```
+
+### FILES AND EXTENSIONS :
+
+12. Percentage of each extensions (API) (X):
+
+```
+./gradlew run --args="--addPlugin=getExtensions --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
+```
