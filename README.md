@@ -88,7 +88,7 @@ You can now compile and execute the following commands.
 1. List of members (API) (X) :
 
 ```
-./gradlew run --args="--addPlugin=getMembers --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
+./gradlew run --args="--addPlugin=getMembers --privateToken=YourPrivateToken --projectId=YourProjectId"
 ```
 
 #### ACTIVITIES PER DATE :
@@ -143,13 +143,13 @@ You can now compile and execute the following commands.
 8. Number of comments (API) (X):
 
 ```
-./gradlew run --args="--addPlugin=countComments --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
+./gradlew run --args="--addPlugin=countComments --privateToken=YourPrivateToken --projectId=YourProjectId"
 ```
 
 9. Number of assigned issues (API) (X) :
 
 ```
-./gradlew run --args="--addPlugin=countIssues --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
+./gradlew run --args="--addPlugin=countIssues --privateToken=YourPrivateToken --projectId=YourProjectId"
 ```
 
 ### ACTIVITIES PER DATE AND BY AUTHOR :
@@ -179,5 +179,5 @@ You can now compile and execute the following commands.
 12. Percentage of each extensions (API) (X):
 
 ```
-./gradlew run --args="--addPlugin=getExtensions --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
+./gradlew run --args="--addPlugin=getExtensions --privateToken=YourPrivateToken --projectId=YourProjectId"
 ```
