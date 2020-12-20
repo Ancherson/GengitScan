@@ -6,9 +6,13 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+/**
+ * A JPanel that will present a convenient way to select the plugin you want to launch
+  */
 public class CliMenuPlugin extends JPanel {
+
 	private CLIMenu CLIM;
-	private String result;
+	private String result; //the command line that will be added to CLIM.commande
 
 	//Buttons that represents the "main" plugins
 	private JButton countLinesAdded = makeABeautifulButton("countLinesAdded");
@@ -24,7 +28,11 @@ public class CliMenuPlugin extends JPanel {
 	private JButton countIssues = makeABeautifulButton("countIssues");
 	private JButton countComments = makeABeautifulButton("countComments");
 	//-------------------------------------------------------------------------------------------------------------
-	
+
+	/**
+	 * Function that create your MenuPlugin window
+	 * @param CLIM is the GUI that contains <b>CliMenuPath</b> and the <b>Command line</b>
+	 */
 
 	public CliMenuPlugin(CLIMenu CLIM) {
 		this.CLIM = CLIM;
@@ -32,7 +40,7 @@ public class CliMenuPlugin extends JPanel {
 		this.setLayout(null);
 		this.setBackground(new Color(180, 211, 212));
 		
-		JPanel panelMain = new JPanel(new GridLayout(4,1));
+		JPanel panelMain = new JPanel(new GridLayout(4,1)); //The main Panel were you add everything
 		panelMain.setBackground(Color.white);
 		panelMain.setBorder(BorderFactory.createEmptyBorder(10, 50, 50, 50));
 		panelMain.setBounds(50, 30, 1100, 400);
@@ -45,7 +53,7 @@ public class CliMenuPlugin extends JPanel {
 		
 		GridLayout g1 = new GridLayout(1,5);
 		g1.setHgap(20);
-		JPanel buttonNoAPI = new JPanel(g1);
+		JPanel buttonNoAPI = new JPanel(g1);//Panel that cointains non-API plugin button
 		buttonNoAPI.setBackground(Color.white);
 		panelMain.add(buttonNoAPI);
 				
@@ -61,7 +69,7 @@ public class CliMenuPlugin extends JPanel {
 		
 		GridLayout g2 = new GridLayout(1,4);
 		g2.setHgap(20);
-		JPanel buttonAPI = new JPanel(g2);
+		JPanel buttonAPI = new JPanel(g2);//Panel that cointains API plugin button
 		buttonAPI.setBackground(Color.white);
 		panelMain.add(buttonAPI);
 		
@@ -71,6 +79,11 @@ public class CliMenuPlugin extends JPanel {
 		buttonAPI.add(countComments);
 	}
 	
+	/**
+	 * Create buttons with the same properties
+	 * @param name is the name of the button
+	 * @return a JButton
+	 */
 	public JButton makeABeautifulButton(String name) {
 		JButton b = new JButton(name);
 		b.setBackground(new Color(180, 211, 212));
@@ -80,6 +93,14 @@ public class CliMenuPlugin extends JPanel {
 		return b;
 	}
 	
+	
+	/**What happen when a button is pressed
+	 * you have three possibilities:
+	 *  -an non-API plugin with parameter
+	 *  -an API plugin (it always has parameter
+	 *  -an non-API plugin without parameter)
+	 * @param name Of the Button
+	   */
 	public void eventButton(String name) {
 		result = name;
 		

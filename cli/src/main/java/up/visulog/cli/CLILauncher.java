@@ -28,9 +28,17 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.Scanner;
-
+/**
+ * Class containing the main section of the program
+ * its main goal is to interpret the argument, which we call the <b>Command line </b>
+ */
 public class CLILauncher {
 
+	
+	/** 
+	 * Main function of the project it's the function that is executed when you run the program
+	 * @param args command line written by user
+	 * */
     public static void main(String[] args) throws IOException, URISyntaxException {
     	if(args.length == 0) {
     		new CLIMenu();
@@ -38,21 +46,37 @@ public class CLILauncher {
     	else launch(args);
     }
     
-    
+    /**
+     * Launch is a method that allow to "run" the program when using the GUI
+     * @param args should be the command line
+     * */
     public static void launch(String [] args) throws IOException, URISyntaxException {
 	    var config = makeConfigFromCommandLineArgs(args);
+	    //create config from args
 	    if (config.isPresent()) {
 	        var analyzer = new Analyzer(config.get());
+	        // run the plugins of the config
 			var results = analyzer.computeResults();
+			// get the result
 			var wg = new WebGen();
 			results.toHTML(wg);
 			wg.write();
+			//creation of a new blank html page and then fill it with the results
 			if (Desktop.isDesktopSupported()) {
 				Desktop.getDesktop().open(new File("../htmlResult/index.html"));
+				//Opening of the file if it's possible
 			}
 	    } else displayHelpAndExit(args);
+	    // if the Opening of the file was not possible show the "Help" in the terminal
 	}
 
+    /**
+     * makeConfigFromCommandLineArgs is a fonction that transforms the command Line and it's arguments into a configuration :
+     * -it cut the arguments to find the plugins that will be launched
+     * -transform the Strings into configuration, used in analyzer
+     * @param args Should be the <b>Command line</b>
+     * @return The configuration build from the <b>Command line</b>
+     */
     static Optional<Configuration> makeConfigFromCommandLineArgs(String[] args) {
     	if(args.length==0){
     		return Optional.empty();
@@ -75,11 +99,11 @@ public class CLILauncher {
                     String pName = parts[0];
                     String pValue = parts[1];
                     switch (pName) {
+                    //Here looking is you want to launch a plugin (with or without API), save or even load a configuration
                         case "--addPlugin":
+                            // Here you are looking for the plugin the user gave in the command line
                         	switch(pValue) {
-                            // TODO: parse argument and make an instance of PluginConfig
-
-                            // Let's just trivially do this, before the TODO is fixed:
+                        	
                             
                                 case "countCommits":
                             		plugins.put("countCommits", new PluginConfig() {});
@@ -261,6 +285,7 @@ public class CLILauncher {
                     }
                 }
             } else {
+            	// Case of a directory being written
             	String path = arg;
             	if(!arg.startsWith("/")) path = "../" + path;
             	if(!isGitDirectory(path)) displayHelpAndExit(args);
@@ -273,6 +298,11 @@ public class CLILauncher {
         return Optional.of(new Configuration(gitPath,pPrivateToken,plugins,pProjectId));
     }
     
+    
+    /**
+     * Method that check if the Directory given is a GitDirectory or not
+     * @return true or false 
+     */
     private static boolean isGitDirectory(String path) {
     	File file = new File(path);
     	if(!file.exists()) {
@@ -298,7 +328,12 @@ public class CLILauncher {
 		return false;
      }
     
-    //this function save the command in the file whose path is "path"
+    /**
+     * this function save the command in the file whose path is "path"
+     * @param args <b>Command line</b>
+     * @param name Name of the configuration where the <b>Command line</b> is saved
+     * @return the name of the commnd name
+     */
     private static String saveConfig(String[] args, String name) {
     	String content = "";
     	for(int i = 0; i < args.length; i++) {
@@ -331,6 +366,10 @@ public class CLILauncher {
     	}
     }
     
+    /**LoadConfig launch a config that had been saved before
+     * @param name This is the name of the saved configuration
+     * @return The <b>Command line</b> saved in form of a <i>String[]</i>
+    */
     private static String[] loadConfig(String name) {
     	try {
     		BufferedReader reader = new BufferedReader(new FileReader(Paths.get("../config.txt").toFile()));
@@ -358,7 +397,12 @@ public class CLILauncher {
     }
     
 
-
+    /**
+     * This method is used when something went wrong with the command line filled by the user
+     * it print all the existing plugins and some advices to use the program properly in the Terminal
+     * for more details @see printAllPossiblePlugins
+     * @param args should be the <b>Command line</b>
+     * */
     private static void displayHelpAndExit(String[] args) {
     	if(args.length != 0) {
     		if(args[0].equals("--help")) System.out.println("Wrong command...");
@@ -379,6 +423,10 @@ public class CLILauncher {
 	    System.out.println("(For our project: 1618)\n");
 	    System.exit(0);
     }
+    
+    /**
+     * print in the terminal all the puglins that exist in the project
+     */
     
     private static void printAllPossiblePlugins() {
     	String space = "          ";
