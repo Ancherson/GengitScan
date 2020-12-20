@@ -9,17 +9,45 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * This class represents the Assignees of all the issues
+ */
 public class Assignees {
+    /**
+     * <b>assignees</b> is a collection that contains multiple <b>Assignee</b>
+     */
     private Collection<Assignee> assignees;
+
+    /**
+     * <b>Assignees</b> Constructor
+     * It sets the Collection to null
+     */
     public Assignees(){
         this.assignees = null;
     }
+
+    /**
+     * <b>Assignees</b> Constructor
+     * @param assignees is a collection of <b>Assignee</b>
+     */
     public Assignees(Collection<Assignee> assignees){
         this.assignees = assignees;
     }
+
+    /**
+     * <b>assignees</b> getter
+     * @return a collection that contains multiple <b>Assignee</b>
+     */
     public Collection<Assignee> getAssigneesList() {
         return assignees;
     }
+
+    /**
+     * This function changes from the JSON file created in <b>APIreponse</b> to a Java Object which here is <b>Assignees</b>
+     * @param privateToken is a String that describes your private token to auth in your project
+     * @param idProject is an int that describes the id of your project
+     * @return a collection that contains multiple <b>Assignee</b>
+     */
     public Collection<Assignees> parseAssigneeFromLog(String privateToken,int idProject){
         //Creating results for assignee
         Collection<Assignees> result = new ArrayList<>();
@@ -39,6 +67,11 @@ public class Assignees {
         }
         return result;
     }
+
+    /**
+     * Change the <b>Assignees</b> to a JSON formatted String
+     * @return a string that contains the <b>Assignees</b> with their parameters
+     */
     @Override
     public String toString() {
         return "Assignees{" +

@@ -9,15 +9,36 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * This class represents all the members of a given project
+ */
 public class Members {
+    /**
+     * <b>members</b> a <b>Collection</b> of all the members
+     */
     private Collection<Member> members;
+
+    /**
+     * <b>Members</b> Constructor
+     */
     public Members(){
         this.members = null;
     }
 
+    /**
+     * <b>members</b> Getter
+     * @return a <b>Collection</b> of all the members
+     */
     public Collection<Member> getMembers() {
         return members;
     }
+
+    /**
+     * This function changes from the JSON file created in <b>APIreponse</b> to a Java Object which here is <b>Members</b>
+     * @param privateToken is a String that describes your private token to auth in your project
+     * @param idProject is an int that describes the id of your project
+     * @return a <b>Collection</b> of all the members
+     */
     public Collection<Member> getMembersFromJson(String privateToken,int idProject){
         //Creating results for members
         Collection<Member> result = new ArrayList<Member>();
