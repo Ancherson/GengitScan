@@ -157,6 +157,7 @@ public class CliMenuParameter extends JPanel {
 	 */
 	public void DateIsSelected() {
 		perAuthor.setEnabled(true);
+		perAuthor.setSelected(false);
 		perAuthor.setFont(new Font("Monica", Font.PLAIN, 15));
 	}
 	/**
