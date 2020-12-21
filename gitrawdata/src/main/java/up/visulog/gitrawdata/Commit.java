@@ -292,7 +292,7 @@ public class Commit {
         return "Commit{" +
                 //these 3 fields are optional
                 (id != null ? ("id='" + id + '\'') : "") +
-                (mergedFrom != null ? ("mergedFrom...='" + mergedFrom + '\'') : "") + //TODO: find out if this is the only optional field
+                (mergedFrom != null ? ("mergedFrom...='" + mergedFrom + '\'') : "") +
                 (date != null ? (", date='" + date + '\'') : "") +
                 (author != null ? (", author='" + author + '\'') : "") +
                 //field of description is not optional

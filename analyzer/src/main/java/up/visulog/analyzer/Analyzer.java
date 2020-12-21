@@ -1,7 +1,6 @@
 package up.visulog.analyzer;
 
 import up.visulog.config.Configuration;
-import up.visulog.config.PluginConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,14 +37,11 @@ public class Analyzer {
      */
     public AnalyzerResult computeResults() {
         List<AnalyzerPlugin> plugins = new ArrayList<>();
-        for (var pluginConfigEntry: config.getPluginConfigs().entrySet()) {
-            var pluginName = pluginConfigEntry.getKey();
-            var pluginConfig = pluginConfigEntry.getValue();
-            var plugin = makePlugin(pluginName, pluginConfig);
+        for (var pluginName: config.getPluginConfigs()) {
+            var plugin = makePlugin(pluginName);
             plugin.ifPresent(plugins::add);
         }
         // run all the plugins
-        // TODO: try running them in parallel
         ArrayList<Thread> threads = new ArrayList<Thread>();
         for (var plugin: plugins) {
         	//plugin implements the AnalyzerPlugin interface which inherits from Runnable
@@ -73,10 +69,9 @@ public class Analyzer {
     /**
      * makePlugin create the plugin which corresponds with <b>pluginName</b>
      * @param pluginName is the name of the plugin
-     * @param pluginConfig is totally useless
      * @return the <b>AnalyzerPlugin</b> which corresponds with <b>pluginName</b>
      */
-    private Optional<AnalyzerPlugin> makePlugin(String pluginName, PluginConfig pluginConfig) {
+    private Optional<AnalyzerPlugin> makePlugin(String pluginName) {
         switch (pluginName) {
             case "countCommits" : return Optional.of(new CountCommitsPerAuthorPlugin(config, false));
             case "countCommitsForAllBranches" : return Optional.of(new CountCommitsPerAuthorPlugin(config, true));
