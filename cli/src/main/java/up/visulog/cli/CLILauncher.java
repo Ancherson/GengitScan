@@ -292,7 +292,7 @@ public class CLILauncher {
     	System.out.println("You can use a Graphic Interface by running the program without arguments");
     	System.out.println("You juste have to writte \"./gradlew run\" to launch it \n");
 	    System.out.println("Here is a list of what we can do : ");
-	    System.out.println("--path= 'path of the git directory");
+	    System.out.println("--args=\"[path to your git project] \"");
 	    System.out.println("/!\\ if no path is selected the directory will be GenGit scan directory, not the current directory !");
 	    printAllPossiblePlugins();
 	    System.out.println("--load= (Loads the selected commands (test in the example) into a file ../config.txt)");
