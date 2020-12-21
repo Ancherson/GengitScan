@@ -69,7 +69,7 @@ Currently, it can be run through gradle too. In order to pass program arguments,
 If there is no path, it runs in this project's directory.
 If it's run without arguments, it will launch the GUI which displays all possible arguments.
 
-Some commands need to work with an API and special commands. The latter will be specified with an icon like this (API).
+Some commands need to work with an API and special commands. The latter will be specified with an icon like this [(API)](README.md#privatetoken-and-project-id).
 Some commands can be used on the current branch but also on all branches. Just add "ForAllBranches" to the commands. Those that cannot be used on all branches will be marked with an icon (X).
 Before testing the plugins, you need to do the following commands:
 
