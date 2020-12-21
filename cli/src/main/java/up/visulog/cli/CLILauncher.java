@@ -35,16 +35,16 @@ public class CLILauncher {
 	/**
 	 * <b>pluginWithoutAPI</b> is the list of plugins that doesn't use API
 	 */
-	private static String[] pluginWithoutAPI = {"countCommits","countCommitsForAllBranchs","countMergeCommits","countCommitsPerMonths","countCommitsPerMonthsForAllBranchs",
-			"countCommitsPerWeeks","countCommitsPerWeeksForAllBranchs","countCommitsPerDays","countCommitsPerDaysForAllBranchs",
-			"countLinesDeleted","countLinesDeletedForAllBranchs","countLinesAdded","countLinesAddedForAllBranchs","countLinesAddedPerDays",
-			"countLinesAddedPerDaysForAllBranchs","countLinesAddedPerWeeks","countLinesAddedPerWeeksForAllBranchs","countLinesAddedPerMonths",
-			"countLinesAddedPerMonthsForAllBranchs","countLinesDeletedPerDays","countLinesDeletedPerDaysForAllBranchs","countLinesDeletedPerWeeks",
-			"countLinesDeletedPerWeeksForAllBranchs","countLinesDeletedPerMonths","countLinesDeletedPerMonthsForAllBranchs","countContribution",
-			"countLinesAddedPerAuthorPerDays","countLinesAddedPerAuthorPerDaysForAllBranchs","countLinesAddedPerAuthorPerWeeks",
-			"countLinesAddedPerAuthorPerWeeksForAllBranchs","countLinesAddedPerAuthorPerMonths","countLinesAddedPerAuthorPerMonthsForAllBranchs",
-			"countLinesDeletedPerAuthorPerDays","countLinesDeletedPerAuthorPerDaysForAllBranchs","countLinesDeletedPerAuthorPerWeeks","countLinesDeletedPerAuthorPerWeeksForAllBranchs",
-			"countLinesDeletedPerAuthorPerMonths","countLinesDeletedPerAuthorPerMonthsForAllBranchs","countCommitsPerAuthorPerDays","countCommitsPerAuthorPerDaysForAllBranches",
+	private static String[] pluginWithoutAPI = {"countCommits","countCommitsForAllBranches","countMergeCommits","countCommitsPerMonths","countCommitsPerMonthsForAllBranches",
+			"countCommitsPerWeeks","countCommitsPerWeeksForAllBranches","countCommitsPerDays","countCommitsPerDaysForAllBranches",
+			"countLinesDeleted","countLinesDeletedForAllBranches","countLinesAdded","countLinesAddedForAllBranches","countLinesAddedPerDays",
+			"countLinesAddedPerDaysForAllBranches","countLinesAddedPerWeeks","countLinesAddedPerWeeksForAllBranches","countLinesAddedPerMonths",
+			"countLinesAddedPerMonthsForAllBranches","countLinesDeletedPerDays","countLinesDeletedPerDaysForAllBranches","countLinesDeletedPerWeeks",
+			"countLinesDeletedPerWeeksForAllBranches","countLinesDeletedPerMonths","countLinesDeletedPerMonthsForAllBranches","countContribution",
+			"countLinesAddedPerAuthorPerDays","countLinesAddedPerAuthorPerDaysForAllBranches","countLinesAddedPerAuthorPerWeeks",
+			"countLinesAddedPerAuthorPerWeeksForAllBranches","countLinesAddedPerAuthorPerMonths","countLinesAddedPerAuthorPerMonthsForAllBranches",
+			"countLinesDeletedPerAuthorPerDays","countLinesDeletedPerAuthorPerDaysForAllBranches","countLinesDeletedPerAuthorPerWeeks","countLinesDeletedPerAuthorPerWeeksForAllBranches",
+			"countLinesDeletedPerAuthorPerMonths","countLinesDeletedPerAuthorPerMonthsForAllBranches","countCommitsPerAuthorPerDays","countCommitsPerAuthorPerDaysForAllBranches",
 			"countCommitsPerAuthorPerMonths","countCommitsPerAuthorPerMonthsForAllBranches","countCommitsPerAuthorPerWeeks","countCommitsPerAuthorPerWeeksForAllBranches"};
 	/**
 	 * <b>pluginWithAPI</b> is the list of plugins that use API
