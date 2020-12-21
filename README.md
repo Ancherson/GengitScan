@@ -81,8 +81,10 @@ Visulog contains the following modules:
 
 Currently, it can be run through gradle too. In order to pass program arguments, you need to pass them behind `--args`:
 ```
-./gradlew run --args='here are my args'
+./gradlew run --args="[path to your git project] --addPlugin=Plugin1 --addPlugin=Plugin2"
 ```
+If there is no path, it runs in this project's directory.
+If it's run without arguments, it will launch the GUI which displays all possible arguments.
 
 Some commands need to work with an API and special commands. The latter will be specified with an icon like this (API).
 Some commands can be used on the current branch but also on all branches. Just add "ForAllBranches" to the commands. Those that cannot be used on all branches will be marked with an icon (X).
@@ -100,6 +102,13 @@ brew install curl
 ```
 You can now compile and execute the following commands.
 
+
+### Manual of the software
+
+The following command displays the manual of the software :
+```
+./gradlew run --help
+```
 
 #### GENERAL STATISTICS
 
@@ -154,6 +163,8 @@ You can now compile and execute the following commands.
 
 7. Contribution percentages (X) :
 
+The contribution is calculated in comparison to the number of lines of an author. The line belongs to the last author that modified it.
+
 ```
 ./gradlew run --args="--addPlugin=countContribution"
 ```
@@ -198,4 +209,20 @@ You can now compile and execute the following commands.
 
 ```
 ./gradlew run --args="--addPlugin=getExtensions --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
+```
+
+### LOAD AND SAVE COMMANDS :
+
+13. --load= (Loads the selected commands (test in the example) into a file ../config.txt)
+(Format command: --load=name of the config)
+Example : 
+```
+./gradlew run --args='--load=test'
+```
+
+14. --save= (Save the commande "--addPlugin=(name of command)" in ../config.txt)
+(Format command: --save=name of the config)
+Example : 
+```
+./gradlew run --args='--addPlugin=countCommits --save=test'
 ```
