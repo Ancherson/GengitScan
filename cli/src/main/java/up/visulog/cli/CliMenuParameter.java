@@ -156,9 +156,11 @@ public class CliMenuParameter extends JPanel {
 	 * perAuthor button can be used when a date button is selected
 	 */
 	public void DateIsSelected() {
-		perAuthor.setEnabled(true);
-		perAuthor.setSelected(false);
-		perAuthor.setFont(new Font("Monica", Font.PLAIN, 15));
+		if(!perAuthor.isEnabled()) {
+			perAuthor.setEnabled(true);
+			perAuthor.setSelected(false);
+			perAuthor.setFont(new Font("Monica", Font.PLAIN, 15));
+		}
 	}
 	/**
 	 * If the non date button is selected you can't use the perAuthor button
