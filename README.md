@@ -60,23 +60,6 @@ Visulog contains the following modules:
     ./gradlew build
     ```
     
-###  PrivateToken and Project ID
-
-1. **How to have the project ID ?**
-
-![Project ID](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/ID.png)
-
-2. **How to generate the private Token ?**
-
-![Private Token 1](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken1.png)
-
-![Private Token 2](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken2.png)
-
-![Private Token 3](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken3.png)
-
-![Private Token 4](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken4.png)
-
-
 ### Running the software
 
 Currently, it can be run through gradle too. In order to pass program arguments, you need to pass them behind `--args`:
@@ -86,7 +69,7 @@ Currently, it can be run through gradle too. In order to pass program arguments,
 If there is no path, it runs in this project's directory.
 If it's run without arguments, it will launch the GUI which displays all possible arguments.
 
-Some commands need to work with an API and special commands. The latter will be specified with an icon like this (API).
+Some commands need to work with an API and special commands. The latter will be specified with an icon like this [(API)](README.md#privatetoken-and-project-id).
 Some commands can be used on the current branch but also on all branches. Just add "ForAllBranches" to the commands. Those that cannot be used on all branches will be marked with an icon (X).
 Before testing the plugins, you need to do the following commands:
 
@@ -112,7 +95,7 @@ The following command displays the manual of the software :
 
 #### GENERAL STATISTICS
 
-1. List of members (API) (X) :
+1. List of members [(API)](README.md#privatetoken-and-project-id) (X) :
 
 ```
 ./gradlew run --args="--addPlugin=getMembers --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
@@ -169,13 +152,13 @@ The contribution is calculated in comparison to the number of lines of an author
 ./gradlew run --args="--addPlugin=countContribution"
 ```
 
-8. Number of comments (API) (X):
+8. Number of comments [(API)](README.md#privatetoken-and-project-id) (X):
 
 ```
 ./gradlew run --args="--addPlugin=countComments --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
 ```
 
-9. Number of assigned issues (API) (X) :
+9. Number of assigned issues [(API)](README.md#privatetoken-and-project-id) (X) :
 
 ```
 ./gradlew run --args="--addPlugin=countIssues --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
@@ -205,7 +188,7 @@ The contribution is calculated in comparison to the number of lines of an author
 
 ### FILES AND EXTENSIONS :
 
-12. Percentage of each extensions (API) (X):
+12. Percentage of each extensions [(API)](README.md#privatetoken-and-project-id) (X):
 
 ```
 ./gradlew run --args="--addPlugin=getExtensions --privateToken=1m1pdKszBNnTtCHS9KtS --projectId=1618"
@@ -226,3 +209,21 @@ Example :
 ```
 ./gradlew run --args='--addPlugin=countCommits --save=test'
 ```
+
+-----------------------------------------------------------------------------------------------------------------------------
+#  PrivateToken and Project ID
+
+1. **How to get the project ID ?**
+
+![Project ID](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/ID.png)
+
+2. **How to generate the private Token ?**
+
+![Private Token 1](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken1.png)
+
+![Private Token 2](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken2.png)
+
+![Private Token 3](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken3.png)
+
+![Private Token 4](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken4.png)
+
