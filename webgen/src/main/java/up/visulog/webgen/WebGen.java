@@ -19,7 +19,7 @@ import htmlflow.StaticHtml;
 
 /**
  * The module WebGen is converting result from Plugins in Analyzer into Html and Javascript part
- * @see Analyzer
+ * @see <a href="file:../../../../../../../analyzer/build/docs/javadoc/index.html">Analyzer</a>
  */
 
 public class WebGen {

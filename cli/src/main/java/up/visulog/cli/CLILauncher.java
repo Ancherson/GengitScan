@@ -67,6 +67,8 @@ public class CLILauncher {
 	/** 
 	 * Main function of the project it's the function that is executed when you run the program
 	 * @param args command line written by user
+	 * @throws java.io.IOException when we have a java error when we open a file or write to a file
+         * @throws java.net.URISyntaxException when the URI syntax is wrong
 	 * */
     public static void main(String[] args) throws IOException, URISyntaxException {
     	if(args.length == 0) {
@@ -78,6 +80,8 @@ public class CLILauncher {
     /**
      * Launch is a method that allow to "run" the program when using the GUI
      * @param args should be the command line
+     * @throws java.io.IOException when we have a java error when we open a file or write to a file
+     * @throws java.net.URISyntaxException when the URI syntax is wrong
      * */
     public static void launch(String [] args) throws IOException, URISyntaxException {
 	    var config = makeConfigFromCommandLineArgs(args);
