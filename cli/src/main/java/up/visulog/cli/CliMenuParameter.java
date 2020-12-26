@@ -36,8 +36,8 @@ public class CliMenuParameter extends JPanel {
 	 * 	 * Function that create your MenuPlarameter window
 	 * @param CLIM is the GUI that contains <b>CliMenuPath</b> and the <b>Command line</b>
 	 * @param pluginName is the name of the plugin selected in the <b>MenuPlugin</b>
-	 * @param version <p> two possibilities :<br/>
-	 * -True means the non-API with parameters plugin (Lines added/deleted + count commits)<br/>
+	 * @param version <p> two possibilities :<br>
+	 * -True means the non-API with parameters plugin (Lines added/deleted + count commits)<br>
 	 * -False means the API plugins</p>
 	 */
 
@@ -213,6 +213,8 @@ public class CliMenuParameter extends JPanel {
 	 * given the version of the window it will get the value of the buttons
 	 * and add it to the <b>command</b> of <b>CLIM</b>.
 	 * It will then swap the window to the Last menu
+	 * @throws java.io.IOException when we have a java error when we open a file or write to a file
+         * @throws java.net.URISyntaxException when the URI syntax is wrong
 	 */
 	
 	public void submitMethode() throws IOException, URISyntaxException{

@@ -143,6 +143,8 @@ public class CLIMenu extends JFrame {
 	
 	/**
 	 * A simple method that run the program when the use of the GUI is over
+	 * @throws java.io.IOException when we have a java error when we open a file or write to a file
+         * @throws java.net.URISyntaxException when the URI syntax is wrong
 	 */
 	
 	public void launch() throws IOException, URISyntaxException {

@@ -20,8 +20,8 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
 /**
- *<p> A JPanel that will be the last window: <br/>
- * show the actual <b>command line</b>, it can be selected and copied.<br/>
+ *<p> A JPanel that will be the last window: <br>
+ * show the actual <b>command line</b>, it can be selected and copied.<br>
  * ask if the user want to execute the program or add other plugins</p>
   */
 public class CliMenuLast extends JPanel{
@@ -32,7 +32,7 @@ public class CliMenuLast extends JPanel{
 	
 	/**
 	 * Method to set the text inside the JTextPane
-	 * @param line should be the <b>Command line<b>
+	 * @param line should be the <b>Command line</b>
 	 */
 	public void setCommande(String line) {
 		this.JCommande.setText(line);
