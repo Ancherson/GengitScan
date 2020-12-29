@@ -40,15 +40,15 @@ GenGit Scan contains the following modules:
 
 1. clone the repository
     ```
-    git clone git@gaufre.informatique.univ-paris-diderot.fr:adegorre/GenGit Scan.git
+    git clone git@gaufre.informatique.univ-paris-diderot.fr:adegorre/visulog.git
     ```
    or
     ```
-    git clone https://gaufre.informatique.univ-paris-diderot.fr/adegorre/GenGit Scan.git
+    git clone https://gaufre.informatique.univ-paris-diderot.fr/adegorre/visulog.git
     ```
 2. Enter the project folder
     ```
-    cd GenGit Scan
+    cd visulog
     ```
 3. Only if you are on a SCRIPT computer (in one of the TP rooms):
     ```
@@ -215,15 +215,15 @@ Example :
 
 1. **How to get the project ID ?**
 
-![Project ID](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/GenGit Scan/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/ID.png)
+![Project ID](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/ID.png)
 
 2. **How to generate the private Token ?**
 
-![Private Token 1](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/GenGit Scan/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken1.png)
+![Private Token 1](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken1.png)
 
-![Private Token 2](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/GenGit Scan/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken2.png)
+![Private Token 2](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken2.png)
 
-![Private Token 3](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/GenGit Scan/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken3.png)
+![Private Token 3](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken3.png)
 
-![Private Token 4](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/GenGit Scan/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken4.png)
+![Private Token 4](https://gaufre.informatique.univ-paris-diderot.fr/badaoui/visulog/raw/a8a33523c3a68afcf405a4fb400127e06a6b54bf/images/PrivateToken4.png)
 
