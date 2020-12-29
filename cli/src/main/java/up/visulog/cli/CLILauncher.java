@@ -291,7 +291,7 @@ public class CLILauncher {
      * */
     private static void displayHelpAndExit(String[] args) {
     	if(args.length != 0) {
-    		if(args[0].equals("--help")) System.out.println("Wrong command...");
+    		if(!args[0].equals("--help")) System.out.println("Wrong command...");
     	}
     	System.out.println("You can use a Graphic Interface by running the program without arguments");
     	System.out.println("You juste have to writte \"./gradlew run\" to launch it \n");
