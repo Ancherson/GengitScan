@@ -90,7 +90,7 @@ You can now compile and execute the following commands.
 
 The following command displays the manual of the software :
 ```
-./gradlew run --help
+./gradlew run --args="--help"
 ```
 
 #### GENERAL STATISTICS
