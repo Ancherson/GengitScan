@@ -353,18 +353,34 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
         		}
             } else {
             	var labels0 = commitsPerAuthorPerWeeks.entrySet().iterator().next().getKey();
-        		int cmp = Integer.parseInt(labels0.substring(labels0.length()-2, labels0.length()));
-        		int expected = cmp;
+            	int cmp = 0;
+       			try {
+       				cmp = Integer.parseInt(labels0.substring(labels0.length()-2, labels0.length()));  
+       			}
+    			catch(NumberFormatException e){
+    				cmp = Integer.parseInt(labels0.substring(labels0.length()-1, labels0.length()));
+    			}             		
+       			int expected = cmp;
+        		int lastCurrentYear = Integer.parseInt(commitsPerAuthorPerWeeks.entrySet().iterator().next().getKey().substring(0,4));
         		for(var item : commitsPerAuthorPerWeeks.entrySet()) {
-        			cmp = Integer.parseInt(item.getKey().substring(item.getKey().length()-2, item.getKey().length()));
+        			try {
+        				cmp = Integer.parseInt(item.getKey().substring(item.getKey().length()-2, item.getKey().length()));
+        			}
+        			catch(NumberFormatException e){
+        				cmp = Integer.parseInt(item.getKey().substring(item.getKey().length()-1, item.getKey().length()));
+        			}        			
         			if(cmp != expected) {
         				while(expected != cmp) {
-        					labels.add("Week " + expected + " (" + item.getKey().substring(0,4) + ")");
-            				expected++;
+        					labels.add("Week " + expected + " (" + lastCurrentYear + ")");
+            				expected ++;
+            				if(expected == 53) {
+            					expected = 0;
+            					lastCurrentYear++;
+            				}
             				nbr++;
         				}
         			}
-        			labels.add("Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")");
+        			labels.add("Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + lastCurrentYear+ ")");
     				Map<String, Integer> commits = item.getValue();
             		for(var c : commits.entrySet()) {
             			String author = c.getKey();
@@ -376,8 +392,12 @@ public class CountCommitsPerAuthorPerDatePlugin implements AnalyzerPlugin {
             			datasets.put(author, authorAndInteger);
             		}
             		nbr++;
-        			expected++;
-        		}
+    				expected ++;
+    				if(expected == 53) {
+    					expected = 0;
+    					lastCurrentYear++;
+    				}
+            	}
             }
             
             wg.addChart("Number of commits per author and per " + howToSort, labels, datasets);

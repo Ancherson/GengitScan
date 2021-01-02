@@ -251,21 +251,47 @@ public class CountLinesPerDatePlugin implements AnalyzerPlugin {
         		}
         	} else {
         		var labels0 = commitsPerWeeks.entrySet().iterator().next().getKey();
-        		int cmp = Integer.parseInt(labels0.substring(labels0.length()-2, labels0.length()));
-        		int expected = cmp;
+        		System.out.println(commitsPerWeeks);
+        		System.out.println(labels0);
+
+        		int cmp = 0;
+       			try {
+       				cmp = Integer.parseInt(labels0.substring(labels0.length()-2, labels0.length()));  
+       			}
+    			catch(NumberFormatException e){
+    				cmp = Integer.parseInt(labels0.substring(labels0.length()-1, labels0.length()));
+    			}      
+       			int expected = cmp;
+        		int lastCurrentYear = Integer.parseInt(commitsPerWeeks.entrySet().iterator().next().getKey().substring(0,4));
         		for(var item : commitsPerWeeks.entrySet()) {
-        			cmp = Integer.parseInt(item.getKey().substring(item.getKey().length()-2, item.getKey().length()));
-        			if(cmp != expected) {
+           			try {
+           				cmp = Integer.parseInt(item.getKey().substring(item.getKey().length()-2, item.getKey().length()));  
+           			}
+        			catch(NumberFormatException e){
+        				cmp = Integer.parseInt(item.getKey().substring(item.getKey().length()-1, item.getKey().length()));
+        			}                 	
+           			System.out.print(cmp);
+           			System.out.println(expected);
+
+           			if(cmp != expected) {
         				while(expected != cmp) {
-        					labels.add("Week " + expected + " (" + item.getKey().substring(0,4) + ")");
+        					labels.add("Week " + expected + " (" + lastCurrentYear + ")");
             				data.add(0);
-            				expected++;
+            				expected ++;
+            				if(expected == 53) {
+            					expected = 0;
+            					lastCurrentYear++;
+            				}
         				}
         			}
-        			labels.add("Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + item.getKey().substring(0,4) + ")");
+        			labels.add("Week " + item.getKey().substring(item.getKey().length()-2, item.getKey().length()) + " (" + lastCurrentYear + ")");
         			data.add(item.getValue());
-        			expected++;
-        		}
+    				expected ++;
+    				if(expected == 53) {
+    					expected = 0;
+    					lastCurrentYear++;
+    				}        		
+    			}
         	}
             
             wg.addChart("line", "Number of Lines " + (lines ? "Added" : "Deleted") + " Per " + howToSort, "Lines " + (lines ? "added" : "deleted"), labels, data);
